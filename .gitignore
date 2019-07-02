@@ -3,3 +3,4 @@ blacklist.json
 nodemon.json
 config.json
 test.js
+.eslintrc.json
