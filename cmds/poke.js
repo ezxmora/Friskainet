@@ -23,10 +23,21 @@ exports.run = async (bot, message, args) => {
 		};
 		await userMention.send({ embed });
 		bot.LogIt.cmd(`${message.author.username} ha pokeado a ${userMention}`);
-	} catch (err) {
+	}
+	catch (err) {
 		message.reply(`No he podido pokear a ${userMention} porque tiene los PM deshabilitados`);
 		bot.LogIt.error(
 			`No se ha podido mandar el poke de ${message.author.tag} a ${userMention.nickname}`
 		);
 	}
+};
+
+exports.help = async (bot, message) => {
+	const embed = {
+		color: ((1 << 24) * Math.random()) | 0,
+		title: 'Uso del comando',
+		description: 'Yo que se mano\n_<Test>_',
+	};
+
+	message.channel.send({ embed });
 };

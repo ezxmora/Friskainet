@@ -1,0 +1,6 @@
+{
+	"LOGIT_ERROR": "LogIt sólo acepta como parámtetros log, warn, error y cmd",
+	"NOT_ALLOWED": "",
+	"FORBIDDEN": "",
+	"C_USSAGE": "Uso del comando"
+}

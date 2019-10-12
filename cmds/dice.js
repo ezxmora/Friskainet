@@ -39,41 +39,42 @@ exports.run = async (bot, message, args) => {
 		}
 
 		switch (generateNumber) {
-			case 1:
-				output += ':one:';
-				break;
+		case 1:
+			output += ':one:';
+			break;
 
-			case 2:
-				output += ':two:';
-				break;
+		case 2:
+			output += ':two:';
+			break;
 
-			case 3:
-				output += ':three:';
-				break;
+		case 3:
+			output += ':three:';
+			break;
 
-			case 4:
-				output += ':four:';
-				break;
+		case 4:
+			output += ':four:';
+			break;
 
-			case 5:
-				output += ':five:';
-				break;
+		case 5:
+			output += ':five:';
+			break;
 
-			case 6:
-				output += ':six:';
-				break;
+		case 6:
+			output += ':six:';
+			break;
 		}
 	}
 
 	if (wins == 0) {
 		result = 'Has perdido, suerte la próxima';
-	} else if (wins == 1) {
+	}
+	else if (wins == 1) {
 		result = `Has ganado una vez y te has embolsado ${bet * (bot.config.betRatio * 1)} tokens`;
 		bot.db.modTokens(bot, message.author.id, bet);
 		bot.db.modTokens(bot, message.author.id, bet * (bot.config.betRatio * 1));
-	} else {
-		result = `Has ganado ${wins} veces y te has embolsado ${bet *
-			(bot.config.betRatio * wins)} tokens`;
+	}
+	else {
+		result = `Has ganado ${wins} veces y te has embolsado ${bet * (bot.config.betRatio * wins)} tokens`;
 		bot.db.modTokens(bot, message.author.id, bet);
 		bot.db.modTokens(bot, message.author.id, bet * (bot.config.betRatio * wins));
 	}
@@ -88,6 +89,16 @@ exports.run = async (bot, message, args) => {
 		thumbnail: {
 			url: message.author.avatarURL,
 		},
+	};
+
+	message.channel.send({ embed });
+};
+
+exports.help = async (bot, message) => {
+	const embed = {
+		color: ((1 << 24) * Math.random()) | 0,
+		title: 'Uso del comando',
+		description: 'Yo que se mano\n_<Test>_',
 	};
 
 	message.channel.send({ embed });

@@ -1,6 +1,6 @@
-const Canvas = require('canvas');
+//const Canvas = require('canvas');
 
-const applyText = (canvas, text) => {
+/*const applyText = (canvas, text) => {
 	const ctx = canvas.getContext('2d');
 
 	let fontSize = 70;
@@ -10,13 +10,13 @@ const applyText = (canvas, text) => {
 	} while (ctx.measureText(text).width > canvas.width - 300);
 
 	return ctx.font;
-};
+};*/
 
 module.exports = async (bot, member) => {
-	const defaultChannel = member.guild.channels.find(channel => channel.name === 'entrada');
+	/*const defaultChannel = member.guild.channels.find(channel => channel.name === 'entrada');
 
-	/* const greetings = bot.config.greetings[Math.floor(Math.random() * bot.config.greetings.length)];
-	defaultChannel.send(greetings.replace("{{user}}", `${member}`));*/
+	const greetings = bot.config.greetings[Math.floor(Math.random() * bot.config.greetings.length)];
+	defaultChannel.send(greetings.replace("{{user}}", `${member}`));
 
 	const canvas = Canvas.createCanvas(700, 250);
 	const ctx = canvas.getContext('2d');
@@ -49,5 +49,5 @@ module.exports = async (bot, member) => {
 
 	defaultChannel.send(`Bienvenid@ al servidor, ${member}`, attachment);
 	bot.LogIt.log(`${member.user.tag} se ha unido al servidor`);
-	bot.db.addUser(bot, member.user.id, member.user.tag);
+	bot.db.addUser(bot, member.user.id, member.user.tag);*/
 };

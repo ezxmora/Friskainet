@@ -70,3 +70,13 @@ exports.run = async (bot, message, args) => {
 	await message.channel.send(finalArray);
 	bot.LogIt.cmd(`${message.author.tag} ha utilizado shuffle`);
 };
+
+exports.help = async (bot, message) => {
+	const embed = {
+		color: ((1 << 24) * Math.random()) | 0,
+		title: 'Uso del comando',
+		description: 'Yo que se mano\n_<Test>_',
+	};
+
+	message.channel.send({ embed });
+};

@@ -7,12 +7,11 @@
 		"start": "forever start -l log.txt ./app.js ",
 		"restart": "forever restart ./app.js",
 		"stop": "forever stop ./app.js",
-		"test": "node app.js"
+		"testing": "nodemon app.js"
 	},
 	"author": "Eriknaitor",
 	"license": "ISC",
 	"dependencies": {
-		"canvas": "^2.5.0",
 		"chalk": "^2.4.2",
 		"discord.js": "^11.5.1",
 		"enmap": "^5.0.0",
@@ -20,6 +19,7 @@
 		"mongoose": "^5.6.2",
 		"mongoose-unique-validator": "^2.0.3",
 		"node-fetch": "^2.6.0",
-		"urban": "^0.3.2"
+		"urban": "^0.3.2",
+		"ytdl-core": "^0.29.3"
 	}
 }

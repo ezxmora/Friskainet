@@ -24,3 +24,13 @@ exports.run = async (bot, message, args) => {
 	message.reply(`El comando ${commandName} ha sido recargado`);
 	bot.LogIt.log(`El comando ${commandName} ha sido recargado`);
 };
+
+exports.help = async (bot, message) => {
+	const embed = {
+		color: ((1 << 24) * Math.random()) | 0,
+		title: 'Uso del comando',
+		description: 'Yo que se mano\n_<Test>_',
+	};
+
+	message.channel.send({ embed });
+};

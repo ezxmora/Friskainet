@@ -38,8 +38,7 @@ After having everything set up you can also install [forever](https://www.npmjs.
 -   Music? Maybe?
 -   Role cleanup
 -   Gambling system
--   Reports via Telegram
--   Broadcast via Telegram
+-   Command usage
 
 ## Authors
 

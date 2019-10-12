@@ -9,7 +9,7 @@ exports.run = async (bot, message) => {
 
 				message.channel
 					.bulkDelete(notPinned, true)
-					.then(_m => bot.LogIt.log(`Se han borrado ${notPinned.size} mensajes`))
+					.then(() => bot.LogIt.log(`Se han borrado ${notPinned.size} mensajes`))
 					.catch(console.error);
 			})
 			.catch(err => {

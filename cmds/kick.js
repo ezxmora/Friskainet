@@ -17,3 +17,13 @@ exports.run = async (bot, message, [, ...reason]) => {
 		message.reply(`${member.user.username} ha sido kickeado.`);
 	});
 };
+
+exports.help = async (bot, message) => {
+	const embed = {
+		color: ((1 << 24) * Math.random()) | 0,
+		title: 'Uso del comando',
+		description: 'Yo que se mano\n_<Test>_',
+	};
+
+	message.channel.send({ embed });
+};
