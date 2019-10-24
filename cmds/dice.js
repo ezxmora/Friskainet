@@ -5,32 +5,36 @@ exports.run = async (bot, message, args) => {
 	let wins = 0;
 	let output = '';
 	let result = '';
-	const tokens = await bot.db
+	const tokens = 0;
+	/* await bot.db
 		.getUser(message.author.id)
 		.then(res => {
 			return res[0].tokens;
 		})
 		.catch(err => {
 			bot.LogIt.error(err);
-		});
+		}); */
 
 	if (isNaN(dices) || (dices <= 0 && dices > 7)) {
-		return message.reply('Tienes que introducir un número de dados válido [0-6]');
+		exports.help(bot, message);
+		return message.reply(bot.lang.C_MSG.DICE_NOT_VALID_NUM);
 	}
 
-	if (isNaN(bet)) return message.reply('La cantidad de la apuesta tiene que ser un número');
+	if (isNaN(bet)) {
+		exports.help(bot, message);
+		return message.reply(bot.lang.C_MSG.DICE_NOT_VALID_QUANT);
+	}
 
 	if (isNaN(guessNum) || (guessNum <= 0 && guessNum > 11)) {
-		return message.reply('El número de dados tiene que ser un número [1-10]');
+		exports.help(bot, message);
+		return message.reply(bot.lang.C_MSG.DICE_NOT_VALID_DICES);
 	}
 
-	if (tokens < bet) {
-		return message.reply(
-			`La apuesta es mayor que el número de tokens, tienes ${tokens} tokens`
-		);
+	/*if (tokens < bet) {
+		return message.reply(bot.lang.C_MSG.DICE_NOT_ENOUGH_TOKENS.replace('{{tokens}}', tokens));
 	}
 
-	bot.db.modTokens(bot, message.author.id, -bet);
+	bot.db.modTokens(bot, message.author.id, -bet);*/
 
 	for (let i = 1; i <= dices; i++) {
 		const generateNumber = Math.ceil(Math.random() * 6);
@@ -66,17 +70,18 @@ exports.run = async (bot, message, args) => {
 	}
 
 	if (wins == 0) {
-		result = 'Has perdido, suerte la próxima';
+		result = bot.lang.C_MSG.DICE_LOST;
 	}
 	else if (wins == 1) {
-		result = `Has ganado una vez y te has embolsado ${bet * (bot.config.betRatio * 1)} tokens`;
-		bot.db.modTokens(bot, message.author.id, bet);
-		bot.db.modTokens(bot, message.author.id, bet * (bot.config.betRatio * 1));
+		result = bot.lang.C_MSG.DICE_WIN_ONCE.replace('{{tokens}}', bet * (bot.config.betRatio * 1));
+		//bot.db.modTokens(bot, message.author.id, bet);
+		//bot.db.modTokens(bot, message.author.id, bet * (bot.config.betRatio * 1));
 	}
 	else {
-		result = `Has ganado ${wins} veces y te has embolsado ${bet * (bot.config.betRatio * wins)} tokens`;
-		bot.db.modTokens(bot, message.author.id, bet);
-		bot.db.modTokens(bot, message.author.id, bet * (bot.config.betRatio * wins));
+		result = bot.lang.C_MSG.DICE_WIN_MULTI.replace('{{wins}}', wins);
+		result = result.replace('{{profit}}', bet * (bot.config.betRatio * wins));
+		//bot.db.modTokens(bot, message.author.id, bet);
+		//bot.db.modTokens(bot, message.author.id, bet * (bot.config.betRatio * wins));
 	}
 
 	const embed = {
@@ -97,8 +102,8 @@ exports.run = async (bot, message, args) => {
 exports.help = async (bot, message) => {
 	const embed = {
 		color: ((1 << 24) * Math.random()) | 0,
-		title: 'Uso del comando',
-		description: 'Yo que se mano\n_<Test>_',
+		title: bot.lang.C_USAGE_TITLE,
+		description: bot.lang.C_USAGE.DICE.replace('{{syntax}}', `${bot.config.prefix}dice`),
 	};
 
 	message.channel.send({ embed });

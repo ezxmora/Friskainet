@@ -1,45 +1,42 @@
 exports.run = async (bot, message, args) => {
-	const needleMessage = args
-		.slice(1)
-		.join(' ')
-		.toLowerCase();
+	const needleMessage = args.slice(1).join(' ').toLowerCase();
+	const amountMessages = parseInt(args[0]) + 1;
 
-	// Comprobamos que tenga permisos para borrar mensajes
-	if (message.member.hasPermission('MANAGE_MESSAGES')) {
-		if (isNaN(args[0])) {
-			return message.reply(
-				'Tienes que introducir una cantidad de mensajes que quieras borrar'
-			);
-		}
-
-		if (needleMessage === '') {
-			return message.reply('Tienes que especificar algo que quieras borrar');
-		}
-		// Recogemos todos los mentajes que complan el criterio y los borramos
-		const limit = Number(args[0]) + 1;
-		await message.channel
-			.fetchMessages({ limit: limit })
-			.then(msg => {
-				const botMessages = msg.filter(
-					m => m.content.toLowerCase().includes(needleMessage) && !m.pinned
-				);
-
-				message.channel
-					.bulkDelete(botMessages, true)
-					.then(m => bot.LogIt.log(`Se han borrado ${m.size} mensajes`))
-					.catch(console.error);
-			})
-			.catch(err => {
-				console.log(err);
-			});
+	if (isNaN(amountMessages)) {
+		exports.help(bot, message);
+		return message.reply(bot.lang.C_MSG.DEL_QUANT);
 	}
+
+	if (needleMessage === '') {
+		exports.help(bot, message);
+		return message.reply(bot.lang.C_MSG.DEL_NEEDLE);
+	}
+
+
+	// Fetchs the messages and deletes all of them that fullfills the criteria
+	await message.channel.messages.fetch({ limit: amountMessages })
+		.then((msg) => {
+			let filteredMessages = msg.filter(m => m.content.toLowerCase().includes(needleMessage) && !m.pinned && m.author.id === message.author.id);
+
+			if (message.member.hasPermission('MANAGE_MESSAGES')) {
+				filteredMessages = msg.filter(m => m.content.toLowerCase().includes(needleMessage) && !m.pinned);
+			}
+
+			message.channel.bulkDelete(filteredMessages, true)
+				.then(m => bot.LogIt.log(`Se han borrado ${m.size} mensajes`))
+				.catch(console.error);
+		})
+		.catch(err => {
+			bot.LogIt.error(err);
+		});
+
 };
 
 exports.help = async (bot, message) => {
 	const embed = {
 		color: ((1 << 24) * Math.random()) | 0,
-		title: 'Uso del comando',
-		description: 'Yo que se mano\n_<Test>_',
+		title: bot.lang.C_USAGE_TITLE,
+		description: bot.lang.C_USAGE.DEL.replace('{{syntax}}', `${bot.config.prefix}del`),
 	};
 
 	message.channel.send({ embed });

@@ -1,19 +1,27 @@
 exports.run = async (bot, message) => {
-	// Comprobamos que tenga permisos para borrar mensajes
-	if (message.member.hasPermission('MANAGE_MESSAGES')) {
-		// Recogemos todos los mentajes y los borramos
-		await message.channel
-			.fetchMessages()
-			.then(msg => {
-				const notPinned = msg.filter(m => !m.pinned);
+	await message.channel.messages.fetch()
+		.then((msg) => {
+			let msgFilter = msg.filter(m => !m.pinned && m.author.id === message.author.id);
 
-				message.channel
-					.bulkDelete(notPinned, true)
-					.then(() => bot.LogIt.log(`Se han borrado ${notPinned.size} mensajes`))
-					.catch(console.error);
-			})
-			.catch(err => {
-				console.log(err);
-			});
-	}
+			if (message.member.hasPermission('MANAGE_MESSAGES')) {
+				msgFilter = msg.filter(m => !m.pinned);
+			}
+
+			message.channel.bulkDelete(msgFilter, true)
+				.then(() => bot.LogIt.log(`Se han borrado ${msgFilter.size} mensajes`))
+				.catch(console.error);
+		})
+		.catch((err) => {
+			bot.LogIt.error(err);
+		});
+};
+
+exports.help = async (bot, message) => {
+	const embed = {
+		color: ((1 << 24) * Math.random()) | 0,
+		title: bot.lang.C_USAGE_TITLE,
+		description: bot.lang.C_USAGE.PURGE.replace('{{syntax}}', `${bot.config.prefix}purge`),
+	};
+
+	message.channel.send({ embed });
 };

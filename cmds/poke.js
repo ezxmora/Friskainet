@@ -7,10 +7,6 @@ exports.run = async (bot, message, args) => {
 		return message.reply('El mensaje tiene que ser menor de 2048 caracteres');
 	}
 
-	/**
-	 * Try-catch porque al mandar el mensaje puede que el usuario
-	 * tenga los PMs deshabilitados o al bot bloqueado
-	 */
 	try {
 		const embed = {
 			title: `${message.author.username} te ha pokeado`,
@@ -18,17 +14,15 @@ exports.run = async (bot, message, args) => {
 			color: ((1 << 24) * Math.random()) | 0,
 			timestamp: `${message.createdAt}`,
 			thumbnail: {
-				url: `${message.author.avatarURL}`,
+				url: `${message.author.avatarURL()}`,
 			},
 		};
-		await userMention.send({ embed });
+		await userMention.send({ embed: embed });
 		bot.LogIt.cmd(`${message.author.username} ha pokeado a ${userMention}`);
 	}
 	catch (err) {
 		message.reply(`No he podido pokear a ${userMention} porque tiene los PM deshabilitados`);
-		bot.LogIt.error(
-			`No se ha podido mandar el poke de ${message.author.tag} a ${userMention.nickname}`
-		);
+		bot.LogIt.error(`No se ha podido mandar el poke de ${message.author.tag} a ${userMention.nickname}`);
 	}
 };
 

@@ -1,8 +1,12 @@
 'use strict';
 
 const Discord = require('discord.js');
-const bot = new Discord.Client();
-const Enmap = require('enmap');
+const bot = new Discord.Client({
+	disableEveryone: true,
+	messageCacheMaxSize: 500,
+	messageCacheLifetime: 120,
+	messageSweepInterval: 60,
+});
 const { promisify } = require('util');
 const readdir = promisify(require('fs').readdir);
 const Mongoose = require('mongoose');
@@ -10,7 +14,10 @@ const Mongoose = require('mongoose');
 bot.LogIt = require('./modules/LogIt');
 bot.Discord = Discord;
 bot.config = require('./config.json');
-bot.commands = new Enmap();
+bot.lang = require(`./resources/lang/${bot.config.lang}.json`);
+bot.commands = new Discord.Collection();
+bot.queue = new Discord.Collection();
+bot.util = require('./modules/Utils');
 
 const init = async () => {
 	// Loading commands
@@ -36,7 +43,7 @@ const init = async () => {
 	});
 
 	// Connection to the database
-	await Mongoose.connect(bot.config.database, { useNewUrlParser: true })
+	await Mongoose.connect(bot.config.database, { useNewUrlParser: true, useUnifiedTopology: true })
 		.then(() => bot.LogIt.log('Conectado a la base de datos'))
 		.catch(err => bot.LogIt.err(`Ha habido un error al conectar con la base de datos: ${err}`));
 

@@ -1,6 +1,39 @@
 {
 	"LOGIT_ERROR": "LogIt sólo acepta como parámtetros log, warn, error y cmd",
-	"NOT_ALLOWED": "",
-	"FORBIDDEN": "",
-	"C_USSAGE": "Uso del comando"
+	"NOT_ALLOWED": "No tienes permiso pasa usar este comando.",
+	"FORBIDDEN": "No puedes utilizar este comando aquí",
+	"C_USAGE_TITLE": "Uso del comando",
+	"C_USAGE": {
+		"ASS": "**Descripción:** Muestra fotos aleatorias de culos.\n**Uso:** `{{syntax}}`",
+		"BOOBS": "**Descripción:** Muestra fotos aleatorias de tetas.\n**Uso:** `{{syntax}}`",
+		"DEL": "**Descripción:** Borra mensajes que cumplan un criterio.\n**Uso:** {{syntax}} <N. mensajes> <Criterio>",
+		"DICE": "**Descripción:** Hace una apuesta y tira de 1 a 10 dados.\n**Uso:** `{{syntax}} <N. dados [1-10]> <Apuesta> <N. adivinar [1-6]> `",
+		"KICK": "**Descripción:** ",
+		"LMGTFY": "**Descripción:** ",
+		"PLAY:": "**Descripción:** ",
+		"POKE": "**Descripción:** ",
+		"PURGE": "**Descripción:** ",
+		"REBOOT": "**Descripción:** ",
+		"RELOAD": "**Descripción:** ",
+		"RULES": "**Descripción:** ",
+		"SHUFFLE": "**Descripción:** ",
+		"TOPTOKEN": "**Descripción:** ",
+		"URBAN": "**Descripción:** "
+	},
+	"C_MSG": {
+		"DEL_QUANT": "Tienes que introducir una cantidad de mensajes que quieras borrar [1-99]",
+		"DEL_NEEDLE": "Tienes que especificar algo que quieras borrar",
+		"DEL_N": "Se han borrado {{size}} mensajes",
+		"DICE_NOT_VALID_NUM": "Tienes que introducir un número de dados válido [1-6]",
+		"DICE_NOT_VALID_QUANT": "La cantidad de la apuesta tiene que ser un número",
+		"DICE_NOT_VALID_DICES": "El número de dados tiene que ser un número [1-10]",
+		"DICE_NOT_ENOUGH_TOKENS": "La apuesta es mayor que el número de tokens, tienes {{tokens}} tokens",
+		"DICE_LOST": "Has perdido, suerte la próxima vez",
+		"DICE_WIN_ONCE": "Has ganado una vez y te has embolsado {{tokens}} tokens",
+		"DICE_WIN_MULTI": "Has ganado {{wins}} veces y te has embolsado {{profit}} tokens"
+	},
+	"WELCOME": "Bienvenid@ al servidor, ",
+	"S_WELCOME": "se ha unido al servidor",
+	"LEAVE": "ha dejado el servidor, F en el chat.",
+	"S_LEAVE": "ha abandonado el servidor"
 }

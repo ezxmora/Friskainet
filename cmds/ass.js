@@ -2,11 +2,11 @@ const fetch = require('node-fetch');
 
 exports.run = async (bot, message) => {
 	if (!message.member.roles.find(r => r.name === 'NSFW')) {
-		return message.channel.send('No puedes utilizar este comando');
+		return message.channel.send(bot.lang.NOT_ALLOWED);
 	}
 
 	if (!message.channel.nsfw) {
-		return message.channel.send('No puede utilzar este comando aquí');
+		return message.channel.send(bot.lang.FORBIDDEN);
 	}
 
 	await fetch('http://api.obutts.ru/butts/0/1/random')
@@ -26,8 +26,8 @@ exports.run = async (bot, message) => {
 exports.help = async (bot, message) => {
 	const embed = {
 		color: ((1 << 24) * Math.random()) | 0,
-		title: 'Uso del comando',
-		description: 'Yo que se mano\n_<Test>_',
+		title: bot.lang.C_USAGE_TITLE,
+		description: bot.lang.C_USAGE.ASS.replace('{{syntax}}', `${bot.config.prefix}ass`),
 	};
 
 	message.channel.send({ embed });

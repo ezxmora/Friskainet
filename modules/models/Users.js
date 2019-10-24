@@ -35,7 +35,7 @@ Users.prototype.isBlacklisted = function() {
 /**
  * Guarda un usuario en la base de datos
  * @param {Discord} bot
- * @param {String} discordId - la ID única del usuario
+ * @param {String} discordId - La ID única del usuario
  */
 Users.methods.addUser = function(bot, discordId) {
 	const addNewUser = new Users({

@@ -1,16 +1,16 @@
 module.exports = async (bot, message) => {
 	if (message.author.bot) return;
 
-	// No quiere escuchar los DM
+	// Doesn't listen to DMs
 	if (message.channel.type === 'dm') return;
 
-	// Comprobamos si está en la blaclist
+	// Checks if the user is in the blacklist
 	// if (Users.methods.isBlacklisted(bot, message.author.id)) return;
 
-	// Le damos tokens a los usuarios por mandar un mensaje
+	// It gives away some tokens.
 	// await bot.db.modTokens(bot, message.author.id, Math.ceil(Math.random() * 10));
 
-	// Comprobamos que tenga el prefix y vemos si es un comando o no
+	// Checks that he message has the prefix and it's a valid command.
 	if (message.content.indexOf(bot.config.prefix) !== 0) return;
 
 	const args = message.content

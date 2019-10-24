@@ -12,10 +12,14 @@ exports.run = async (bot, message, [, ...reason]) => {
 
 	const kickMember = message.mentions.members.first();
 
-	await kickMember.kick(reason.join(' ')).then(member => {
-		bot.LogIt.log(`${member.user.username} ha sido kickeado`);
-		message.reply(`${member.user.username} ha sido kickeado.`);
-	});
+	await kickMember.kick(reason.join(' '))
+		.then(member => {
+			bot.LogIt.log(`${member.user.username} ha sido kickeado.`);
+			message.reply(`${member.user.username} ha sido kickeado.`);
+		})
+		.catch((err) => {
+			bot.LogIt.error(`Ha habido un error. Error: ${err}`);
+		});
 };
 
 exports.help = async (bot, message) => {
