@@ -1,15 +1,15 @@
 exports.run = async (bot, message, args) => {
 	const userMention = message.mentions.members.first();
 
-	if (!userMention) return message.reply('Tienes que mencionar a un usuario que quieras pokear');
+	if (!userMention) return message.reply(bot.lang.NEED_MENTION);
 
-	if (args.slice(1).join(' ').length > 2049) {
-		return message.reply('El mensaje tiene que ser menor de 2048 caracteres');
+	if (args.slice(1).join(' ').length > 2001) {
+		return message.reply(bot.lang.C_MSG.POKE_CHARS);
 	}
 
 	try {
 		const embed = {
-			title: `${message.author.username} te ha pokeado`,
+			title: bot.lang.C_MSG.POKE_TITLE.replace('{{user}}', message.author.username),
 			description: `${args.slice(1).join(' ')}`,
 			color: ((1 << 24) * Math.random()) | 0,
 			timestamp: `${message.createdAt}`,
@@ -18,19 +18,21 @@ exports.run = async (bot, message, args) => {
 			},
 		};
 		await userMention.send({ embed: embed });
-		bot.LogIt.cmd(`${message.author.username} ha pokeado a ${userMention}`);
+		let pokedBy = bot.lang.C_MSG.POKE_SYS.replace('{{user}}', message.author.username);
+		pokedBy = pokedBy.replace('{{mention}}', userMention);
+		bot.LogIt.cmd(pokedBy);
 	}
 	catch (err) {
-		message.reply(`No he podido pokear a ${userMention} porque tiene los PM deshabilitados`);
-		bot.LogIt.error(`No se ha podido mandar el poke de ${message.author.tag} a ${userMention.nickname}`);
+		message.reply(bot.lang.C_MSG.POKE_ERR.replace('{{mention}}', userMention));
+		bot.LogIt.error(bot.lang.C_MSG.POKE_ERR.replace('{{mention}}', userMention));
 	}
 };
 
 exports.help = async (bot, message) => {
 	const embed = {
 		color: ((1 << 24) * Math.random()) | 0,
-		title: 'Uso del comando',
-		description: 'Yo que se mano\n_<Test>_',
+		title: bot.lang.C_USAGE_TITLE,
+		description: bot.lang.C_USAGE.POKE.replace('{{syntax}}', `${bot.config.prefix}poke`),
 	};
 
 	message.channel.send({ embed });

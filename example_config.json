@@ -1,0 +1,14 @@
+{
+	"token": "YOUR DISCORD TOKEN HERE",
+	"googleToken": "YOUR GOOGLE TOKEN HERE",
+	"database": "YOUR DATABASE DIRECTION HERE",
+	"prefix": ".",
+	"presence": ["PRESENCE NAME", "PRESENCE TYPE", "PRESENCE STATUS"],
+	"entryChannel": "CHANNEL NAME",
+	"roleAdmin": "ADMIN ROLE",
+	"lang": "CHANGE DEPENDING YOUR LANGUAGE FILE NAME",
+	"betRatio": 0.75,
+	"greetings": [
+		"Sup {{user}}?"
+	]
+}

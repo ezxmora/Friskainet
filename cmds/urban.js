@@ -2,14 +2,14 @@ const urban = require('urban');
 
 exports.run = async (bot, message, args) => {
 	const query = args.slice(0).join(' ');
-	if (query === '') return message.reply('Tienes que especificar algo para buscar');
+	if (query === '') return message.reply(bot.lang.C_MSG.NEEDLE);
 
 	/**
-	 * Hacemos la búsqueda gracias a la librería urban y
-	 * devolvemos la respuesta en caso de haberla
+	 * Using Urban we search for the query and
+	 * we get the first response
 	 */
 	await urban(query).first(response => {
-		if (!query) return message.channel.send('No he encontrado nada');
+		if (!query) return message.channel.send(bot.lang.C_MSG.URBAN_CANT_FIND);
 
 		const description = response.definition;
 
@@ -41,8 +41,8 @@ exports.run = async (bot, message, args) => {
 exports.help = async (bot, message) => {
 	const embed = {
 		color: ((1 << 24) * Math.random()) | 0,
-		title: 'Uso del comando',
-		description: 'Yo que se mano\n_<Test>_',
+		title: bot.lang.C_USAGE_TITLE,
+		description: bot.lang.C_USAGE.URBAN.replace('{{syntax}}', `${bot.config.prefix}urban`),
 	};
 
 	message.channel.send({ embed });

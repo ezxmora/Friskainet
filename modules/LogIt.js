@@ -32,7 +32,7 @@ exports.log = (content, type = 'log') => {
 		);
 
 	default:
-		throw new TypeError('LogIt sólo acepta como parámtetros log, warn, error y cmd');
+		throw new TypeError('LogIt only acepts log, warn, error & cmd as parameters');
 	}
 };
 

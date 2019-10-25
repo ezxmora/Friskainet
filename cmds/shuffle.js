@@ -1,9 +1,9 @@
 /**
- * Distribuye de forma aleatoria los elementos de un array
- * @param {Array} array - El array que vamos a barajar
+ * Distributes randomly the elements of an array.
+ * @param {Array} array - They array that we are shuffling.
  * @returns String[]
  */
-const shuffleArray = array => {
+const shuffleArray = (array) => {
 	let currentIndex = array.length,
 		temporaryValue,
 		randomIndex;
@@ -19,9 +19,9 @@ const shuffleArray = array => {
 };
 
 /**
- * Separa en sectores el array
- * @param {Array} array - El array que vamos a separar
- * @param {Integer} groups - Número de grupos en los que se va a dividir
+ * Chunks the array.
+ * @param {Array} array - They array that we are going to chunk.
+ * @param {Integer} groups - Number of groups that we are going to create.
  * @returns {Array}
  */
 const chunkArray = (array, size) => {
@@ -34,14 +34,14 @@ const chunkArray = (array, size) => {
 };
 
 /**
- * Crea una tabla a partir de un array
- * @param {Array} array - El array con el que vamos a crear la tabla
+ * Creates a table from an array.
+ * @param {Array} array - The array that we are going to use.
  * @returns {String}
  */
-const createTable = array => {
+const createTable = (bot, array) => {
 	let table = '';
 	for (let i = 0; i < array.length; i++) {
-		table += `** Grupo ${i + 1}: **`;
+		table += bot.lang.C_MSG.SHUFFLE_TABLE.replace('{{num}}', i + 1);
 		for (let k = 0; k < array[i].length; k++) {
 			table += `${array[i][k]} `;
 		}
@@ -53,7 +53,7 @@ const createTable = array => {
 
 exports.run = async (bot, message, args) => {
 	const numGroups = args[0];
-	if (isNaN(numGroups)) return message.reply('El primer parámetro tiene que ser un número');
+	if (isNaN(numGroups)) return message.reply(bot.lang.C_MSG.SHUFFLE_ISNAN);
 
 	const intGroups = parseInt(numGroups);
 	const usersArray = [];
@@ -62,20 +62,20 @@ exports.run = async (bot, message, args) => {
 	}
 
 	if (intGroups > usersArray.length) {
-		return message.reply('La cantidad de grupos es mayor que la de personas');
+		return message.reply(bot.lang.C_MSG.SHUFFLE_GROUPS);
 	}
 
-	const finalArray = createTable(chunkArray(shuffleArray(usersArray), intGroups));
+	const finalArray = createTable(bot, chunkArray(shuffleArray(usersArray), intGroups));
 
 	await message.channel.send(finalArray);
-	bot.LogIt.cmd(`${message.author.tag} ha utilizado shuffle`);
+	bot.LogIt.cmd(bot.lang.C_MSG.SHUFFLE_USED.replace('{{user}}', message.author.tag));
 };
 
 exports.help = async (bot, message) => {
 	const embed = {
 		color: ((1 << 24) * Math.random()) | 0,
-		title: 'Uso del comando',
-		description: 'Yo que se mano\n_<Test>_',
+		title: bot.lang.C_USAGE_TITLE,
+		description: bot.lang.C_USAGE.SHUFFLE.replace('{{syntax}}', `${bot.config.prefix}shuffle`),
 	};
 
 	message.channel.send({ embed });

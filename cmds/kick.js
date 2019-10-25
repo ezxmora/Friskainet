@@ -1,11 +1,15 @@
 exports.run = async (bot, message, [, ...reason]) => {
 	const modRole = message.guild.roles.find(role => role.name === bot.config.roleAdmin);
-	if (!modRole) return bot.LogIt.warn('El rol no existe en el servidor');
+	if (!modRole) return bot.LogIt.warn(bot.lang.ROLE_DOESNT_EXIST);
 
-	if (!message.member.roles.has(modRole.id)) return message.reply('No puedes usar este comando');
+	if (!message.member.roles.has(modRole.id)) {
+		exports.help(bot, message);
+		return message.reply(bot.lang.NOT_ALLOWED);
+	}
 
 	if (message.mentions.members.size === 0) {
-		return message.reply('Por favor menciona a un usuario para kickear');
+		exports.help(bot, message);
+		return message.reply(bot.lang.NEED_MENTION);
 	}
 
 	if (!message.guild.me.hasPermission('KICK_MEMBERS')) return message.reply('');
@@ -14,19 +18,19 @@ exports.run = async (bot, message, [, ...reason]) => {
 
 	await kickMember.kick(reason.join(' '))
 		.then(member => {
-			bot.LogIt.log(`${member.user.username} ha sido kickeado.`);
-			message.reply(`${member.user.username} ha sido kickeado.`);
+			bot.LogIt.log(`${member.user.username} ${bot.lang.S_KICKED}`);
+			message.reply(`${member.user.username} ${bot.lang.S_KICKED}`);
 		})
 		.catch((err) => {
-			bot.LogIt.error(`Ha habido un error. Error: ${err}`);
+			bot.LogIt.error(bot.lang.S_ERROR.replace('{{error}}', err));
 		});
 };
 
 exports.help = async (bot, message) => {
 	const embed = {
 		color: ((1 << 24) * Math.random()) | 0,
-		title: 'Uso del comando',
-		description: 'Yo que se mano\n_<Test>_',
+		title: bot.lang.C_USAGE_TITLE,
+		description: bot.lang.C_USAGE.KICK.replace('{{syntax}}', `${bot.config.prefix}kick`),
 	};
 
 	message.channel.send({ embed });

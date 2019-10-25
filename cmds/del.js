@@ -23,7 +23,7 @@ exports.run = async (bot, message, args) => {
 			}
 
 			message.channel.bulkDelete(filteredMessages, true)
-				.then(m => bot.LogIt.log(`Se han borrado ${m.size} mensajes`))
+				.then(m => bot.LogIt.log(bot.lang.C_MSG.DEL_N.replace('{{size}}', m.size)))
 				.catch(console.error);
 		})
 		.catch(err => {

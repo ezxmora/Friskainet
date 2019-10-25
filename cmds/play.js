@@ -3,9 +3,8 @@ const ytdl = require('ytdl-core');
 const ytdlDiscord = require('ytdl-core-discord');
 const ytsearch = require('youtube-search');
 
-
 exports.run = async (bot, message, args) => {
-	const { voiceChannel } = message.member;
+	const voiceChannel = message.member.voice.channel;
 	if (!voiceChannel) return message.channel.send('Necesitas estar en un canal de voz para poner música');
 	const perms = voiceChannel.permissionsFor(message.client.user);
 	if (!perms.has('CONNECT')) return message.channel.send('No me puedo conectar mano');
@@ -28,7 +27,6 @@ exports.run = async (bot, message, args) => {
 				if (results[i].kind == 'youtube#channel') {
 					continue;
 				} else {
-					console.log('Checking params');
 					const comparison = bot.util.compareTwoStrings(results[i].title, args.join(' '));
 					if (comparison > percentageComparison) {
 						percentageComparison = comparison;
@@ -53,7 +51,6 @@ exports.run = async (bot, message, args) => {
 	// If the server has a queue created, adds the song
 	if (serverQueue) {
 		serverQueue.songs.push(song);
-		console.log(serverQueue.songs)
 		return message.channel.send(`**${song.title}** se ha añadido a la cola`);
 	}
 
@@ -78,14 +75,16 @@ exports.run = async (bot, message, args) => {
 			return;
 		}
 
-		const dispatcher = queue.connection.playOpusStream(await ytdlDiscord(song.url), { passes: 3 })
-			.on('end', reason => {
-				if (reason === 'Stream is not generating quickly enough.') console.log('Song eneded.');
-				else console.log(reason);
+		// The bit shifting in the highWaterMark is needed to add buffer for the song so it doesn't cut.
+		const dispatcher = queue.connection.play(await ytdlDiscord(song.url), { type: 'opus', passes: 5, highWaterMark: 1 << 13 })
+			.on('end', (reason) => {
+				if (reason === 'Stream is not generating quickly enough.') {
+					bot.LogIt.error('La canción ha terminado antes de lo previsto');
+				}
 				queue.songs.shift();
 				play(queue.songs[0]);
 			})
-			.on('error', error => console.error('Error:', error));
+			.on('error', error => console.log('Error:', error));
 		dispatcher.setVolumeLogarithmic(queue.volume / 5);
 		message.channel.send(`Playing: **${song.title}**`);
 	};
@@ -97,9 +96,9 @@ exports.run = async (bot, message, args) => {
 
 	} catch (error) {
 		bot.LogIt.error('No me he podido unir al canal de voz');
-		console.error(error);
+		console.log('Error:', error);
 		bot.queue.delete(message.guild.id);
-		await voiceChannel.leave();
+		voiceChannel.leave();
 		return message.channel.send('Ha habido un error al intentar unirme.');
 	}
 };

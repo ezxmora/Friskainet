@@ -1,35 +1,35 @@
 exports.run = async (bot, message, args) => {
 	const modRole = message.guild.roles.find(role => role.name === bot.config.roleAdmin);
 	if (!modRole) {
-		return bot.LogIt.warn('El rol no existe en el servidor');
+		return bot.LogIt.warn(bot.lang.ROLE_DOESNT_EXIST);
 	}
 
-	if (!message.member.roles.has(modRole.id)) return message.reply('No puedes usar este comando');
+	if (!message.member.roles.has(modRole.id)) return message.reply(bot.lang.NOT_ALLOWED);
 
 	if (!args || args.size < 1) {
-		return message.reply('Tienes que dar el nombre de un comando para recargar');
+		return message.reply(bot.lang.C_MSG.NEED_PARAM_RELOAD);
 	}
 	const commandName = args[0];
-	// Comprueba si el comando existe
+
 	if (!bot.commands.has(commandName)) {
-		return message.reply('Ese comando no existe');
+		return message.reply(bot.lang.C_MSG.RELOAD_DOESNT_EXIST);
 	}
-	// La ruta es relativa a este script
+	// Relative route form this script
 	delete require.cache[require.resolve(`./${commandName}.js`)];
-	// También hay que recargar el comando en Enmap
+	// Reload from the collection where the commands are stored
 	await bot.commands.delete(commandName);
 	const props = require(`./${commandName}.js`);
 	bot.commands.set(commandName, props);
 
-	message.reply(`El comando ${commandName} ha sido recargado`);
-	bot.LogIt.log(`El comando ${commandName} ha sido recargado`);
+	message.reply(bot.lang.C_MSG.RELOAD_RELOADED.replace('{{command}}', commandName));
+	bot.LogIt.log(bot.lang.C_MSG.RELOAD_RELOADED.replace('{{command}}', commandName));
 };
 
 exports.help = async (bot, message) => {
 	const embed = {
 		color: ((1 << 24) * Math.random()) | 0,
-		title: 'Uso del comando',
-		description: 'Yo que se mano\n_<Test>_',
+		title: bot.lang.C_USAGE_TITLE,
+		description: bot.lang.C_USAGE.RELOAD.replace('{{syntax}}', `${bot.config.prefix}reload`),
 	};
 
 	message.channel.send({ embed });

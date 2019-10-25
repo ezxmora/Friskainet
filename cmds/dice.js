@@ -85,14 +85,14 @@ exports.run = async (bot, message, args) => {
 	}
 
 	const embed = {
-		title: 'Resultado de los dados',
+		title: bot.lang.C_USAGE.DICE_SCORE_EMBED,
 		description: output,
 		color: ((1 << 24) * Math.random()) | 0,
 		footer: {
 			text: result,
 		},
 		thumbnail: {
-			url: message.author.avatarURL,
+			url: message.author.avatarURL(),
 		},
 	};
 

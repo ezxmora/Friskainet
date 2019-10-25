@@ -20,7 +20,7 @@ exports.run = async (bot, message) => {
 		});
 
 	const embed = {
-		title: 'Top 3 de usuarios mas ricos',
+		title: bot.lang.C_MSG.TOPTOKEN_TOP,
 		description: description,
 		color: ((1 << 24) * Math.random()) | 0,
 		thumbnail: {
@@ -33,8 +33,8 @@ exports.run = async (bot, message) => {
 exports.help = async (bot, message) => {
 	const embed = {
 		color: ((1 << 24) * Math.random()) | 0,
-		title: 'Uso del comando',
-		description: 'Yo que se mano\n_<Test>_',
+		title: bot.lang.C_USAGE_TITLE,
+		description: bot.lang.C_USAGE.TOPTOKEN.replace('{{syntax}}', `${bot.config.prefix}toptoken`),
 	};
 
 	message.channel.send({ embed });

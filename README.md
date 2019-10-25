@@ -36,9 +36,7 @@ After having everything set up you can also install [forever](https://www.npmjs.
 -   Multilanguage support
 -   CRUD Rules
 -   Music? Maybe?
--   Role cleanup
 -   Gambling system
--   Command usage
 
 ## Authors
 
