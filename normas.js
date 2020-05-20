@@ -102,4 +102,4 @@ bot.on('message', async message => {
 	}
 });
 
-bot.login('MjM4Mzc3ODY3Mzc1OTM1NDg4.XbH4qg.rsJ2nDfz7GWN-87Lc1eVmX6an9I');
+bot.login('token hehe');
