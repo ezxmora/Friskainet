@@ -1,11 +1,12 @@
 module.exports = async (bot, message) => {
-	if (message.author.bot) return;
+	if (message.author.bot || message.author.system) return;
 
 	// Doesn't listen to DMs
 	if (message.channel.type === 'dm') return;
 
 	// Checks if the user is in the blacklist
-	// if (Users.methods.isBlacklisted(bot, message.author.id)) return;
+	const user = bot.User({ discordId: message.author.id });
+	if (user.isUserBlacklisted(bot)) return;
 
 	// It gives away some tokens.
 	// await bot.db.modTokens(bot, message.author.id, Math.ceil(Math.random() * 10));
@@ -25,7 +26,8 @@ module.exports = async (bot, message) => {
 
 	if (args[0] == 'help') {
 		await command.help(bot, message);
-	} else {
+	}
+	else {
 		await command.run(bot, message, args);
 	}
 };

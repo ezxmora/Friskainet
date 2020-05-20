@@ -40,7 +40,7 @@ After having everything set up you can also install [forever](https://www.npmjs.
 
 ## Authors
 
--   **Erik Zamora** - _Everything_ - [Eriknaitor](https://github.com/Eriknaitor)
+-   **Erik Zamora** - _Everything_ - [Eriknaitor](https://github.com/ezxmora)
 
 See also the list of [contributors](https://github.com/Eriknaitor/friskainet/contributors) who participated in this project.
 

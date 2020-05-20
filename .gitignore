@@ -3,4 +3,6 @@ blacklist.json
 nodemon.json
 config.json
 test.js
+package-lock.json
 .eslintrc.json
+cmds/wip-disabled/

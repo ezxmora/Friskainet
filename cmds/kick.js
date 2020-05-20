@@ -18,11 +18,11 @@ exports.run = async (bot, message, [, ...reason]) => {
 
 	await kickMember.kick(reason.join(' '))
 		.then(member => {
-			bot.LogIt.log(`${member.user.username} ${bot.lang.S_KICKED}`);
-			message.reply(`${member.user.username} ${bot.lang.S_KICKED}`);
+			bot.LogIt.log(bot.lang.SYS.KICK.replace('{{user}}', member.user.username));
+			message.reply(bot.lang.SYS.KICK.replace('{{user}}', member.user.username));
 		})
 		.catch((err) => {
-			bot.LogIt.error(bot.lang.S_ERROR.replace('{{error}}', err));
+			bot.LogIt.error(bot.lang.SYS.ERROR.replace('{{error}}', err));
 		});
 };
 

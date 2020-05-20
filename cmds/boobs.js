@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 
 exports.run = async (bot, message) => {
-	if (!message.member.roles.find(r => r.name === 'NSFW')) {
+	if (!message.member.roles.cache.find(r => r.name === 'NSFW')) {
 		return message.reply(bot.lang.NOT_ALLOWED);
 	}
 

@@ -1,33 +1,45 @@
-exports.run = async (bot, message) => {
-	const topUsers = bot.db.toptokens();
-	const medals = ['🥇', '🥈', '🥉'];
-	let description = '';
-	let avatarTop = '';
+const medals = ['🥇', '🥈', '🥉'];
+let description = '';
+let avatarTop = '';
 
-	await topUsers
-		.then(users => {
-			users.forEach((User, i) => {
-				if (i == 0) {
-					bot.fetchUser(User.idUser).then(myUser => {
-						avatarTop += myUser.avatarURL;
+function buildEmbed(bot) {
+	description = '';
+	avatarTop = '';
+	return new Promise((resolve, reject) => {
+		bot.User.toptokens(function(err, response) {
+			if (err) return reject(bot.LogIt.error(err));
+
+			for (let i = 0; i < response.length; i++) {
+				bot.users.fetch(response[i].discordId)
+					.then((fetchedUser) => {
+						if (i == 0) {
+							avatarTop += fetchedUser.avatarURL({ dynamic: true });
+						}
+						description += `${medals[i]} ${fetchedUser.username}#${fetchedUser.discriminator} **Tokens: ${response[i].tokens}**\n`;
+					})
+					.then(resolve)
+					.catch((err) => {
+						reject(bot.LogIt.error(err));
 					});
-				}
-				description += `${medals[i]} ${User.username}  **Tokens ${User.tokens}**\n`;
-			});
+			}
+		});
+	});
+}
+
+exports.run = async (bot, message) => {
+	await buildEmbed(bot)
+		.then(() => {
+			const embed = {
+				title: bot.lang.C_MSG.TOPTOKEN_TOP,
+				description: description,
+				color: ((1 << 24) * Math.random()) | 0,
+				thumbnail: { url: avatarTop },
+			};
+			message.channel.send({ embed });
 		})
-		.catch(err => {
+		.catch((err) => {
 			bot.LogIt.error(err);
 		});
-
-	const embed = {
-		title: bot.lang.C_MSG.TOPTOKEN_TOP,
-		description: description,
-		color: ((1 << 24) * Math.random()) | 0,
-		thumbnail: {
-			url: avatarTop,
-		},
-	};
-	await message.channel.send({ embed });
 };
 
 exports.help = async (bot, message) => {

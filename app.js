@@ -11,8 +11,10 @@ const { promisify } = require('util');
 const readdir = promisify(require('fs').readdir);
 const Mongoose = require('mongoose');
 
-bot.LogIt = require('./modules/LogIt');
 bot.Discord = Discord;
+bot.User = require('./modules/models/Users');
+bot.Rules = require('./modules/models/Rules');
+bot.LogIt = require('./modules/LogIt');
 bot.config = require('./config.json');
 bot.lang = require(`./resources/lang/${bot.config.lang}.json`);
 bot.commands = new Discord.Collection();
@@ -52,3 +54,8 @@ const init = async () => {
 };
 
 init();
+
+
+process.on('unhandledRejection', error => {
+	console.error('Unhandled promise rejection:', error);
+});

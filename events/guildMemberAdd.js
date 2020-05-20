@@ -2,7 +2,6 @@ const Canvas = require('canvas');
 
 const applyText = (canvas, text) => {
 	const ctx = canvas.getContext('2d');
-
 	let fontSize = 70;
 
 	do {
@@ -13,7 +12,7 @@ const applyText = (canvas, text) => {
 };
 
 module.exports = async (bot, member) => {
-	const defaultChannel = member.guild.channels.find(channel => channel.name === bot.config.entryChannel);
+	const defaultChannel = member.guild.channels.cache.find(channel => channel.name === bot.config.entryChannel);
 
 	const greetings = bot.config.greetings[Math.floor(Math.random() * bot.config.greetings.length)];
 
@@ -45,12 +44,16 @@ module.exports = async (bot, member) => {
 	ctx.closePath();
 	ctx.clip();
 
-	const avatar = await Canvas.loadImage(member.user.displayAvatarURL);
+	const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: 'png' }));
 	ctx.drawImage(avatar, 25, 25, 200, 200);
 
-	const attachment = new bot.Discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
+	const attachment = new bot.Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
 
-	defaultChannel.send(greetings.replace('{{user}}', `${member}`), attachment);
-	bot.LogIt.log(`${member.user.tag} ${bot.lang.S_WELCOME}`);
-	// bot.db.addUser(bot, member.user.id, member.user.tag);
+	defaultChannel.send(greetings.replace('{{user}}', `<${member}>`), attachment);
+	bot.LogIt.log(bot.lang.SYS.WELCOME.replace('{{user}}', member.user.tag));
+
+	const user = bot.User({ discordId: member.user.id });
+	user.save(function(err) {
+		if (err) bot.LogIt.error('Error saving');
+	});
 };

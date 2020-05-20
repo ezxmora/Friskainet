@@ -1,10 +1,9 @@
 'use strict';
 
-const { Mongoose } = require('mongoose');
+const Mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
 const RulesScheme = Mongoose.Schema({
-	_id: Mongoose.Schema.Types.ObjectId,
 	title: {
 		type: String,
 		unique: true,
@@ -21,11 +20,19 @@ const RulesScheme = Mongoose.Schema({
 });
 
 /**
- * Adds a rule to the server
+ * Shows all the rules
+ * @param {requestCallback} cb - The callback that handles the response
+ */
+RulesScheme.statics.getRules = function getRules(cb) {
+	return this.find().exec(cb);
+};
+
+/**
+ * Adds a rule to the server - DISABLED
  * @param {Discord} bot
  * @param {String} title - Title of the rule
  * @param {Content} content - Content of the rule
- */
+
 RulesScheme.methods.addRule = function(bot, title, content) {
 	const rule = new Rules({
 		title,
@@ -39,13 +46,13 @@ RulesScheme.methods.addRule = function(bot, title, content) {
 
 		return bot.LogIt.log('The rule has been added');
 	});
-};
+}; */
 
 /**
- * Removes a rule by the title
+ * Removes a rule by the title - DISABLED
  * @param {Discord} bot
  * @param {String} title - Title of the rule
- */
+
 RulesScheme.methods.removeRule = function(bot, title) {
 	this.deleteOne({ title: `/${title}/i` }, function(err) {
 		if (err) {
@@ -54,19 +61,10 @@ RulesScheme.methods.removeRule = function(bot, title) {
 
 		return bot.LogIt.log('The rule has been removed');
 	});
-};
-
-/**
- * Updates a rule by the title
- * @param {Discord} bot
- * @param {String} title - Title of the rule
- * @param
- */
-RulesScheme.methods.updateRule = function(params) {};
+}; */
 
 RulesScheme.set('autoIndex', false);
 RulesScheme.plugin(uniqueValidator);
 
 const Rules = Mongoose.model('rules', RulesScheme);
-
 module.exports = Rules;
