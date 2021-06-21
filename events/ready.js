@@ -1,4 +1,9 @@
-module.exports = async (bot) => {
-	bot.LogIt.log(bot.lang.SYS.READY.replace('{{users}}', bot.users.cache.size));
-	bot.user.setPresence({ activity: { name: bot.config.presence[0], type: bot.config.presence[1].toUpperCase() }, status: bot.config.presence[2].toLowerCase() });
+module.exports = {
+	name: 'ready',
+	once: true,
+	execute(bot) {
+		bot.LogIt.log(`${bot.user.tag} funcionando y sirviendo a ${bot.users.cache.size} usuarios`);
+		bot.user.setStatus(bot.config.presence.status);
+		bot.user.setActivity(bot.config.presence.name, { type: bot.config.presence.type });
+	}
 };

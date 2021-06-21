@@ -11,28 +11,28 @@ const moment = require('moment');
 exports.log = (content, type = 'log') => {
 	const timestamp = `[${moment().format('MMMM Do YYYY, HH:mm:ss')}]`;
 	switch (type) {
-	case 'log':
-		return console.log(
-			`${timestamp} - ${chalk.bgCyan.black(type.toUpperCase())} ${content}`
-		);
+		case 'log':
+			return console.log(
+				`${timestamp} - ${chalk.bgCyan.black(type.toUpperCase())} ${content}`
+			);
 
-	case 'warn':
-		return console.log(
-			`${timestamp} - ${chalk.bgYellow.black(type.toUpperCase())} ${content}`
-		);
+		case 'warn':
+			return console.log(
+				`${timestamp} - ${chalk.bgYellow.black(type.toUpperCase())} ${content}`
+			);
 
-	case 'error':
-		return console.log(
-			`${timestamp} - ${chalk.bgRed.black(type.toUpperCase())} ${content}`
-		);
+		case 'error':
+			return console.log(
+				`${timestamp} - ${chalk.bgRed.black(type.toUpperCase())} ${content}`
+			);
 
-	case 'cmd':
-		return console.log(
-			`${timestamp} - ${chalk.bgWhite.black(type.toUpperCase())} ${content}`
-		);
+		case 'cmd':
+			return console.log(
+				`${timestamp} - ${chalk.bgWhite.black(type.toUpperCase())} ${content}`
+			);
 
-	default:
-		throw new TypeError('LogIt only acepts log, warn, error & cmd as parameters');
+		default:
+			throw new TypeError('LogIt only acepts log, warn, error & cmd as parameters');
 	}
 };
 

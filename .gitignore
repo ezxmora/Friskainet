@@ -1,8 +1,5 @@
 node_modules/
 blacklist.json
-nodemon.json
-config.json
-test.js
+.env
 package-lock.json
 .eslintrc.json
-cmds/wip-disabled/
