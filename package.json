@@ -17,8 +17,10 @@
 		"chalk": "^3.0.0",
 		"discord.js": "^12.5.3",
 		"dotenv": "^10.0.0",
+		"mariadb": "^2.5.4",
 		"moment": "^2.24.0",
 		"node-fetch": "^2.6.0",
+		"sequelize": "^6.6.2",
 		"urban": "^0.3.2"
 	}
 }

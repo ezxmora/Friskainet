@@ -31,8 +31,13 @@ exports.log = (content, type = 'log') => {
 				`${timestamp} - ${chalk.bgWhite.black(type.toUpperCase())} ${content}`
 			);
 
+		case 'db':
+			return console.log(
+				`${timestamp} - ${chalk.bgMagenta.black(type.toUpperCase())} ${content}`
+			);
+
 		default:
-			throw new TypeError('LogIt only acepts log, warn, error & cmd as parameters');
+			throw new TypeError('LogIt only acepts log, warn, error, db & cmd as parameters');
 	}
 };
 
@@ -56,3 +61,10 @@ exports.warn = (...args) => this.log(...args, 'warn');
  * @param {String} [type = cmd] - Type of log that we are going to print.
  */
 exports.cmd = (...args) => this.log(...args, 'cmd');
+
+/**
+ * Module for commands in the terminal with a timestamp
+ * @param {String} content - Content of the log
+ * @param {String} [type = cmd] - Type of log that we are going to print.
+ */
+exports.db = (...args) => this.log(...args, 'db');

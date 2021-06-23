@@ -8,11 +8,12 @@ module.exports = {
 		if (message.channel.type === 'dm') return;
 
 		// Checks if the user is in the blacklist
-		// const user = bot.User({ discordId: message.author.id });
-		// if (user.isUserBlacklisted(bot)) return;
+		const user = await bot.database.User.findOne({ where: { discordID: message.author.id } })
 
-		// It gives away some tokens.
-		// await bot.db.modTokens(bot, message.author.id, Math.ceil(Math.random() * 10));
+		if (user.isBlacklisted()) return;
+
+		// It gives away some tokens [1-100].
+		user.increment('balance', { by: Math.floor(Math.random() * 100) + 1 });
 
 		// Checks that he message has the prefix and it's a valid command.
 		if (!message.content.startsWith(bot.config.prefix)) return;
@@ -33,7 +34,7 @@ module.exports = {
 				return message.reply('No tienes permisos para ejecutar este comando');
 			}
 		}
-		
+
 		const cooldowns = bot.commandCooldowns;
 
 		// There is no cooldown
