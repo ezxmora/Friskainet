@@ -1,7 +1,7 @@
 module.exports = {
   name: 'dice',
   description: 'Tira unos dados',
-  category: 'fun',
+  category: 'economy',
   args: true,
   usage: '<N. dados [1-10]> <Apuesta> <N. adivinar [1-6]>',
   cooldown: 5,

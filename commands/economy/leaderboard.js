@@ -1,7 +1,7 @@
 module.exports = {
   name: 'leaderboard',
   description: 'Muestra el top 3 de las personas más ricas del servidor',
-  category: 'fun',
+  category: 'economy',
   args: false,
   cooldown: 15,
   run: async (message) => {

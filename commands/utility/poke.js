@@ -9,7 +9,7 @@ module.exports = {
     const userMention = message.mentions.members.first();
     const clientMessage = args.slice(1).join(' ');
 
-    if (!userMention) return message.reply('Necesitar mencionar a un usuario');
+    if (!userMention) return message.reply('Necesitas mencionar a un usuario');
 
     if (clientMessage.length > 2001) return message.reply('El mensaje es demasiado largo, máximo 2000 caracteres');
 

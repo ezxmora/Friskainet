@@ -1,11 +1,9 @@
-
 ![](https://i.imgur.com/XBnWtFG.png)
-
 <p align="center">
   <img alt="License" src="https://img.shields.io/github/license/ezxmora/Friskainet?style=flat-square">
   <img alt="Language" src="https://img.shields.io/badge/Language-Node.js-red?style=flat-square&logo=node.js">
   <img alt="Discord" src="https://img.shields.io/discord/234313904317136906?style=flat-square">
-  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/ezxmora/Friskainet?style=flat-square">
+  <a href="https://github.com/ezxmora/Friskainet/commits/main"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/ezxmora/Friskainet?style=flat-square"></a>
 </p>
 
 # Friskainet
@@ -17,6 +15,16 @@ To be honest the name came from a chat that a friend and I were having about an 
 It also comes from Free [Skynet](<https://en.wikipedia.org/wiki/Skynet_(Terminator)>).
 #### Why the RuneScape gnome as logo?
 It was the first image that I used for my bot and I think that it's a funny one. I haven't played RuneScape in my life and I'm not affiliated with Jagex either.
+
+## Features
+- Announcer
+- Fun
+- Economy
+- Gambling
+- Moderation
+- NSFW
+- Utility
+- Leveling system
 
 ## Requirements
 - [NodeJS](https://nodejs.org/) >= 12.22.1
