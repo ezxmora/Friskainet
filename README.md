@@ -11,25 +11,24 @@
 # Friskainet
 Friskainet is a Discord bot written in JavaScript with the main purpose of improving my coding skills.
 
-### F.A.Q
+## F.A.Q
 #### Why that name?
 To be honest the name came from a chat that a friend and I were having about an old bot he had from a videogame and I asked him if I could use that.
-
 It also comes from Free [Skynet](<https://en.wikipedia.org/wiki/Skynet_(Terminator)>).
-
 #### Why the RuneScape gnome as logo?
 It was the first image that I used for my bot and I think that it's a funny one. I haven't played RuneScape in my life and I'm not affiliated with Jagex either.
-### Requirements
+
+## Requirements
 - [NodeJS](https://nodejs.org/) >= 12.22.1
 - SQL database
 
-### Supported Languages
+## Supported Languages
 - Spanish
 
-### Installation
+## Installation
 Check [SETUP.md](docs/SETUP.md)
-## TODO
 
+## TODO
 -   More commands
 -   Multilanguage support
 -   ~~C~~R~~UD~~ Rules

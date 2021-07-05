@@ -3,4 +3,4 @@ blacklist.json
 .env
 package-lock.json
 *.mp3
-./normas.js
+normas.js
