@@ -32,7 +32,7 @@ module.exports = {
           name: response.author,
         },
       };
-      return message.channel.send({ embed });
+      return message.reply({ embed });
     });
   },
 };

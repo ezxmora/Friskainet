@@ -36,6 +36,6 @@ module.exports = {
       formattedGroups.fields.push(aux);
     }
 
-    return message.channel.send({ embed: formattedGroups });
+    return message.reply({ embed: formattedGroups });
   },
 };

@@ -27,9 +27,7 @@ module.exports = {
     const name = args[0].toLowerCase();
     const command = commands.get(name);
 
-    if (!command) {
-      return message.reply('Ese no es un comando válido');
-    }
+    if (!command) return message.reply('Ese no es un comando válido');
 
     const embed = {
       color: util.randomColor(),

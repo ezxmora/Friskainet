@@ -10,12 +10,10 @@ module.exports = {
     const { util } = message.client;
 
     if (!message.member.roles.cache.some((r) => r.name === 'NSFW')) {
-      return message.channel.send('No tienes permisos para usar este comando');
+      return message.reply('No tienes permisos para usar este comando');
     }
 
-    if (!message.channel.nsfw) {
-      return message.channel.send('No puedes usar este comando aquí');
-    }
+    if (!message.channel.nsfw) return message.reply('No puedes usar este comando aquí');
 
     await fetch('http://api.oboobs.ru/boobs/0/1/random')
       .then((res) => res.json())

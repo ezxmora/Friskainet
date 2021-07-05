@@ -23,7 +23,7 @@ module.exports = {
     try {
       const newCommand = require(`../${folderName}/${command.name}.js`);
       message.client.commands.set(newCommand.name, newCommand);
-      return message.channel.send(`El comando \`${newCommand.name}\` fue recargado`);
+      return message.reply(`El comando \`${newCommand.name}\` fue recargado`);
     } catch (error) {
       return logger.error(`Ha habido un error recargando el comando:\n${error.message}`);
     }
