@@ -1,26 +1,35 @@
 {
 	"name": "discord-js-bot",
-	"version": "1.0.0",
+	"version": "2.0.0",
 	"description": "",
 	"main": "app.js",
-	"scripts": {
-		"start": "forever start -l log.txt ./app.js ",
-		"restart": "forever restart ./app.js",
-		"stop": "forever stop ./app.js",
-		"testing": "nodemon app.js"
+	"engines": {
+		"node": ">=12.22.1"
 	},
-	"author": "Eriknaitor",
-	"license": "ISC",
+	"scripts": {
+		"prestart": "node resources/prestart.js",
+		"start": "node app.js"
+	},
+	"author": "ezxmora",
+	"license": "MIT",
 	"dependencies": {
 		"@discordjs/opus": "^0.5.3",
-		"canvas": "^2.6.1",
-		"chalk": "^3.0.0",
+		"canvas": "^2.8.0",
+		"chalk": "^4.1.1",
 		"discord.js": "^12.5.3",
 		"dotenv": "^10.0.0",
 		"mariadb": "^2.5.4",
-		"moment": "^2.24.0",
-		"node-fetch": "^2.6.0",
+		"moment": "^2.29.1",
+		"node-fetch": "^2.6.1",
 		"sequelize": "^6.6.2",
-		"urban": "^0.3.2"
+		"urban": "^0.3.2",
+		"uuid": "^8.3.2"
+	},
+	"devDependencies": {
+		"eslint": "^7.29.0",
+		"eslint-config-airbnb-base": "^14.2.1",
+		"eslint-plugin-import": "^2.23.4",
+		"eslint-plugin-node": "^11.1.0",
+		"eslint-plugin-promise": "^5.1.0"
 	}
 }

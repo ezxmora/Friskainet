@@ -1,5 +1,9 @@
-module.exports = (bot, member) => {
-	const defaultChannel = member.guild.channels.cache.find(channel => channel.name === 'entrada');
-	defaultChannel.send(bot.lang.LEAVE.replace('{{user}}', member)).then((c) => c.react('🇫'));
-	bot.LogIt.log(bot.lang.SYS.LEAVE.replace('{{user}}', member.user.tag));
+module.exports = {
+  name: 'guildMemberRemove',
+  once: false,
+  execute: async (member, bot) => {
+    const defaultChannel = member.guild.channels.cache.find((channel) => channel.name === bot.config.welcomeChannel);
+    defaultChannel.send(`${member} ha dejado el servidor`).then((c) => c.react('🇫'));
+    bot.logger.log(`${member.user.tag} ha abandonado el servidor`);
+  },
 };

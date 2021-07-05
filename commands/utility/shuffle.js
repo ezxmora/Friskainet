@@ -1,82 +1,41 @@
-/**
- * Distributes randomly the elements of an array.
- * @param {Array} array - They array that we are shuffling.
- * @returns String[]
- */
-const shuffleArray = (array) => {
-	let currentIndex = array.length,
-		temporaryValue,
-		randomIndex;
+module.exports = {
+  name: 'shuffle',
+  description: 'Baraja y divide en grupos una serie de elementos',
+  category: 'utility',
+  args: true,
+  usage: '<N. de grupos> <Items separados por comas>',
+  cooldown: 30,
+  run: async (message, args) => {
+    const { util: { chunk, shuffle, randomColor } } = message.client;
+    const numberGroups = !Number.isNaN(args[0]) ? Number.parseInt(args[0], 10) : message.reply('El primer parámetro tiene que ser un número');
+    const itemsToShuffle = await args.slice(1).join(' ').split(',').map((element) => element.trim());
 
-	while (currentIndex !== 0) {
-		randomIndex = Math.floor(Math.random() * currentIndex);
-		currentIndex -= 1;
-		temporaryValue = array[currentIndex];
-		array[currentIndex] = array[randomIndex];
-		array[randomIndex] = temporaryValue;
-	}
-	return array;
-};
+    if (numberGroups > itemsToShuffle.length) return message.reply('El número de grupos no puede ser mayor que el de items');
 
-/**
- * Chunks the array.
- * @param {Array} array - They array that we are going to chunk.
- * @param {Integer} groups - Number of groups that we are going to create.
- * @returns {Array}
- */
-const chunkArray = (array, size) => {
-	const results = [];
+    const chunkedAndShuffled = await chunk(shuffle(itemsToShuffle), numberGroups);
 
-	while (array.length) {
-		results.push(array.splice(0, size));
-	}
-	return results;
-};
+    const formattedGroups = {
+      title: 'Shuffle',
+      color: randomColor(),
+      thumbnail: {
+        url: message.client.user.avatarURL({ dynamic: true, format: 'png' }),
+      },
+      fields: [],
+    };
 
-/**
- * Creates a table from an array.
- * @param {Array} array - The array that we are going to use.
- * @returns {String}
- */
-const createTable = (bot, array) => {
-	let table = '';
-	for (let i = 0; i < array.length; i++) {
-		table += bot.lang.C_MSG.SHUFFLE_TABLE.replace('{{num}}', i + 1);
-		for (let k = 0; k < array[i].length; k++) {
-			table += `${array[i][k]} `;
-		}
-		table += '\n';
-	}
+    for (let i = 0; i < chunkedAndShuffled.length; i++) {
+      const aux = { name: '', value: '' };
+      aux.name = `**Grupo ${i + 1}**`;
+      for (let j = 0; j < chunkedAndShuffled[i].length; j++) {
+        if (chunkedAndShuffled[i].length !== j + 1) {
+          aux.value += `${chunkedAndShuffled[i][j]} - `;
+        } else {
+          aux.value += `${chunkedAndShuffled[i][j]}\n`;
+        }
+      }
+      formattedGroups.fields.push(aux);
+    }
 
-	return table;
-};
-
-exports.run = async (bot, message, args) => {
-	const numGroups = args[0];
-	if (isNaN(numGroups)) return message.reply(bot.lang.C_MSG.SHUFFLE_ISNAN);
-
-	const intGroups = parseInt(numGroups);
-	const usersArray = [];
-	for (let i = 1; i < args.length; i++) {
-		usersArray.push(args[i]);
-	}
-
-	if (intGroups > usersArray.length) {
-		return message.reply(bot.lang.C_MSG.SHUFFLE_GROUPS);
-	}
-
-	const finalArray = createTable(bot, chunkArray(shuffleArray(usersArray), intGroups));
-
-	await message.channel.send(finalArray);
-	bot.LogIt.cmd(bot.lang.C_MSG.SHUFFLE_USED.replace('{{user}}', message.author.tag));
-};
-
-exports.help = async (bot, message) => {
-	const embed = {
-		color: ((1 << 24) * Math.random()) | 0,
-		title: bot.lang.C_USAGE_TITLE,
-		description: bot.lang.C_USAGE.SHUFFLE.replace('{{syntax}}', `${bot.config.prefix}shuffle`),
-	};
-
-	message.channel.send({ embed });
+    return message.channel.send({ embed: formattedGroups });
+  },
 };

@@ -1,5 +1,3 @@
-'use strict';
-
 const chalk = require('chalk');
 const moment = require('moment');
 
@@ -9,36 +7,36 @@ const moment = require('moment');
  * @param {String} [type = log] - Type of log that we are going to print.
  */
 exports.log = (content, type = 'log') => {
-	const timestamp = `[${moment().format('MMMM Do YYYY, HH:mm:ss')}]`;
-	switch (type) {
-		case 'log':
-			return console.log(
-				`${timestamp} - ${chalk.bgCyan.black(type.toUpperCase())} ${content}`
-			);
+  const timestamp = `[${moment().format('MMMM Do YYYY, HH:mm:ss')}]`;
+  switch (type) {
+    case 'log':
+      return console.log(
+        `${timestamp} - ${chalk.bgCyan.black(type.toUpperCase())} ${content}`,
+      );
 
-		case 'warn':
-			return console.log(
-				`${timestamp} - ${chalk.bgYellow.black(type.toUpperCase())} ${content}`
-			);
+    case 'warn':
+      return console.log(
+        `${timestamp} - ${chalk.bgYellow.black(type.toUpperCase())} ${content}`,
+      );
 
-		case 'error':
-			return console.log(
-				`${timestamp} - ${chalk.bgRed.black(type.toUpperCase())} ${content}`
-			);
+    case 'error':
+      return console.log(
+        `${timestamp} - ${chalk.bgRed.black(type.toUpperCase())} ${content}`,
+      );
 
-		case 'cmd':
-			return console.log(
-				`${timestamp} - ${chalk.bgWhite.black(type.toUpperCase())} ${content}`
-			);
+    case 'cmd':
+      return console.log(
+        `${timestamp} - ${chalk.bgWhite.black(type.toUpperCase())} ${content}`,
+      );
 
-		case 'db':
-			return console.log(
-				`${timestamp} - ${chalk.bgMagenta.black(type.toUpperCase())} ${content}`
-			);
+    case 'db':
+      return console.log(
+        `${timestamp} - ${chalk.bgMagenta.black(type.toUpperCase())} ${content}`,
+      );
 
-		default:
-			throw new TypeError('LogIt only acepts log, warn, error, db & cmd as parameters');
-	}
+    default:
+      throw new TypeError('Logger only acepts log, warn, error, db & cmd as parameters');
+  }
 };
 
 /**

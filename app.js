@@ -1,55 +1,59 @@
-'use strict';
+process.title = 'Friskainet';
+global.__basedir = __dirname; // Shitty trick for getting the main folder ¯\_(ツ)_/¯
+
 require('dotenv').config();
 const { Client, Intents, Collection } = require('discord.js');
 const { readdirSync } = require('fs');
 
 const bot = new Client({
-	intents: Intents.ALL/*[Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]*/,
-	disableMentions: 'everyone',
+  intents: Intents.ALL/* [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] */,
+  disableMentions: 'everyone',
 });
 
-bot.database = require('./modules/database/index');
-bot.LogIt = require('./modules/LogIt');
+bot.database = require('./libs/database/index');
+bot.logger = require('./libs/logger');
 bot.config = require('./resources/config');
+
 bot.commands = new Collection();
 bot.commandCooldowns = new Collection();
-bot.util = require('./modules/Utils');
+bot.util = require('./libs/utils');
 
 const init = async () => {
-	// Loading commands
-	const commandFolders = readdirSync('./commands');
-	let numberCommands = 0;
-	let numberCategories = 0;
+  // Loading commands
+  const commandFolders = readdirSync('./commands');
+  let numberCommands = 0;
+  let numberCategories = 0;
 
-	for (const folder of commandFolders) {
-		const commands = readdirSync(`./commands/${folder}`).filter((file) => file.endsWith('.js'))
-		numberCategories = numberCategories + 1;
-		for (const file of commands) {
-			const command = require(`./commands/${folder}/${file}`);
-			bot.commands.set(command.name, command);
-			numberCommands = numberCommands + 1;
-		}
-	}
+  commandFolders.forEach((folder) => {
+    const commands = readdirSync(`./commands/${folder}`).filter((file) => file.endsWith('.js'));
+    numberCategories += 1;
 
-	bot.LogIt.log(`Caragando ${numberCommands} comandos en ${numberCategories} categorías`);
+    commands.forEach((command) => {
+      const file = require(`./commands/${folder}/${command}`);
+      numberCommands += 1;
+      bot.commands.set(file.name, file);
+    });
+  });
 
-	// Loading events
-	const events = readdirSync('./events').filter((file) => file.endsWith('.js'));
+  bot.logger.log(`Caragando ${numberCommands} comandos en ${numberCategories} categorías`);
 
-	for (const file of events) {
-		const event = require(`./events/${file}`);
-		if (event.once) {
-			bot.once(event.name, (...args) => event.execute(...args, bot));
-		} else {
-			bot.on(event.name, (...args) => event.execute(...args, bot));
-		}
-	}
+  // Loading events
+  const events = readdirSync('./events').filter((file) => file.endsWith('.js'));
+  let numberEvents = 0;
 
-	bot.LogIt.log(`Cargando ${events.length} eventos`);
+  events.forEach((event) => {
+    const file = require(`./events/${event}`);
+    numberEvents += 1;
+    if (event.once) {
+      return bot.once(file.name, (...args) => file.execute(...args, bot));
+    }
+    return bot.on(file.name, (...args) => file.execute(...args, bot));
+  });
 
-	// Log in the bot
-	bot.login(bot.config.discordToken);
+  bot.logger.log(`Cargando ${numberEvents} eventos`);
+
+  // Log in the bot
+  bot.login(bot.config.discordToken);
 };
 
 init();
-
