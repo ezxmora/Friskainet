@@ -15,7 +15,7 @@ module.exports = {
   userJoined: async (voiceState) => {
     const { member, channelID, guild } = voiceState;
     try {
-      const path = await synth(`${member.user.username} se ha unido al canal`, `${__basedir}/resources/voice/join/${member.id}.mp3`);
+      const path = await synth(`${member.user.username} se ha unido al canal`, `${global.basedir}/resources/voice/join/${member.id}.mp3`);
       play(guild.client, channelID, path);
     } catch (error) {
       logger.error(`Ha habido un error al procesar el audio de join de ${member.user.username} (${member.id}.mp3)\n${error}`);
@@ -25,7 +25,7 @@ module.exports = {
   userLeft: async (voiceState) => {
     const { member, channelID, guild } = voiceState;
     try {
-      const path = await synth(`${member.user.username} ha abandonado el canal`, `${__basedir}/resources/voice/leave/${member.id}.mp3`);
+      const path = await synth(`${member.user.username} ha abandonado el canal`, `${global.basedir}/resources/voice/leave/${member.id}.mp3`);
       play(guild.client, channelID, path);
     } catch (error) {
       logger.error(`Ha habido un error al procesar el audio leave de ${member.user.username} (${member.id}.mp3)\n${error}`);

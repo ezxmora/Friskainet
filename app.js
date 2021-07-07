@@ -1,5 +1,5 @@
 process.title = 'Friskainet';
-global.__basedir = __dirname; // Shitty trick for getting the main folder ¯\_(ツ)_/¯
+global.basedir = __dirname; // Shitty trick for getting the main folder ¯\_(ツ)_/¯
 
 require('dotenv').config();
 const { Client, Intents, Collection } = require('discord.js');
