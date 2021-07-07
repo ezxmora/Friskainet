@@ -7,15 +7,7 @@ const logger = require('../libs/logger');
 
 const bot = new Client({ intents: Intents.ALL });
 
-syncAll();
-
 bot.once('ready', async () => {
-  if (!existsSync('./resources/voice')) {
-    mkdirSync('./resources/voice');
-    mkdirSync('./resources/voice/join');
-    mkdirSync('./resources/voice/leave');
-  }
-
   bot.guilds.cache.map(async (guild) => {
     const memberList = await guild.members.cache;
 
@@ -36,4 +28,15 @@ bot.once('ready', async () => {
   });
 });
 
-bot.login(discordToken);
+const init = async () => {
+  if (!existsSync('./resources/voice')) {
+    mkdirSync('./resources/voice');
+    mkdirSync('./resources/voice/join');
+    mkdirSync('./resources/voice/leave');
+  }
+
+  await syncAll();
+  bot.login(discordToken);
+};
+
+init();
