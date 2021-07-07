@@ -1,7 +1,9 @@
 module.exports = (sequelize, DataTypes) => sequelize.define('User', {
-  id: {
+  userId: {
     type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
+    allowNull: false,
   },
   discordID: {
     type: DataTypes.STRING,

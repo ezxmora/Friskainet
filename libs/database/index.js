@@ -1,5 +1,4 @@
 const { Sequelize, DataTypes, Op } = require('sequelize');
-const { v4: uuidv4 } = require('uuid');
 const { database } = require('../../resources/config');
 
 const sequelize = new Sequelize(database.databaseName, database.username, database.password, {
@@ -8,24 +7,25 @@ const sequelize = new Sequelize(database.databaseName, database.username, databa
   logging: false,
 });
 
-const User = require('./User')(sequelize, DataTypes);
-const Rule = require('./Rule')(sequelize, DataTypes);
-const XP = require('./XP')(sequelize, DataTypes);
+const User = require('./models/User')(sequelize, DataTypes);
+const Rule = require('./models/Rule')(sequelize, DataTypes);
+const Experience = require('./models/Experience')(sequelize, DataTypes);
+const Warn = require('./models/Warn')(sequelize, DataTypes);
 
-User.hasOne(XP);
-XP.belongsTo(User);
+// Relations
+User.hasOne(Experience, { foreignKey: 'userId' });
+User.hasMany(Warn, { foreignKey: 'userId' });
 
+// Methods
 User.prototype.isBlacklisted = () => this.blacklisted;
 
-User.beforeCreate((user) => user.id = uuidv4());
-
-/**
- * Drops all the tables and creates it again.
- */
+// Drops all the tables and creates them again.
 const syncAll = () => {
-  sequelize.sync({ force: false, alter: true });
+  sequelize.sync({ force: true, alter: true });
 };
 
 module.exports = {
-  User, Rule, XP, syncAll, Op,
+  User, Rule, Experience, Warn, syncAll, Op,
 };
+
+//  DROP DATABASE friskainet; CREATE DATABASE friskainet; USE friskainet;
