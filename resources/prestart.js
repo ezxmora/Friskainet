@@ -7,9 +7,9 @@ const logger = require('../libs/logger');
 
 const bot = new Client({ intents: Intents.ALL });
 
-bot.once('ready', async () => {
-  await syncAll();
+syncAll();
 
+bot.once('ready', async () => {
   if (!existsSync('./resources/voice')) {
     mkdirSync('./resources/voice');
     mkdirSync('./resources/voice/join');
