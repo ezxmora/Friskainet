@@ -63,9 +63,7 @@ module.exports = {
         .then((user) => {
           bot.logger.db(`${user.discordID} ha sido añadido a la base de datos`);
         })
-        .catch((err) => {
-          bot.logger.error(err);
-        });
+        .catch((err) => bot.logger.error(err));
     }
   },
 };
