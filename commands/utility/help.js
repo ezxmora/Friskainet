@@ -1,6 +1,7 @@
 module.exports = {
   name: 'help',
   description: 'Lista todos los comandos o información específica de uno',
+  category: 'utility',
   usage: '[Nombre del comando]',
   cooldown: 2,
   async run(message, args) {
@@ -9,10 +10,25 @@ module.exports = {
     } = message.client;
 
     if (!args.length) {
+      const categories = [...new Set(commands.map((cmd) => cmd.category))];
+      const commandList = [];
+
+      categories.forEach((cat) => {
+        const categoryObject = { name: cat.charAt(0).toUpperCase() + cat.slice(1), value: [] };
+        commands.forEach((c) => {
+          if (c.category === cat) {
+            categoryObject.value.push(`\`${c.name}\``);
+          }
+        });
+        categoryObject.name = `${categoryObject.name} - ${categoryObject.value.length}`;
+        categoryObject.value = categoryObject.value.join(', ');
+        commandList.push(categoryObject);
+      });
+
       const embed = {
         color: util.randomColor(),
         title: 'Comandos del bot',
-        description: commands.map((command) => `\`${command.name}\``).join(', '),
+        fields: commandList,
         footer: { text: `Prueba ${config.prefix}help [nombre del comando] para obtener información específica del mismo` },
       };
 

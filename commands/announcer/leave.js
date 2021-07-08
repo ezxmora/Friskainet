@@ -1,7 +1,7 @@
 module.exports = {
   name: 'leave',
   description: 'Hace que el bot se vaya del canal de voz',
-  category: 'announce',
+  category: 'announcer',
   args: false,
   cooldown: 0,
   run: async (message) => {

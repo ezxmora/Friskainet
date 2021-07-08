@@ -1,7 +1,7 @@
 module.exports = {
   name: 'announce',
   description: 'Invoca al bot a la sala de voz y hace que empiece a anunciar quien entra y sale de la sala',
-  category: 'announce',
+  category: 'announcer',
   args: false,
   cooldown: 0,
   run: async (message) => {
