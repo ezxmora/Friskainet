@@ -103,7 +103,7 @@ module.exports = {
         }
       },
 
-      remove: async () => {
+      remove: () => {
         if (ruleExists) {
           const { title, content } = ruleExists;
 

@@ -17,18 +17,18 @@ It also comes from Free [Skynet](<https://en.wikipedia.org/wiki/Skynet_(Terminat
 It was the first image that I used for my bot and I think that it's a funny one. I haven't played RuneScape in my life and I'm not affiliated with Jagex either.
 
 ## Features
-- Announcer
-- Fun
-- Economy
-- Gambling
-- Moderation
-- NSFW
-- Utility
-- Leveling system
+-   Announcer
+-   Fun
+-   Economy
+-   Gambling
+-   Moderation
+-   NSFW
+-   Utility
+-   Leveling system
 
 ## Requirements
-- [NodeJS](https://nodejs.org/) >= 12.22.1
-- SQL database
+-   [NodeJS](https://nodejs.org/) >= 12.22.1
+-   SQL database
 
 ## Supported Languages
 - Spanish

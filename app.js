@@ -3,6 +3,7 @@ global.basedir = __dirname; // Shitty trick for getting the main folder ¯\_(ツ
 
 require('dotenv').config();
 const { Client, Intents, Collection } = require('discord.js');
+const cron = require('node-cron');
 const { readdirSync } = require('fs');
 
 const bot = new Client({
@@ -35,7 +36,7 @@ const init = async () => {
     });
   });
 
-  bot.logger.log(`Caragando ${numberCommands} comandos en ${numberCategories} categorías`);
+  bot.logger.log(`Cargando ${numberCommands} comandos en ${numberCategories} categorías`);
 
   // Loading events
   const events = readdirSync('./events').filter((file) => file.endsWith('.js'));
@@ -51,6 +52,16 @@ const init = async () => {
   });
 
   bot.logger.log(`Cargando ${numberEvents} eventos`);
+
+  const jobs = readdirSync('./jobs').filter((job) => job.endsWith('.js'));
+  let numberJobs = 0;
+  jobs.forEach((job) => {
+    numberJobs += 1;
+    const { expression, run } = require(`./jobs/${job}`);
+    cron.schedule(expression, () => run(bot), { scheduled: true });
+  });
+
+  bot.logger.log(`Cargando ${numberJobs} cron-jobs`);
 
   // Log in the bot
   bot.login(bot.config.discordToken);

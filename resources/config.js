@@ -1,7 +1,10 @@
 module.exports = {
   discordToken: process.env.FRISKAINET_TOKEN,
   prefix: process.env.FRISKAINET_PREFIX,
-  welcomeChannel: process.env.FRISKAINET_WELCOME_CHANNEL,
+  channels: {
+    welcome: process.env.FRISKAINET_WELCOME_CHANNEL,
+    volatile: process.env.FRISKAINET_VOLATILE_CHANNEL,
+  },
   adminRole: process.env.FRISKAINET_ADMIN_ROLE,
   betRatio: process.env.FRISKAINET_BETTING_RATIO,
   voicerssToken: process.env.FRISKAINET_VOICERSS,
