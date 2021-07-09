@@ -73,7 +73,8 @@ module.exports = {
     try {
       bot.logger.cmd(`${message.author.tag} ha ejecutado ${command.name}`);
       command.run(message, args);
-    } catch (error) {
+    }
+    catch (error) {
       bot.logger.error(`Ha habido un error\n ${error}`);
     }
   },

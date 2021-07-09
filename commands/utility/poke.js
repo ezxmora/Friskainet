@@ -25,7 +25,8 @@ module.exports = {
       };
 
       return userMention.send({ embed });
-    } catch (error) {
+    }
+    catch (error) {
       logger.error(`Ha habido un error al intentar pokear a ${userMention.tag}: \n${error.message}`);
       return message.reply('Ha habido un error al pokear al usuario, puede que tenga los DMs deshabilitados');
     }

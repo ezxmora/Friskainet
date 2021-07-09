@@ -4,7 +4,8 @@ module.exports = {
   category: 'economy',
   args: true,
   usage: '<Usuario>',
-  cooldown: 86400, // 86400s are 24h
+  // 86400s are 24h
+  cooldown: 86400,
   run: async (message) => {
     const { database: { User } } = message.client;
     const user = message.mentions.users.first();

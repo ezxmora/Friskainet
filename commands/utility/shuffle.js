@@ -29,7 +29,8 @@ module.exports = {
       for (let j = 0; j < chunkedAndShuffled[i].length; j++) {
         if (chunkedAndShuffled[i].length !== j + 1) {
           aux.value += `${chunkedAndShuffled[i][j]} - `;
-        } else {
+        }
+        else {
           aux.value += `${chunkedAndShuffled[i][j]}\n`;
         }
       }

@@ -6,7 +6,8 @@ const play = async (bot, channelID, urlpath) => {
 
   if (conn) {
     await conn.play(urlpath);
-  } else {
+  }
+  else {
     logger.log('No hay ninguna conexión establecida');
   }
 };
@@ -17,7 +18,8 @@ module.exports = {
     try {
       const path = await synth(`${member.user.username} se ha unido al canal`, `${global.basedir}/resources/voice/join/${member.id}.mp3`);
       play(guild.client, channelID, path);
-    } catch (error) {
+    }
+    catch (error) {
       logger.error(`Ha habido un error al procesar el audio de join de ${member.user.username} (${member.id}.mp3)\n${error}`);
     }
   },
@@ -27,7 +29,8 @@ module.exports = {
     try {
       const path = await synth(`${member.user.username} ha abandonado el canal`, `${global.basedir}/resources/voice/leave/${member.id}.mp3`);
       play(guild.client, channelID, path);
-    } catch (error) {
+    }
+    catch (error) {
       logger.error(`Ha habido un error al procesar el audio leave de ${member.user.username} (${member.id}.mp3)\n${error}`);
     }
   },

@@ -46,12 +46,14 @@ module.exports = {
 
     if (wins === 0) {
       result = 'No has ganado ninguna tirada';
-    } else if (wins === 1) {
+    }
+    else if (wins === 1) {
       // result = `Has ganado una vez\nTokens ganados: ${bet * (config.betRatio * 1)}`;
       result = `Has ganado una vez\nTokens ganados: ${config.betRatio * ((1 ** 2) - 1)}`;
       // bot.db.modTokens(bot, message.author.id, bet);
       // bot.db.modTokens(bot, message.author.id, bet * (bot.config.betRatio * 1));
-    } else {
+    }
+    else {
       result = `Has ganado ${wins} tiradas\nTokens ganados: ${bet * (config.betRatio * wins)}`;
       // bot.db.modTokens(bot, message.author.id, bet);
       // bot.db.modTokens(bot, message.author.id, bet * (bot.config.betRatio * wins));

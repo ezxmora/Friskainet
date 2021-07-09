@@ -15,7 +15,7 @@ module.exports = {
 
     if (!message.channel.nsfw) return message.reply('No puedes usar este comando aquí');
 
-    await fetch('http://api.obutts.ru/butts/0/1/random')
+    return fetch('http://api.obutts.ru/butts/0/1/random')
       .then((res) => res.json())
       .then((json) => {
         const embed = {

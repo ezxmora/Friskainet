@@ -35,15 +35,14 @@ module.exports = {
                           .then((collected) => {
                             const reaction = collected.first();
                             if (reaction.emoji.name === '✔️') {
-                              Rule.create({
-                                title: ruleTitle,
-                                content: ruleContent,
-                              })
-                                .then((rule) => {
-                                  message.channel.send('Se ha añadido la norma a la base de datos');
-                                  logger.db(`${rule.title} ha sido añadido a la base de datos`);
-                                })
-                                .catch((err) => logger.error(err));
+                              try {
+                                Rule.create({ title: ruleTitle, content: ruleContent });
+                                message.channel.send('Se ha añadido la norma a la base de datos');
+                                logger.db(`${ruleTitle} ha sido añadido a la base de datos`);
+                              }
+                              catch (err) {
+                                logger.error(err);
+                              }
                             }
                           })
                           .catch(() => message.channel.send('Has superado el tiempo de espera, vuelve a empezar'));
@@ -52,7 +51,8 @@ module.exports = {
                 })
                 .catch(() => message.channel.send('Has superado el tiempo de espera, vuelve a empezar'));
             });
-        } else {
+        }
+        else {
           message.reply('Una norma con ese título ya existe');
         }
       },
@@ -82,7 +82,8 @@ module.exports = {
                           .catch((err) => logger.error(err));
                       })
                       .catch(() => message.reply('Has superado el tiempo de espera, vuelve a empezar'));
-                  } else {
+                  }
+                  else {
                     message.channel.awaitMessages(filters.sameAuthor, { max: 1, time: 30000, errors: ['time'] })
                       .then((response) => {
                         const newContent = response.first().content;
@@ -98,7 +99,8 @@ module.exports = {
                 })
                 .catch(() => message.reply('Has superado el tiempo de espera, vuelve a empezar'));
             });
-        } else {
+        }
+        else {
           message.reply('No existe una norma con algo así en el título');
         }
       },
