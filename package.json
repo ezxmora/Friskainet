@@ -1,6 +1,6 @@
 {
 	"name": "discord-js-bot",
-	"version": "2.3.5",
+	"version": "2.4.0",
 	"description": "",
 	"main": "app.js",
 	"engines": {
@@ -23,6 +23,7 @@
 		"node-cron": "^3.0.0",
 		"node-fetch": "^2.6.1",
 		"sequelize": "^6.6.2",
+		"slot-machine": "^2.1.0",
 		"urban": "^0.3.2"
 	},
 	"devDependencies": {

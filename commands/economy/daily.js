@@ -6,12 +6,10 @@ module.exports = {
   // 86400 are 24h
   cooldown: 86400,
   run: async (message) => {
-    const { database: { User }, logger } = message.client;
-    const user = await User.findOne({ where: { discordID: message.author.id } });
+    const { logger } = message.client;
+    if (!message.member.info) return message.reply('No se te ha encontrado en la base de datos, contacta con un administrador');
 
-    if (!user) return message.reply('No se te ha encontrado en la base de datos, contacta con un administrador');
-
-    return user.increment('balance', { by: 100 })
+    return message.member.giveTokens(100)
       .then(() => message.reply('Has canjeado tu bonus diario.'))
       .catch((err) => logger.error(err));
   },

@@ -6,10 +6,10 @@ module.exports = {
   permissions: 'ADMINISTRATOR',
   usage: '<Usuario> <Motivo>',
   run: async (message, args) => {
-    const { database: { User, Warn }, logger } = message.client;
-    const user = message.mentions.users.first();
+    const { database: { Warn }, logger } = message.client;
+    const user = message.mentions.members.first();
     const reason = args.slice(1).join(' ');
-    const userExists = await User.findOne({ where: { discordID: user.id } });
+    const userExists = await user.info;
 
     if (!userExists) return message.reply('Ese usuario no existe');
 
@@ -18,7 +18,7 @@ module.exports = {
       reason,
     })
       .then((warn) => {
-        logger.db(`${user.tag} ha recibido un warn, motivo: ${warn.reason}`);
+        logger.db(`${user.user.tag} ha recibido un warn, motivo: ${warn.reason}`);
       })
       .catch((err) => logger.error(err));
   },

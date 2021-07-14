@@ -8,12 +8,10 @@ module.exports = {
     if (message.channel.type === 'dm') return;
 
     // Checks if the user is in the blacklist
-    const user = await bot.database.User.findOne({ where: { discordID: message.author.id } });
-
-    if (user && user.isBlacklisted()) return;
+    if (message.member.info.blacklisted) return;
 
     // It gives away some tokens [1-100].
-    user.increment('balance', { by: Math.floor(Math.random() * 10) + 1 });
+    message.member.giveTokens(Math.floor(Math.random() * 10) + 1);
 
     // Checks that he message has the prefix and it's a valid command.
     if (!message.content.startsWith(bot.config.prefix)) return;

@@ -8,11 +8,11 @@ const logger = require('../libs/logger');
 const bot = new Client({ intents: Intents.ALL });
 
 bot.once('ready', async () => {
-  bot.guilds.cache.map(async (guild) => {
+  bot.guilds.cache.each(async (guild) => {
     const memberList = await guild.members.cache;
 
     if (guild.available) {
-      memberList.forEach((guildMemeber) => {
+      memberList.each((guildMemeber) => {
         if (!guildMemeber.user.bot) {
           User.create({
             discordID: guildMemeber.user.id,

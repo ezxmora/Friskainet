@@ -1,13 +1,16 @@
 process.title = 'Friskainet';
-global.basedir = __dirname; // Shitty trick for getting the main folder ¯\_(ツ)_/¯
+// Shitty trick for getting the main folder ¯\_(ツ)_/¯
+global.basedir = __dirname;
 
 require('dotenv').config();
+require('./classes/GuildMember');
 const { Client, Intents, Collection } = require('discord.js');
 const cron = require('node-cron');
 const { readdirSync } = require('fs');
 
 const bot = new Client({
-  intents: Intents.ALL/* [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] */,
+  /* [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] */
+  intents: Intents.ALL,
   disableMentions: 'everyone',
 });
 
