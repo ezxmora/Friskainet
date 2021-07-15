@@ -58,7 +58,7 @@ module.exports = class Friskainet extends Client {
     jobs.forEach((job) => {
       numberJobs += 1;
       const { expression, run } = require(`../jobs/${job}`);
-      cron.schedule(expression, () => run(bot), { scheduled: true });
+      cron.schedule(expression, () => run(this), { scheduled: true });
     });
 
     logger.log(`Cargando ${numberJobs} cron-jobs`);
