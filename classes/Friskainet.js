@@ -39,29 +39,26 @@ module.exports = class Friskainet extends Client {
 
     // Loading events
     const events = await readdirSync('./events').filter((file) => file.endsWith('.js'));
-    let numberEvents = 0;
 
     events.forEach((event) => {
       const file = require(`../events/${event}`);
-      numberEvents += 1;
       if (event.once) {
         return this.once(file.name, (...args) => file.execute(...args, this));
       }
       return this.on(file.name, (...args) => file.execute(...args, this));
     });
 
-    logger.log(`Cargando ${numberEvents} eventos`);
+    logger.log(`Cargando ${events.length} eventos`);
 
     // Loading cron-jobs
     const jobs = readdirSync('./jobs').filter((job) => job.endsWith('.js'));
-    let numberJobs = 0;
+
     jobs.forEach((job) => {
-      numberJobs += 1;
       const { expression, run } = require(`../jobs/${job}`);
       cron.schedule(expression, () => run(this), { scheduled: true });
     });
 
-    logger.log(`Cargando ${numberJobs} cron-jobs`);
+    logger.log(`Cargando ${jobs.length} cron-jobs`);
 
     super.login(token);
   }

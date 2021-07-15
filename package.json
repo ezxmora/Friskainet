@@ -1,13 +1,13 @@
 {
 	"name": "discord-js-bot",
-	"version": "2.5.0",
+	"version": "2.5.2",
 	"description": "",
 	"main": "app.js",
 	"engines": {
 		"node": ">=12.22.1"
 	},
 	"scripts": {
-		"prestart": "node resources/prestart.js",
+		"config": "node resources/prestart.js",
 		"start": "node app.js"
 	},
 	"author": "ezxmora",
