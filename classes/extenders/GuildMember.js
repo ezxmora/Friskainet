@@ -1,5 +1,5 @@
 const { Structures } = require('discord.js');
-const { User, Warn } = require('../libs/database/index');
+const { User, Warn } = require('../../libs/database/index');
 
 module.exports = Structures.extend('GuildMember', (GuildMember) => class extends GuildMember {
   get info() {
