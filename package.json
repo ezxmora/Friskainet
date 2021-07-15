@@ -21,6 +21,7 @@
 		"moment": "^2.29.1",
 		"node-cron": "^3.0.0",
 		"node-fetch": "^2.6.1",
+		"opusscript": "^0.0.8",
 		"sequelize": "^6.6.2",
 		"slot-machine": "^2.1.0",
 		"urban": "^0.3.2"
