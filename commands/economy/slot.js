@@ -23,7 +23,7 @@ module.exports = {
     return message.reply({
       embed: {
         color: message.client.util.randomColor(),
-        title: 'Resultados tragaperras',
+        title: 'Resultados de la tragaperras',
         thumbnail: {
           url: message.author.avatarURL({ dynamic: true, format: 'png' }),
         },
