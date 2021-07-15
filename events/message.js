@@ -10,6 +10,12 @@ module.exports = {
     // Checks if the user is in the blacklist
     if (message.member.info.blacklisted) return;
 
+    // Reacts to someone trying to @everyone
+    if (message.content.includes('@everyone')) {
+      const reactionEmoji = message.guild.emojis.cache.find((emoji) => emoji.name === 'ping');
+      message.react(reactionEmoji);
+    }
+
     // It gives away some tokens [1-100].
     message.member.giveTokens(Math.floor(Math.random() * 10) + 1);
 
