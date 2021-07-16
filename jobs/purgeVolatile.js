@@ -1,6 +1,6 @@
 module.exports = {
-  name: 'TestEvent',
-  expression: '* 0 4 * * *',
+  name: 'purgeVolatile',
+  expression: '0 0 4 * * *',
   run: async (bot) => {
     const { channels: { volatile } } = bot.config;
     const oldChannel = bot.channels.cache.find((channel) => channel.name === volatile);

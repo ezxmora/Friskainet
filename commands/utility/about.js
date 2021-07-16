@@ -20,7 +20,7 @@ module.exports = {
       fields: [
         { name: '**ID:**', value: user.user.id },
         { name: '**Balance:**', value: userInfo.balance, inline: true },
-        { name: '**Apodo:**', value: user.nickname || user.username, inline: true },
+        { name: '**Apodo:**', value: user.nickname || 'No tiene', inline: true },
         { name: `**Role(s):** - ${roles.length}`, value: roles.join(','), inline: false },
         { name: `**Warn(s):** - ${warns.length || 0}`, value: warns.join(',') || 'Ninguno', inline: false },
         {
