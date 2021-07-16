@@ -1,8 +1,8 @@
 process.title = 'Friskainet';
 // Shitty trick for getting the main folder ¯\_(ツ)_/¯
 global.basedir = __dirname;
-
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 require('./classes/extenders/GuildMember');
 const { Intents } = require('discord.js');
 const Friskainet = require('./classes/Friskainet');
