@@ -16,7 +16,7 @@ module.exports = {
       message.react(reactionEmoji);
     }
 
-    // It gives away some tokens [1-100].
+    // It gives away some tokens [1-10].
     message.member.giveTokens(Math.floor(Math.random() * 10) + 1);
 
     // Checks that he message has the prefix and it's a valid command.
