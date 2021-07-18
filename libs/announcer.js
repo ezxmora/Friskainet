@@ -16,7 +16,7 @@ module.exports = {
   userJoined: async (voiceState) => {
     const { member, channelID, guild } = voiceState;
     try {
-      const path = await synth(`${member.user.username} se ha unido al canal`, `${global.basedir}/resources/voice/join/${member.id}.mp3`);
+      const path = await synth(`${member.user.username} se unió al canal`, `${global.basedir}/resources/voice/join/${member.id}.mp3`);
       play(guild.client, channelID, path);
     }
     catch (error) {
@@ -27,7 +27,7 @@ module.exports = {
   userLeft: async (voiceState) => {
     const { member, channelID, guild } = voiceState;
     try {
-      const path = await synth(`${member.user.username} ha abandonado el canal`, `${global.basedir}/resources/voice/leave/${member.id}.mp3`);
+      const path = await synth(`${member.user.username} abandonó el canal`, `${global.basedir}/resources/voice/leave/${member.id}.mp3`);
       play(guild.client, channelID, path);
     }
     catch (error) {
