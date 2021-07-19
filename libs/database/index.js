@@ -1,4 +1,6 @@
-const { Sequelize, DataTypes, Op } = require('sequelize');
+const {
+  Sequelize, DataTypes, Op, Transaction,
+} = require('sequelize');
 const { database } = require('../../resources/config');
 const logger = require('../logger');
 
@@ -31,7 +33,13 @@ const syncAll = () => {
 };
 
 module.exports = {
-  User, Rule, Experience, Warn, syncAll, Op,
+  User,
+  Rule,
+  Experience,
+  Warn,
+  syncAll,
+  Op,
+  sequelize,
 };
 
 //  DROP DATABASE friskainet; CREATE DATABASE friskainet; USE friskainet;
