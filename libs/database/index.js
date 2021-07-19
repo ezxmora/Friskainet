@@ -1,5 +1,5 @@
 const {
-  Sequelize, DataTypes, Op, Transaction,
+  Sequelize, DataTypes, Op,
 } = require('sequelize');
 const { database } = require('../../resources/config');
 const logger = require('../logger');
