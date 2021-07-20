@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'message',
+  name: 'messageCreate',
   once: false,
   execute: async (message, bot) => {
     if (message.author.bot || message.author.system) return;
@@ -8,7 +8,7 @@ module.exports = {
     if (message.channel.type === 'dm') return;
 
     // Checks if the user is in the blacklist
-    if (message.member.info.blacklisted) return;
+    // if (message.member.info.blacklisted) return;
 
     // Reacts to someone trying to @everyone
     if (message.content.includes('@everyone')) {
@@ -17,7 +17,7 @@ module.exports = {
     }
 
     // It gives away some tokens [1-10].
-    message.member.giveTokens(Math.floor(Math.random() * 10) + 1);
+    // message.member.giveTokens(Math.floor(Math.random() * 10) + 1);
 
     // Checks that he message has the prefix and it's a valid command.
     if (!message.content.startsWith(bot.config.prefix)) return;
