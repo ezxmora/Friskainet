@@ -33,6 +33,7 @@ const init = async () => {
     mkdirSync('./resources/voice');
     mkdirSync('./resources/voice/join');
     mkdirSync('./resources/voice/leave');
+    mkdirSync('./resources/voice/say');
   }
 
   await syncAll();

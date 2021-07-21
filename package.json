@@ -16,7 +16,7 @@
 		"@discordjs/opus": "^0.5.3",
 		"@discordjs/voice": "^0.5.4",
 		"chalk": "^4.1.1",
-		"discord.js": "^13.0.0-dev.1e90be8.1626825831",
+		"discord.js": "^13.0.0-dev.fe6cc0c.1625227356",
 		"dotenv": "^10.0.0",
 		"libsodium-wrappers": "^0.7.9",
 		"moment": "^2.29.1",

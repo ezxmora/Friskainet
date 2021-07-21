@@ -5,17 +5,17 @@ module.exports = {
   args: false,
   cooldown: 0,
   run: async (message) => {
-    const bot = message.client;
-    const userVoiceChan = message.member.voice.channel;
-    const botVoiceConns = bot.voice.connections;
-    if (!userVoiceChan) return message.reply({ content: 'No estás en un canal de voz', allowedMentions: { repliedUser: false } });
+    const { logger, voiceLib } = message.client;
+    const voiceChannel = message.member?.voice.channel;
+    if (!voiceChannel) return message.reply({ content: 'No estás en un canal de voz' });
+
+    const connection = voiceLib.connection(voiceChannel.guild.id);
 
     // Bot and user are in the same channel
-    const voiceChannel = botVoiceConns.find((current) => current.channel.id === userVoiceChan.id);
-    if (voiceChannel) {
-      voiceChannel.disconnect();
-      return bot.logger.log(`He abandonado el canal de voz ${voiceChannel.channel.name} (${voiceChannel.channel.id})`);
+    if (connection && voiceChannel.id === connection?.joinConfig.channelId) {
+      connection.destroy();
+      return logger.log(`He abandonado el canal de voz ${voiceChannel.name} (${voiceChannel.id})`);
     }
-    return message.reply({ content: 'No estamos en el mismo canal de voz <:Sadge:824018458139295775>' });
+    return message.reply('No estamos en el mismo canal de voz <:Sadge:824018458139295775>');
   },
 };

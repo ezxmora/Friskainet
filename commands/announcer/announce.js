@@ -5,11 +5,19 @@ module.exports = {
   args: false,
   cooldown: 0,
   run: async (message) => {
-    const { logger } = message.client;
-    if (!message.member.voice.channel) return message.reply('Tienes que estar en un canal de voz para invocarme');
+    const { logger, voiceLib, voicePlayer } = message.client;
+    const voiceChannel = message.member?.voice.channel;
 
-    return message.member.voice.channel.join()
-      .then((connection) => logger.log(`Me he unido al canal de voz ${connection.channel.name} (${connection.channel.id})`))
-      .catch((error) => logger.error(`Ha habido un error al conectar a un canal de voz: ${error}`));
+    if (!voiceChannel) return message.reply('Tienes que estar en un canal de voz para invocarme');
+
+    try {
+      const connection = await voiceLib.connectToChannel(voiceChannel);
+
+      return connection.subscribe(voicePlayer);
+    }
+    catch (error) {
+      console.log(error);
+      logger.error(`Ha habido un error al conectar a un canal de voz: ${error}`);
+    }
   },
 };

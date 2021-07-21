@@ -1,10 +1,12 @@
 const { Client, Collection } = require('discord.js');
 const { readdirSync } = require('fs');
 const cron = require('node-cron');
+const { createAudioPlayer } = require('@discordjs/voice');
 const config = require('../resources/config');
 const database = require('../libs/database');
 const logger = require('../libs/logger');
 const util = require('../libs/utils');
+const voice = require('../libs/voice');
 
 module.exports = class Friskainet extends Client {
   constructor(options = {}) {
@@ -16,6 +18,8 @@ module.exports = class Friskainet extends Client {
     this.database = database;
     this.logger = logger;
     this.util = util;
+    this.voiceLib = voice;
+    this.voicePlayer = createAudioPlayer();
   }
 
   async login(token) {
