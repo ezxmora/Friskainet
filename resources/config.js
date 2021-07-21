@@ -23,4 +23,5 @@ module.exports = {
   greetings: [
     'Sup {{user}}?',
   ],
+  randomizerRoute: process.env.FRISKAINET_RANDOMIZER_ROUTE
 };

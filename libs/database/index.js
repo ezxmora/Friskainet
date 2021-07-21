@@ -14,6 +14,7 @@ const User = require('./models/User')(sequelize, DataTypes);
 const Rule = require('./models/Rule')(sequelize, DataTypes);
 const Experience = require('./models/Experience')(sequelize, DataTypes);
 const Warn = require('./models/Warn')(sequelize, DataTypes);
+const PokemonRom = require('./models/PokemonRom')(sequelize, DataTypes);
 
 // Relations
 User.hasOne(Experience, { as: 'fk_userId_xp', foreignKey: 'userId' });
@@ -37,6 +38,7 @@ module.exports = {
   Rule,
   Experience,
   Warn,
+  PokemonRom,
   syncAll,
   Op,
   sequelize,
