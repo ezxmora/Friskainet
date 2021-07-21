@@ -14,10 +14,11 @@
 	"license": "MIT",
 	"dependencies": {
 		"@discordjs/opus": "^0.5.3",
-		"canvas": "^2.8.0",
+		"@discordjs/voice": "^0.5.4",
 		"chalk": "^4.1.1",
-		"discord.js": "^13.0.0-dev.77784ac.1626696170",
+		"discord.js": "^13.0.0-dev.1e90be8.1626825831",
 		"dotenv": "^10.0.0",
+		"libsodium-wrappers": "^0.7.9",
 		"moment": "^2.29.1",
 		"node-cron": "^3.0.0",
 		"node-fetch": "^2.6.1",
