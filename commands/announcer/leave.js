@@ -16,6 +16,6 @@ module.exports = {
       connection.destroy();
       return logger.log(`He abandonado el canal de voz ${voiceChannel.name} (${voiceChannel.id})`);
     }
-    return message.reply('No estamos en el mismo canal de voz <:Sadge:824018458139295775>');
+    return message.reply({ content: 'No estamos en el mismo canal de voz <:Sadge:824018458139295775>' });
   },
 };

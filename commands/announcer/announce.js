@@ -8,7 +8,7 @@ module.exports = {
     const { logger, voiceLib, voicePlayer } = message.client;
     const voiceChannel = message.member?.voice.channel;
 
-    if (!voiceChannel) return message.reply('Tienes que estar en un canal de voz para invocarme');
+    if (!voiceChannel) return message.reply({ content: 'Tienes que estar en un canal de voz para invocarme' });
 
     try {
       const connection = await voiceLib.connectToChannel(voiceChannel);

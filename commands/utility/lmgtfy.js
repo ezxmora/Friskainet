@@ -7,6 +7,6 @@ module.exports = {
   run: async (message, args) => {
     const query = args.join('+');
     const url = `https://lmgt.com/?q=${query}`;
-    message.reply(url);
+    message.reply({ content: `${url}` });
   },
 };

@@ -9,9 +9,9 @@ module.exports = {
     const userMention = message.mentions.members.first();
     const clientMessage = args.slice(1).join(' ');
 
-    if (!userMention) return message.reply('Necesitas mencionar a un usuario');
+    if (!userMention) return message.reply({ content: 'Necesitas mencionar a un usuario' });
 
-    if (clientMessage.length > 2001) return message.reply('El mensaje es demasiado largo, máximo 2000 caracteres');
+    if (clientMessage.length > 2001) return message.reply({ content: 'El mensaje es demasiado largo, máximo 2000 caracteres' });
 
     try {
       const embed = {
@@ -24,11 +24,11 @@ module.exports = {
         },
       };
 
-      return userMention.send({ embed });
+      return userMention.send({ embeds: [embed] });
     }
     catch (error) {
       logger.error(`Ha habido un error al intentar pokear a ${userMention.tag}: \n${error.message}`);
-      return message.reply('Ha habido un error al pokear al usuario, puede que tenga los DMs deshabilitados');
+      return message.reply({ content: 'Ha habido un error al pokear al usuario, puede que tenga los DMs deshabilitados' });
     }
   },
 };

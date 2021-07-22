@@ -32,18 +32,18 @@ module.exports = {
         footer: { text: `Prueba ${config.prefix}help [nombre del comando] para obtener información específica del mismo` },
       };
 
-      return message.author.send({ embed })
-        .then(() => message.reply('Te he mandado un DM con todos mis comandos'))
+      return message.author.send({ embeds: [embed] })
+        .then(() => message.reply({ content: 'Te he mandado un DM con todos mis comandos' }))
         .catch((error) => {
           logger.error(`No le he podido mandar un DM a ${message.author.tag}.\n${error}`);
-          return message.reply('Parece que no te puedo mandar un DM. ¿Los tienes desactivados?');
+          return message.reply({ content: 'Parece que no te puedo mandar un DM. ¿Los tienes desactivados?' });
         });
     }
 
     const name = args[0].toLowerCase();
     const command = commands.get(name);
 
-    if (!command) return message.reply('Ese no es un comando válido');
+    if (!command) return message.reply({ content: 'Ese no es un comando válido' });
 
     const embed = {
       color: util.randomColor(),
@@ -54,6 +54,6 @@ module.exports = {
         { name: 'Cooldown', value: `${command.cooldown || 3} segundo(s)` },
       ],
     };
-    return message.channel.send({ embed, split: true });
+    return message.channel.send({ embeds: [embed] });
   },
 };

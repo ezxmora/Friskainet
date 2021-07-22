@@ -11,15 +11,10 @@ module.exports = {
     const reason = args.slice(1).join(' ');
     const userExists = await user.info;
 
-    if (!userExists) return message.reply('Ese usuario no existe');
+    if (!userExists) return message.reply({ content: 'Ese usuario no existe' });
 
-    return Warn.create({
-      userId: userExists.userId,
-      reason,
-    })
-      .then((warn) => {
-        logger.db(`${user.user.tag} ha recibido un warn, motivo: ${warn.reason}`);
-      })
+    return Warn.create({ userId: userExists.userId, reason })
+      .then((warn) => logger.db(`${user.user.tag} ha recibido un warn, motivo: ${warn.reason}`))
       .catch((err) => logger.error(err));
   },
 };

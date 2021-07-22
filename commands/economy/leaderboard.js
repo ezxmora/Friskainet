@@ -23,6 +23,6 @@ module.exports = {
       }
     });
 
-    message.reply({ embed });
+    message.reply({ embeds: [embed] });
   },
 };

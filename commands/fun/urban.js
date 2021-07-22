@@ -12,7 +12,7 @@ module.exports = {
     const query = args.slice(0).join(' ');
 
     await urban(query).first((response) => {
-      if (!response) return message.reply('No he encontrado nada');
+      if (!response) return message.reply({ content: 'No he encontrado nada' });
 
       const description = response.definition;
 
@@ -32,7 +32,7 @@ module.exports = {
           name: response.author,
         },
       };
-      return message.reply({ embed });
+      return message.reply({ embeds: [embed] });
     });
   },
 };

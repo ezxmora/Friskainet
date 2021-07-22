@@ -10,10 +10,10 @@ module.exports = {
     const { util } = message.client;
 
     if (!message.member.roles.cache.some((r) => r.name === 'NSFW')) {
-      return message.reply('No tienes permisos para usar este comando');
+      return message.reply({ content: 'No tienes permisos para usar este comando' });
     }
 
-    if (!message.channel.nsfw) return message.reply('No puedes usar este comando aquí');
+    if (!message.channel.nsfw) return message.reply({ content: 'No puedes usar este comando aquí' });
 
     return fetch('http://api.oboobs.ru/boobs/0/1/random')
       .then((res) => res.json())
@@ -25,7 +25,7 @@ module.exports = {
             url: `http://media.oboobs.ru/${json[0].preview}`,
           },
         };
-        message.channel.send({ embed });
+        message.channel.send({ embeds: [embed] });
       });
   },
 };

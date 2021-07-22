@@ -20,13 +20,13 @@ module.exports = {
     const rulesOptions = {
       add: () => {
         if (!ruleExists) {
-          message.reply('OK, ese será el título de la norma, ahora introduce el contenido:')
+          message.reply({ content: 'OK, ese será el título de la norma, ahora introduce el contenido:' })
             .then(() => {
               message.channel.awaitMessages(filters.sameAuthor, { max: 1, time: 30000, errors: ['time'] })
                 .then((response) => {
                   const ruleContent = response.first().content;
                   if (ruleContent) {
-                    message.reply({ embed: { color: randomColor(), title: '¿Está todo correcto?', fields: [{ name: ruleTitle, value: ruleContent }] } })
+                    message.reply({ embeds: [{ color: randomColor(), title: '¿Está todo correcto?', fields: [{ name: ruleTitle, value: ruleContent }] }] })
                       .then(async (m) => {
                         await m.react('✔️');
                         await m.react('❌');
@@ -37,7 +37,7 @@ module.exports = {
                             if (reaction.emoji.name === '✔️') {
                               try {
                                 Rule.create({ title: ruleTitle, content: ruleContent });
-                                message.channel.send('Se ha añadido la norma a la base de datos');
+                                message.channel.send({ content: 'Se ha añadido la norma a la base de datos' });
                                 logger.db(`${ruleTitle} ha sido añadido a la base de datos`);
                               }
                               catch (err) {
@@ -45,15 +45,15 @@ module.exports = {
                               }
                             }
                           })
-                          .catch(() => message.channel.send('Has superado el tiempo de espera, vuelve a empezar'));
+                          .catch(() => message.channel.send({ content: 'Has superado el tiempo de espera, vuelve a empezar' }));
                       });
                   }
                 })
-                .catch(() => message.channel.send('Has superado el tiempo de espera, vuelve a empezar'));
+                .catch(() => message.channel.send({ content: 'Has superado el tiempo de espera, vuelve a empezar' }));
             });
         }
         else {
-          message.reply('Una norma con ese título ya existe');
+          message.reply({ content: 'Una norma con ese título ya existe' });
         }
       },
 

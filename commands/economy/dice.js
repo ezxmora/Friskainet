@@ -16,13 +16,10 @@ module.exports = {
     const user = await database.User.findOne({ where: { discordID: message.author.id } });
     const tokens = user.balance;
 
-    if (Number.isNaN(dices) || (dices <= 0 && dices > 7)) return message.reply('Tienes que introducir un número de dados válido [1-6]');
-
-    if (Number.isNaN(bet)) return message.reply('La cantidad de la apuesta tiene que ser un número');
-
-    if (Number.isNaN(guessNum) || (guessNum <= 0 && guessNum > 11)) return message.reply('El número de dados tiene que ser un número [1-10]');
-
-    if (Number.parseInt(tokens, 10) < bet * Number.parseInt(dices, 10)) return message.reply(`No tienes suficientes tokens para hacer la apuesta. Tienes ${tokens} tokens`);
+    if (Number.isNaN(dices) || (dices <= 0 && dices > 7)) return message.reply({ content: 'Tienes que introducir un número de dados válido [1-6]' });
+    if (Number.isNaN(bet)) return message.reply({ content: 'La cantidad de la apuesta tiene que ser un número' });
+    if (Number.isNaN(guessNum) || (guessNum <= 0 && guessNum > 11)) return message.reply({ content: 'El número de dados tiene que ser un número [1-10]' });
+    if (Number.parseInt(tokens, 10) < bet * Number.parseInt(dices, 10)) return message.reply({ content: `No tienes suficientes tokens para hacer la apuesta. Tienes ${tokens} tokens` });
 
     // await user.decrement('balance', { by: bet * Number.parseInt(dices, 10) });
 
@@ -71,6 +68,6 @@ module.exports = {
       },
     };
 
-    return message.channel.send({ embed });
+    return message.channel.send({ embeds: [embed] });
   },
 };

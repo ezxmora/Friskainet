@@ -7,10 +7,10 @@ module.exports = {
   cooldown: 86400,
   run: async (message) => {
     const { logger } = message.client;
-    if (!message.member.info) return message.reply('No se te ha encontrado en la base de datos, contacta con un administrador');
+    if (!message.member.info) return message.reply({ content: 'No se te ha encontrado en la base de datos, contacta con un administrador' });
 
     return message.member.giveTokens(100)
-      .then(() => message.reply('Has canjeado tu bonus diario.'))
+      .then(() => message.reply({ content: 'Has canjeado tu bonus diario.' }))
       .catch((err) => logger.error(err));
   },
 };

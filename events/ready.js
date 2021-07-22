@@ -4,7 +4,7 @@ module.exports = {
   execute(bot) {
     bot.logger.log(`${bot.user.tag} funcionando y sirviendo a ${bot.users.cache.size} usuarios`);
     bot.user.setPresence({
-      activity: { name: bot.config.presence.name, type: bot.config.presence.type },
+      activities: [{ name: bot.config.presence.name, type: bot.config.presence.type }],
       status: bot.config.presence.status,
     });
   },

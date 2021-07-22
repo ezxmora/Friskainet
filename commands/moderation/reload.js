@@ -12,7 +12,7 @@ module.exports = {
     const commandName = args[0].toLowerCase();
     const command = message.client.commands.get(commandName);
 
-    if (!command) return message.reply(`No existe un comando con el nombre \`${commandName}\``);
+    if (!command) return message.reply({ content: `No existe un comando con el nombre \`${commandName}\`` });
 
     const commandFolder = readdirSync('./commands');
     const folderName = commandFolder.find((folder) => readdirSync(`./commands/${folder}`).includes(`${command.name}.js`));
@@ -23,7 +23,7 @@ module.exports = {
     try {
       const newCommand = require(`../${folderName}/${command.name}.js`);
       message.client.commands.set(newCommand.name, newCommand);
-      return message.reply(`El comando \`${newCommand.name}\` fue recargado`);
+      return message.reply({ content: `El comando \`${newCommand.name}\` fue recargado` });
     }
     catch (error) {
       return logger.error(`Ha habido un error recargando el comando:\n${error.message}`);

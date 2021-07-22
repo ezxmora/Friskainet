@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'messageCreate',
+  name: 'message',
   once: false,
   execute: async (message, bot) => {
     if (message.author.bot || message.author.system) return;
@@ -35,7 +35,7 @@ module.exports = {
       const authorPerms = message.channel.permissionsFor(message.author);
 
       if (!authorPerms || !authorPerms.has(command.permissions)) {
-        return message.reply('No tienes permisos para ejecutar este comando');
+        return message.reply({ content: 'No tienes permisos para ejecutar este comando' });
       }
     }
 
@@ -56,7 +56,7 @@ module.exports = {
 
       if (now < expirationTime) {
         const timeLeft = (expirationTime - now) / 1000;
-        return message.reply(`Por favor expera ${timeLeft.toFixed(1)} segundos(s) antes de usar el comando \`${command.name}\`.`);
+        return message.reply({ content: `Por favor expera ${timeLeft.toFixed(1)} segundos(s) antes de usar el comando \`${command.name}\`.` });
       }
     }
 
@@ -71,7 +71,7 @@ module.exports = {
       if (command.usage) {
         reply += `\nEl uso correcto sería: \`${bot.config.prefix}${command.name} ${command.usage}\``;
       }
-      return message.channel.send(reply);
+      return message.channel.send({ content: reply });
     }
 
     try {

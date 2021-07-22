@@ -7,10 +7,18 @@ module.exports = {
   cooldown: 30,
   run: async (message, args) => {
     const { util: { chunk, shuffle, randomColor } } = message.client;
-    const numberGroups = !Number.isNaN(args[0]) ? Number.parseInt(args[0], 10) : message.reply('El primer parámetro tiene que ser un número');
+    let numberGroups = 0;
+
+    if (!Number.isNaN(args[0])) {
+      numberGroups = Number.parseInt(args[0], 10);
+    }
+    else {
+      return message.reply({ content: 'El primer parámetro tiene que ser un número' });
+    }
+
     const itemsToShuffle = await args.slice(1).join(' ').split(',').map((element) => element.trim());
 
-    if (numberGroups > itemsToShuffle.length) return message.reply('El número de grupos no puede ser mayor que el de items');
+    if (numberGroups > itemsToShuffle.length) return message.reply({ content: 'El número de grupos no puede ser mayor que el de items' });
 
     const chunkedAndShuffled = await chunk(shuffle(itemsToShuffle), numberGroups);
 
@@ -37,6 +45,6 @@ module.exports = {
       formattedGroups.fields.push(aux);
     }
 
-    return message.reply({ embed: formattedGroups });
+    return message.reply({ embeds: [formattedGroups] });
   },
 };
