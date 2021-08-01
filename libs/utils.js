@@ -1,3 +1,7 @@
+const ytdl = require('youtube-dl-exec');
+const { MessageAttachment } = require('discord.js');
+const { unlinkSync } = require('fs');
+
 module.exports = {
   replaceAll: (string, mapObject) => {
     const re = new RegExp(Object.keys(mapObject).join('|'), 'gi');
@@ -30,5 +34,20 @@ module.exports = {
     }
 
     return chunks;
+  },
+
+  downloadVideo: (url, message) => {
+    const filePath = `./resources/tmp/${url.split('/')[url.split('/').length - 1]}.mp4`;
+    ytdl(url, { noWarnings: true, output: filePath })
+      .then(async () => {
+        const file = new MessageAttachment(filePath);
+        await message.reply({ files: [file] });
+        unlinkSync(filePath);
+      })
+      .catch((err) => {
+        if (!err.message.includes('There\'s no video')) {
+          message.reply({ content: `Ha habido un error al intentar descargar el vídeo:\n\`\`\`${err} \`\`\`` });
+        }
+      });
   },
 };
