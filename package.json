@@ -7,7 +7,7 @@
 		"node": ">=12.22.1"
 	},
 	"scripts": {
-		"config": "node resources/prestart.js",
+		"deploy": "node resources/deploy.js",
 		"start": "node app.js"
 	},
 	"author": "ezxmora",
