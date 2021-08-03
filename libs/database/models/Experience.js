@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => sequelize.define('Experience', {
   },
   currentLevel: {
     type: DataTypes.INTEGER,
-    defaultValue: 0,
+    defaultValue: 1,
   },
 }, {
   timestamps: false,

@@ -16,18 +16,19 @@ const Experience = require('./models/Experience')(sequelize, DataTypes);
 const Warn = require('./models/Warn')(sequelize, DataTypes);
 
 // Relations
-User.hasOne(Experience, { as: 'fk_userId_xp', foreignKey: 'userId' });
-User.hasMany(Warn, { as: 'fk_userId_warn', foreignKey: 'userId' });
+User.hasOne(Experience, { as: 'level', foreignKey: 'userId' });
+User.hasMany(Warn, { as: 'warn', foreignKey: 'userId' });
 
 // Methods
 User.prototype.isBlacklisted = () => this.blacklisted;
 
 // Drops all the tables and creates them again.
-const syncAll = () => {
+const syncAll = (callback) => {
   sequelize.sync({ force: true })
     .then(() => {
       logger.db('Se ha reseteado la base de datos');
-      process.exit(0);
+
+      if (typeof callback === 'function') callback();
     })
     .catch((err) => logger.error(err));
 };
@@ -41,5 +42,3 @@ module.exports = {
   Op,
   sequelize,
 };
-
-//  DROP DATABASE friskainet; CREATE DATABASE friskainet; USE friskainet;
