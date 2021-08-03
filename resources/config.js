@@ -1,6 +1,5 @@
 module.exports = {
   discordToken: process.env.FRISKAINET_TOKEN,
-  prefix: process.env.FRISKAINET_PREFIX,
   channels: {
     welcome: process.env.FRISKAINET_WELCOME_CHANNEL,
     volatile: process.env.FRISKAINET_VOLATILE_CHANNEL,

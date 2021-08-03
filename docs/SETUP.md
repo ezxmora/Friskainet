@@ -20,7 +20,7 @@ You are going to need ffmpeg, Node.js and an SQL database (Postgres, MySQL, Mari
    * `npm install --save tedious` - Microsoft SQL Server
 3. Rename `.env.example` into `.env` and tweak the options to your likings
 4. Access to your [DBMS](https://en.wikipedia.org/wiki/Database#Database_management_system) and create a new database with whatever name you gave it in `.env - (FRISKAINET_DATABASE_NAME)`
-5. Run `npm run config` to setup the database and folders
+5. Run `npm run deploy` to setup the database and folders
 6. Run `npm run start` or `node app`
 
 ## Extra
