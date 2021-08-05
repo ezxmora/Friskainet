@@ -14,5 +14,5 @@ module.exports = (sequelize, DataTypes) => sequelize.define('Rule', {
     allowNull: false,
   },
 }, {
-  timestamps: true,
+  timestamps: false,
 });

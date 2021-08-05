@@ -12,12 +12,11 @@ const sequelize = new Sequelize(database.databaseName, database.username, databa
 
 const User = require('./models/User')(sequelize, DataTypes);
 const Rule = require('./models/Rule')(sequelize, DataTypes);
-const Experience = require('./models/Experience')(sequelize, DataTypes);
 const Warn = require('./models/Warn')(sequelize, DataTypes);
 
 // Relations
-User.hasOne(Experience, { as: 'level', foreignKey: 'userId' });
-User.hasMany(Warn, { as: 'warn', foreignKey: 'userId' });
+User.hasMany(Warn, { foreignKey: 'userId' });
+Warn.belongsTo(User, { foreignKey: 'userId' });
 
 // Methods
 User.prototype.isBlacklisted = () => this.blacklisted;
@@ -36,7 +35,6 @@ const syncAll = (callback) => {
 module.exports = {
   User,
   Rule,
-  Experience,
   Warn,
   syncAll,
   Op,

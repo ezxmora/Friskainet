@@ -1,17 +1,21 @@
 module.exports = (sequelize, DataTypes) => sequelize.define('User', {
   userId: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
-    allowNull: false,
-  },
-  discordID: {
     type: DataTypes.STRING,
-    unique: true,
+    primaryKey: true,
   },
   balance: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.INTEGER.UNSIGNED,
     defaultValue: 100,
+    allowNull: false,
+  },
+  experience: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    defaultValue: 0,
+    allowNull: false,
+  },
+  level: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    defaultValue: 1,
     allowNull: false,
   },
   blacklisted: {
@@ -22,5 +26,5 @@ module.exports = (sequelize, DataTypes) => sequelize.define('User', {
     type: DataTypes.DATEONLY,
   },
 }, {
-  timestamps: true,
+  timestamps: false,
 });

@@ -4,6 +4,10 @@ module.exports = {
   execute: async (interaction, bot) => {
     if (!interaction.isCommand()) return;
 
+    // Checks if the user is in the blacklist
+    const userInfo = await bot.userInfo(interaction.member.id);
+    if (userInfo.blacklisted) return;
+
     const cmd = interaction.commandName;
 
     if (!bot.commands.has(cmd)) return;
@@ -43,6 +47,15 @@ module.exports = {
     // Adding the cooldown
     timestamps.set(interaction.member.id, now);
     setTimeout(() => timestamps.delete(interaction.member.id), cooldownAmount);
+
+    // It gives away some tokens [1-10].
+    bot.giveTokens(interaction.member.id, bot.util.getRandomInt(1, 10));
+
+    // It gives away some experience [100-200]
+    const levelUp = await bot.giveExperience(interaction.member.id, bot.util.getRandomInt(100, 200));
+    if (levelUp.level > userInfo.level) {
+      interaction.channel.send({ content: `🎉 ${interaction.author} ha subido al nivel ${levelUp.level} 🎉` });
+    }
 
     try {
       bot.logger.cmd(`${interaction.member.user.tag} ha ejecutado ${cmd}`);

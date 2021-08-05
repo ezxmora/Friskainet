@@ -5,7 +5,6 @@ module.exports = {
     const { config: { channels, greetings } } = bot;
     if (!member.user.bot) {
       const channel = await member.guild.channels.cache.find((c) => c.name === channels.welcome);
-
       const greet = greetings[Math.floor(Math.random() * greetings.length)];
 
       channel.send({ content: greet.replace('{{user}}', member) });
