@@ -15,6 +15,7 @@ module.exports = {
     // Bot and user are in the same channel
     if (connection && voiceChannel.id === connection?.joinConfig.channelId) {
       connection.destroy();
+      interaction.reply({ content: `He abandonado el canal de voz **${voiceChannel.name}**` });
       return logger.log(`He abandonado el canal de voz ${voiceChannel.name} (${voiceChannel.id})`);
     }
     return interaction.reply({ content: 'No estamos en el mismo canal de voz <:Sadge:824018458139295775>' });
