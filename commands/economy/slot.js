@@ -4,37 +4,44 @@ const { slotSymbols } = require('../../resources/slots-symbols');
 module.exports = {
   name: 'slot',
   description: 'Hace una tirada en la tragaperras',
+  options: [{
+    name: 'lineas',
+    type: 'INTEGER',
+    description: 'Cantidas de líneas para tirar en la tragaperras',
+    required: true,
+    choices: [
+      { name: '3', value: 3 },
+      { name: '5', value: 5 },
+      { name: '7', value: 7 },
+      { name: '9', value: 9 },
+    ],
+  },
+  {
+    name: 'apuesta',
+    type: 'INTEGER',
+    description: 'Cantidad a apostar',
+    required: true,
+  }],
   category: 'economy',
-  args: true,
-  usage: '<N. líneas [3-9] impar>',
   cooldown: 0,
-  run: async (message, args) => {
-    let lines = 0;
+  run: async (interaction) => {
+    const lines = interaction.options.getInteger('lineas');
 
-    if (!Number.isNaN(args[0])) {
-      lines = Number.parseInt(args[0], 10);
-    }
-    else {
-      return message.reply({ content: 'El valor introducido no es un número' });
-    }
-
-    if (lines % 2 === 0 || lines < 3 || lines > 9) return message.reply({ content: 'El valor introducido no es un número válido, tiene que ser impar y entre 3 y 9 `(3, 5, 7 y 9)`' });
-
-    const userInfo = await message.member.info;
+    const userInfo = await interaction.client.userInfo(interaction.member.id);
 
     if (userInfo.balance > (lines * 10)) {
-      await message.member.takeTokens(10 * lines);
+      await interaction.client.removeTokens(interaction.member.id, 10 * lines);
       const machine = new SlotMachine(lines, slotSymbols);
       const results = await machine.play();
       const wins = await results.lines.filter((line) => line.isWon);
       const points = await results.lines.reduce((acc, prize) => acc + prize.points, 0);
-      await message.member.giveTokens(points);
+      await interaction.client.giveTokens(interaction.member.id, points);
 
       const embed = {
-        color: message.client.util.randomColor(),
+        color: interaction.client.util.randomColor(),
         title: 'Resultados de la tragaperras',
         thumbnail: {
-          url: message.author.avatarURL({ dynamic: true, format: 'png' }),
+          url: interaction.user.avatarURL({ dynamic: true, format: 'png' }),
         },
         description: results.visualize(),
         footer: {
@@ -42,8 +49,8 @@ module.exports = {
         },
       };
 
-      return message.reply({ embeds: [embed] });
+      return interaction.reply({ embeds: [embed] });
     }
-    return message.reply({ content: `No tienes suficiente dinero para apostar, tienes ${userInfo.balance} tokens` });
+    return interaction.reply({ content: `No tienes suficiente dinero para apostar, tienes ${userInfo.balance} tokens` });
   },
 };

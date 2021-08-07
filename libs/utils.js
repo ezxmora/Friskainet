@@ -48,6 +48,10 @@ module.exports = {
         if (!err.message.includes('There\'s no video')) {
           message.reply({ content: `Ha habido un error al intentar descargar el vídeo:\n\`\`\`${err} \`\`\`` });
         }
+
+        if (err.message.includes('403')) {
+          message.reply({ cotnent: 'Parece que el vídeo ha sido borrado :(' });
+        }
       });
   },
 

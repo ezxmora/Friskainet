@@ -15,7 +15,7 @@ module.exports = class Friskainet extends Client {
   constructor(options = {}) {
     super(options);
 
-    this.commands = new Loader(this, 'commands');
+    this.commands = new Loader(this, './commands');
     this.commandCooldowns = new Collection();
     this.config = config;
     this.database = database;
@@ -28,20 +28,26 @@ module.exports = class Friskainet extends Client {
   }
 
   async login(token) {
-    await Promise.all([
+    const loaders = await Promise.all([
       this.commands.loadFiles(),
       this.events.loadFiles(),
       this.jobs.loadFiles(),
       super.login(token),
     ]);
+
+    this.logger.log(`Se han cargado ${loaders[0].length} comandos`);
+    this.logger.log(`Se han cargado ${loaders[1].length} eventos`);
+    this.logger.log(`Se han cargado ${loaders[2].length} cron-jobs`);
   }
 
   getAllUsers() {
     return this.config.guilds.reduce(async (i, guild) => {
       const currentGuild = await this.guilds.fetch(guild);
-      const guildMembers = await currentGuild.members.fetch();
-      return guildMembers.filter((member) => !member.user.bot);
-    }, 0);
+      if (currentGuild.available) {
+        const guildMembers = await currentGuild.members.fetch({ force: true });
+        return guildMembers.filter((member) => !member.user.bot);
+      }
+    }, []);
   }
 
   async userInfo(userId) {

@@ -5,7 +5,6 @@ module.exports = class EventLoader extends FileLoader {
     super(client, 'events');
   }
 
-
   set(eventName, file) {
     super.set(eventName, file);
 

@@ -1,31 +1,43 @@
 module.exports = {
   name: 'transfer',
   description: 'Envía tokens a otro usuario',
+  options: [{
+    name: 'usuario',
+    type: 'USER',
+    description: 'Usuario al que transferir monedas',
+    required: true,
+  },
+  {
+    name: 'cantidad',
+    type: 'INTEGER',
+    description: 'Cantidad de tokens a transferir',
+    required: true,
+  }],
   category: 'economy',
-  usage: '<Usuario> <Cantidad>',
-  args: true,
   cooldown: 10,
-  run: async (message, args) => {
-    const { database: { sequelize } } = message.client;
-    const user = message.mentions.members.first();
-    let quantity = 0;
+  run: async (interaction) => {
+    const { database: { sequelize }, logger } = interaction.client;
+    const user = interaction.options.getUser('usuario');
+    const quantity = interaction.options.getInteger('cantidad');
 
-    if (!Number.isNaN(args.slice(1)) && Number.parseInt(args.slice(1), 10) > 0) {
-      quantity = Number.parseInt(args.slice(1), 10);
+    if (user.bot) return interaction.reply({ content: 'No puedes mandarle tokens a un bot' });
+    if (quantity <= 0) return interaction.reply({ content: 'La cantidad a enviar no puede ser negativa' });
+    if (user.id === interaction.member.id) return interaction.reply({ content: 'No te puedes transferir tokens a tí mism@' });
+
+    try {
+      await sequelize.transaction(async (t) => {
+        const sender = await interaction.client.userInfo(interaction.member.id);
+        const receiver = await interaction.client.userInfo(user.id);
+
+        await sender.decrement('balance', { by: quantity }, { transaction: t });
+        await receiver.increment('balance', { by: quantity }, { transaction: t });
+      });
+
+      return interaction.reply({ content: `Le transferiste ${quantity} tokens a ${user}` });
     }
-    else {
-      return message.reply({ content: 'El número introducido no es válido o no es un número positivo' });
+    catch (error) {
+      logger.db(`Haciendo rollback de la transferencia entre ${user.tag} y ${interaction.member.user.tag}... ${error}`);
+      return interaction.reply({ content: 'Ha habido un error al transferir tus tokens' });
     }
-
-    if (!user) return message.reply({ content: 'Necesitas mencionar a un usuario' });
-    if (!user.info) return message.reply({ content: 'Ese no es un usuario válido' });
-    if (user.id === message.author.id) return message.reply({ content: 'No te puedes transferir tokens a tí mism@' });
-
-    const result = await sequelize.transaction(async (t) => {
-      await message.member.takeTokens(quantity);
-      await user.giveTokens(quantity);
-    });
-
-    return message.reply({ content: `Le transferiste ${quantity} tokens a ${user}` });
   },
 };

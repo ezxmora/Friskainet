@@ -32,7 +32,18 @@ module.exports = class FileLoader extends Collection {
     this.clear();
     await this.walkFiles();
 
-    return this.size;
+    return this.map((v) => {
+      const obj = {};
+
+      obj.name = v.name;
+      obj.description = v.description ?? null;
+
+      if (Array.isArray(v.options)) {
+        obj.options = v.options;
+      }
+
+      return obj;
+    });
   }
 
   async walkFiles() {
