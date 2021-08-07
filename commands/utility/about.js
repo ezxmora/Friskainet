@@ -3,26 +3,31 @@ const moment = require('moment');
 module.exports = {
   name: 'about',
   description: 'Obtiene toda la información de un usuario',
+  options: [{
+    name: 'usuario',
+    type: 'USER',
+    description: 'Usuario del que obtener información',
+    required: false,
+  }],
   category: 'utility',
-  usage: '[Usuario]',
-  run: async (message) => {
-    moment.locale('es');
-    const user = message.mentions.members.first() || message.member;
-    const userInfo = await user.info;
+  run: async (interaction) => {
+    const user = interaction.options.getMember('usuario') || interaction.member;
+    if (user.bot) return interaction.reply({ content: 'No puedes usar este comando con bots' });
+
+    const userInfo = await interaction.client.userInfo(user.id);
     const roles = await user.roles.cache.map((role) => `<@&${role.id}>`);
     roles.pop();
-    const warns = await user.warns.then((warnings) => warnings.map((warning) => `\`${warning.reason}\``));
 
     const embed = {
-      color: message.client.util.randomColor(),
+      color: interaction.client.util.randomColor(),
       title: user.user.tag,
       thumbnail: { url: user.user.avatarURL({ dynamic: true, format: 'png' }) },
       fields: [
-        { name: '**ID:**', value: user.user.id },
-        { name: '**Balance:**', value: userInfo.balance, inline: true },
+        { name: '**ID:**', value: user.id },
+        { name: '**Balance:**', value: `${userInfo.balance} tokens`, inline: true },
         { name: '**Apodo:**', value: user.nickname || 'No tiene', inline: true },
         { name: `**Role(s):** - ${roles.length}`, value: roles.join(','), inline: false },
-        { name: `**Warn(s):** - ${warns.length || 0}`, value: warns.join(',') || 'Ninguno', inline: false },
+        { name: `**Warn(s):** - ${userInfo.Warns.length || 0}`, value: userInfo.Warns.join(',') || 'Ninguno', inline: false },
         {
           name: '**Fecha de ingreso:**',
           value: `${moment(user.joinedTimestamp).format('D MMM YYYY, HH:m:ss')} - ${moment(user.joinedTimestamp).fromNow()}`,
@@ -35,6 +40,6 @@ module.exports = {
         },
       ],
     };
-    message.channel.send({ embeds: [embed] });
+    return interaction.reply({ embeds: [embed] });
   },
 };

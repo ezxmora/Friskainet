@@ -1,12 +1,17 @@
 module.exports = {
   name: 'lmgtfy',
   description: 'Crea una búsqueda en Let Me Google That',
+  options: [{
+    name: 'busqueda',
+    type: 'STRING',
+    description: 'Término a buscar',
+    required: true,
+  }],
   category: 'utility',
-  args: true,
   usage: '<Término a buscar en Google>',
-  run: async (message, args) => {
-    const query = args.join('+');
+  run: async (interaction) => {
+    const query = interaction.options.getString('busqueda').split(' ').join('+');
     const url = `https://lmgt.com/?q=${query}`;
-    message.reply({ content: `${url}` });
+    return interaction.reply({ content: `${url}` });
   },
 };
