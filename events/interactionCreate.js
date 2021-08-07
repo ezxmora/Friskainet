@@ -54,7 +54,7 @@ module.exports = {
     // It gives away some experience [100-200]
     const levelUp = await bot.giveExperience(interaction.member.id, bot.util.getRandomInt(100, 200));
     if (levelUp.level > userInfo.level) {
-      interaction.channel.send({ content: `🎉 ${interaction.user.tag} ha subido al nivel ${levelUp.level} 🎉` });
+      interaction.channel.send({ content: `🎉 ${interaction.user} ha subido al nivel ${levelUp.level} 🎉` });
     }
 
     try {

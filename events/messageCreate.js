@@ -32,8 +32,9 @@ module.exports = {
 
     // It gives away some experience [100-200]
     const levelUp = await bot.giveExperience(message.author.id, bot.util.getRandomInt(100, 200));
+
     if (levelUp.level > userInfo.level) {
-      message.channel.send({ content: `🎉 ${message.author.tag} ha subido al nivel ${levelUp.level} 🎉` });
+      message.channel.send({ content: `🎉 ${message.author} ha subido al nivel ${levelUp.level} 🎉` });
     }
   },
 };
