@@ -54,11 +54,11 @@ module.exports = {
     // It gives away some experience [100-200]
     const levelUp = await bot.giveExperience(interaction.member.id, bot.util.getRandomInt(100, 200));
     if (levelUp.level > userInfo.level) {
-      interaction.channel.send({ content: `🎉 ${interaction.author} ha subido al nivel ${levelUp.level} 🎉` });
+      interaction.channel.send({ content: `🎉 ${interaction.user.tag} ha subido al nivel ${levelUp.level} 🎉` });
     }
 
     try {
-      bot.logger.cmd(`${interaction.member.user.tag} ha ejecutado ${cmd}`);
+      bot.logger.cmd(`${interaction.user.tag} ha ejecutado ${cmd}`);
       command.run(interaction);
     }
     catch (error) {

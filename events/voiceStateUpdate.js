@@ -10,9 +10,9 @@ module.exports = {
 
     // Ignores all the mute, deaf, stream, etc events
     if (oldState.channelId !== newState.channelId) {
-      const botChannelId = await channelId(oldState.guild.id || newState.guild.id);
+      const botChannelId = await channelId(oldState?.guild.id || newState.guild.id);
 
-      if (!oldState.channelId || botChannelId === newState.channelId) {
+      if (oldState.channelId === undefined && newState.channelId !== undefined) {
         userJoined(newState, voicePlayer);
       }
       else if (botChannelId === oldState.channelId) {
