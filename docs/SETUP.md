@@ -11,8 +11,6 @@
 ## Before doing anything
 You are going to need ffmpeg, Node.js and an SQL database (Postgres, MySQL, MariaDB or Microsoft SQL Server) installed in your system (or in a Docker container).
 
-Also for the welcome message, you may need to install some dependencies depending your OS, check [here](https://github.com/Automattic/node-canvas#Compiling) for more info.
-
 ## Local setup
 1. Run `git clone https://github.com/ezxmora/Friskainet.git && cd Friskainet` to clone and access the repo
 2. Run `npm install --production` for installing all dependencies, you might need to run __one__ of the following commands based in your choice:
@@ -22,7 +20,7 @@ Also for the welcome message, you may need to install some dependencies dependin
    * `npm install --save tedious` - Microsoft SQL Server
 3. Rename `.env.example` into `.env` and tweak the options to your likings
 4. Access to your [DBMS](https://en.wikipedia.org/wiki/Database#Database_management_system) and create a new database with whatever name you gave it in `.env - (FRISKAINET_DATABASE_NAME)`
-5. Run `npm run config` to setup the database and folders
+5. Run `npm run deploy` to setup the database and folders
 6. Run `npm run start` or `node app`
 
 ## Extra

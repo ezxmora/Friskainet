@@ -1,6 +1,5 @@
 module.exports = {
   discordToken: process.env.FRISKAINET_TOKEN,
-  prefix: process.env.FRISKAINET_PREFIX,
   channels: {
     welcome: process.env.FRISKAINET_WELCOME_CHANNEL,
     volatile: process.env.FRISKAINET_VOLATILE_CHANNEL,
@@ -15,10 +14,14 @@ module.exports = {
     host: process.env.FRISKAINET_DATABASE_HOST,
     dialect: process.env.FRISKAINET_DATABASE_DIALECT.toLowerCase(),
   },
+  guilds: ['LIST OF YOUR GUILD IDs'],
   presence: {
-    name: process.env.FRISKAINET_PRESENCE_NAME,
-    type: process.env.FRISKAINET_PRESENCE_TYPE.toUpperCase(),
-    status: process.env.FRISKAINET_PRESENCE_STATUS.toLowerCase(),
+    // Anything you want here
+    name: 'Hey, I\'m running Friskainet',
+    // Check https://discord.js.org/#/docs/main/stable/typedef/ActivityType
+    type: 'CUSTOM',
+    // Check https://discord.js.org/#/docs/main/stable/typedef/ClientPresenceStatus
+    status: 'online',
   },
   greetings: [
     'Sup {{user}}?',

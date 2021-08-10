@@ -1,33 +1,36 @@
 {
 	"name": "discord-js-bot",
-	"version": "2.6.2",
+	"version": "3.0.0",
 	"description": "",
 	"main": "app.js",
 	"engines": {
 		"node": ">=12.22.1"
 	},
 	"scripts": {
-		"config": "node resources/prestart.js",
+		"deploy": "node deploy.js",
 		"start": "node app.js"
 	},
 	"author": "ezxmora",
 	"license": "MIT",
 	"dependencies": {
 		"@discordjs/opus": "^0.5.3",
-		"canvas": "^2.8.0",
-		"chalk": "^4.1.1",
-		"discord.js": "^12.5.3",
+		"@discordjs/voice": "^0.5.5",
+		"chalk": "^4.1.2",
+		"discord.js": "13.0.0",
 		"dotenv": "^10.0.0",
+		"fast-glob": "^3.2.7",
+		"libsodium-wrappers": "^0.7.9",
 		"moment": "^2.29.1",
 		"node-cron": "^3.0.0",
 		"node-fetch": "^2.6.1",
 		"opusscript": "^0.0.8",
-		"sequelize": "^6.6.2",
+		"sequelize": "^6.6.5",
 		"slot-machine": "^2.1.0",
-		"urban": "^0.3.2"
+		"urban": "^0.3.2",
+		"youtube-dl-exec": "^1.2.4"
 	},
 	"devDependencies": {
-		"eslint": "^7.29.0",
+		"eslint": "^7.32.0",
 		"eslint-config-airbnb-base": "^14.2.1",
 		"eslint-plugin-import": "^2.23.4",
 		"eslint-plugin-node": "^11.1.0",

@@ -2,14 +2,20 @@ module.exports = {
   name: 'announce',
   description: 'Invoca al bot a la sala de voz y hace que empiece a anunciar quien entra y sale de la sala',
   category: 'announcer',
-  args: false,
   cooldown: 0,
-  run: async (message) => {
-    const { logger } = message.client;
-    if (!message.member.voice.channel) return message.reply('Tienes que estar en un canal de voz para invocarme');
+  run: async (interaction) => {
+    const { logger, voiceLib, voicePlayer } = interaction.client;
+    const voiceChannel = interaction.member?.voice.channel;
 
-    return message.member.voice.channel.join()
-      .then((connection) => logger.log(`Me he unido al canal de voz ${connection.channel.name} (${connection.channel.id})`))
-      .catch((error) => logger.error(`Ha habido un error al conectar a un canal de voz: ${error}`));
+    if (!voiceChannel) return interaction.reply({ content: 'Tienes que estar en un canal de voz para invocarme' });
+
+    try {
+      const connection = await voiceLib.connectToChannel(voiceChannel);
+      connection.subscribe(voicePlayer);
+      return interaction.reply({ content: 'Me estoy uniendo a tu canal de voz...' });
+    }
+    catch (error) {
+      logger.error(`Ha habido un error al conectar a un canal de voz: ${error}`);
+    }
   },
 };

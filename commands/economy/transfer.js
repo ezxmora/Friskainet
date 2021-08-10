@@ -1,26 +1,43 @@
 module.exports = {
   name: 'transfer',
   description: 'Envía tokens a otro usuario',
+  options: [{
+    name: 'usuario',
+    type: 'USER',
+    description: 'Usuario al que transferir monedas',
+    required: true,
+  },
+  {
+    name: 'cantidad',
+    type: 'INTEGER',
+    description: 'Cantidad de tokens a transferir',
+    required: true,
+  }],
   category: 'economy',
-  usage: '<Usuario> <Cantidad>',
-  args: true,
   cooldown: 10,
-  run: async (message, args) => {
-    const { database: { sequelize } } = message.client;
-    const user = message.mentions.members.first();
-    const quantity = !Number.isNaN(args.slice(1)) && Number.parseInt(args.slice(1), 10) > 0 ? Number.parseInt(args.slice(1), 10) : message.reply('El número introducido no es válido o no es un número positivo');
+  run: async (interaction) => {
+    const { database: { sequelize }, logger } = interaction.client;
+    const user = interaction.options.getUser('usuario');
+    const quantity = interaction.options.getInteger('cantidad');
 
-    if (!user) return message.reply('Necesitas mencionar a un usuario');
+    if (user.bot) return interaction.reply({ content: 'No puedes mandarle tokens a un bot' });
+    if (quantity <= 0) return interaction.reply({ content: 'La cantidad a enviar no puede ser negativa' });
+    if (user.id === interaction.member.id) return interaction.reply({ content: 'No te puedes transferir tokens a tí mism@' });
 
-    if (!user.info) return message.reply('Ese no es un usuario válido');
+    try {
+      await sequelize.transaction(async (t) => {
+        const sender = await interaction.client.userInfo(interaction.member.id);
+        const receiver = await interaction.client.userInfo(user.id);
 
-    if (user.id === message.author.id) return message.reply('No te puedes transferir tokens a tí mism@');
+        await sender.decrement('balance', { by: quantity }, { transaction: t });
+        await receiver.increment('balance', { by: quantity }, { transaction: t });
+      });
 
-    const result = await sequelize.transaction(async (t) => {
-      await message.member.takeTokens(quantity);
-      await user.giveTokens(quantity);
-    });
-
-    return message.reply(`Le transferiste ${quantity} tokens a ${user}`);
+      return interaction.reply({ content: `Le transferiste ${quantity} tokens a ${user}` });
+    }
+    catch (error) {
+      logger.db(`Haciendo rollback de la transferencia entre ${user.tag} y ${interaction.member.user.tag}... ${error}`);
+      return interaction.reply({ content: 'Ha habido un error al transferir tus tokens' });
+    }
   },
 };

@@ -1,20 +1,22 @@
-const { userJoined, userLeft } = require('../libs/announcer');
-
-const inChannel = (bot, channelID) => bot.voice.connections.some((con) => con.channel.id === channelID);
+const { userJoined, userLeft } = require('../libs/tts');
 
 module.exports = {
   name: 'voiceStateUpdate',
   once: false,
   execute: async (oldState, newState, bot) => {
+    const { voicePlayer, voiceLib: { channelId } } = bot;
     // Ignore all bots
     if (newState.member.user.bot || oldState.member.user.bot) return;
 
-    if (oldState.channelID !== newState.channelID) {
-      if (inChannel(bot, newState.channelID)) {
-        userJoined(newState);
+    // Ignores all the mute, deaf, stream, etc events
+    if (oldState.channelId !== newState.channelId) {
+      const botChannelId = await channelId(oldState?.guild.id || newState.guild.id);
+
+      if (oldState.channelId === undefined && newState.channelId !== undefined) {
+        userJoined(newState, voicePlayer);
       }
-      else if (inChannel(bot, oldState.channelID)) {
-        userLeft(oldState);
+      else if (botChannelId === oldState.channelId) {
+        userLeft(oldState, voicePlayer);
       }
     }
   },

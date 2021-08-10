@@ -1,6 +1,7 @@
 node_modules/
-blacklist.json
 .env
 package-lock.json
+
+# Multimedia
 *.mp3
-normas.js
+*.mp4

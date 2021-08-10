@@ -44,10 +44,5 @@ Check [SETUP.md](docs/SETUP.md)
 -   ~~C~~R~~UD~~ Rules
 -   Gambling <sub><sup>(Actually working on it)</sup></sub>
 
-## Authors
--   **Erik Zamora** - _Everything_ - [ezxmora](https://github.com/ezxmora)
-
-See also the list of [contributors](https://github.com/ezxmora/Friskainet/contributors) who participated in this project.
-
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details

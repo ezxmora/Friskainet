@@ -2,11 +2,10 @@ module.exports = {
   name: 'leaderboard',
   description: 'Muestra el top 3 de las personas más ricas del servidor',
   category: 'economy',
-  args: false,
   cooldown: 15,
-  run: async (message) => {
+  run: async (interaction) => {
     const medals = ['🥇', '🥈', '🥉'];
-    const { database, util } = message.client;
+    const { database, util } = interaction.client;
     const topUsers = await database.User.findAll({ limit: 3, order: [['balance', 'DESC']] });
     const embed = {
       color: util.randomColor(),
@@ -15,7 +14,7 @@ module.exports = {
     };
 
     await topUsers.forEach(async (user, iterator) => {
-      const userData = message.guild.members.cache.get(user.discordID);
+      const userData = await interaction.guild.members.fetch(user.userId);
       embed.fields.push({ name: `${medals[iterator]} ${userData.user.tag}`, value: `${user.balance} tokens` });
 
       if (iterator === 0) {
@@ -23,6 +22,6 @@ module.exports = {
       }
     });
 
-    message.reply({ embed });
+    interaction.reply({ embeds: [embed] });
   },
 };

@@ -3,16 +3,20 @@ const urban = require('urban');
 module.exports = {
   name: 'urban',
   description: 'Hace una búsqueda en UrbanDictionary',
+  options: [{
+    name: 'termino',
+    type: 'STRING',
+    description: 'Término a buscar',
+    required: true,
+  }],
   category: 'fun',
-  args: true,
-  usage: '<Término a buscar>',
   cooldown: 5,
-  run: async (message, args) => {
-    const { util: { randomColor } } = message.client;
-    const query = args.slice(0).join(' ');
+  run: async (interaction) => {
+    const { util: { randomColor } } = interaction.client;
+    const query = interaction.options.getString('termino');
 
     await urban(query).first((response) => {
-      if (!response) return message.reply('No he encontrado nada');
+      if (!response) return interaction.reply({ content: 'No he encontrado nada' });
 
       const description = response.definition;
 
@@ -26,13 +30,13 @@ module.exports = {
           text: `Likes: ${response.thumbs_up}`,
         },
         thumbnail: {
-          url: message.client.user.avatarURL({ dynamic: true, format: 'png' }),
+          url: interaction.client.user.avatarURL({ dynamic: true, format: 'png' }),
         },
         author: {
           name: response.author,
         },
       };
-      return message.reply({ embed });
+      return interaction.reply({ embeds: [embed] });
     });
   },
 };

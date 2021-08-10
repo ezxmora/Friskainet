@@ -1,30 +1,53 @@
 module.exports = {
   name: 'dice',
   description: 'Tira unos dados',
+  options: [{
+    name: 'dados',
+    type: 'INTEGER',
+    description: 'Número de dados',
+    required: true,
+    choices: Array(10).fill({ name: '', value: '' }).map((item, iterator) => {
+      const obj = { ...item };
+      obj.name = `${iterator + 1}`;
+      obj.value = iterator + 1;
+      return obj;
+    }),
+  },
+  {
+    name: 'apuesta',
+    type: 'INTEGER',
+    description: 'Cantidad a apostar',
+    required: true,
+  },
+  {
+    name: 'cara',
+    type: 'INTEGER',
+    description: 'Cara del dado a adivinar',
+    required: true,
+    choices: Array(6).fill({ name: '', value: '' }).map((item, iterator) => {
+      const obj = { ...item };
+      obj.name = `${iterator + 1}`;
+      obj.value = iterator + 1;
+      return obj;
+    }),
+  }],
   category: 'economy',
-  args: true,
-  usage: '<N. dados [1-10]> <Apuesta> <N. adivinar [1-6]>',
   cooldown: 5,
-  run: async (message, args) => {
-    const { util, config, database } = message.client;
-    const dices = args[0];
-    const bet = args[1];
-    const guessNum = args[2];
+  run: async (interaction) => {
+    const { util, config } = interaction.client;
+    const dices = interaction.options.getInteger('dados');
+    const bet = interaction.options.getInteger('apuesta');
+    const guessNum = interaction.options.getInteger('cara');
     let wins = 0;
     let output = '';
     let result = '';
-    const user = await database.User.findOne({ where: { discordID: message.author.id } });
+    const user = await interaction.client.userInfo(interaction.member.id);
     const tokens = user.balance;
+    console.log(user.balance, bet * dices);
 
-    if (Number.isNaN(dices) || (dices <= 0 && dices > 7)) return message.reply('Tienes que introducir un número de dados válido [1-6]');
+    if (tokens < bet * dices) return interaction.reply({ content: `No tienes suficientes tokens para hacer la apuesta. Tienes ${tokens} tokens` });
 
-    if (Number.isNaN(bet)) return message.reply('La cantidad de la apuesta tiene que ser un número');
-
-    if (Number.isNaN(guessNum) || (guessNum <= 0 && guessNum > 11)) return message.reply('El número de dados tiene que ser un número [1-10]');
-
-    if (Number.parseInt(tokens, 10) < bet * Number.parseInt(dices, 10)) return message.reply(`No tienes suficientes tokens para hacer la apuesta. Tienes ${tokens} tokens`);
-
-    // await user.decrement('balance', { by: bet * Number.parseInt(dices, 10) });
+    // await interaction.client.removeTokens(interaction.member.id, bet * dices);
 
     for (let i = 1; i <= dices; i++) {
       const dicesTable = {
@@ -67,10 +90,10 @@ module.exports = {
         text: result,
       },
       thumbnail: {
-        url: message.author.avatarURL({ dynamic: true, format: 'png' }),
+        url: interaction.user.avatarURL({ dynamic: true, format: 'png' }),
       },
     };
 
-    return message.channel.send({ embed });
+    return interaction.reply({ embeds: [embed] });
   },
 };

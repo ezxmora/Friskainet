@@ -1,16 +1,29 @@
 module.exports = {
   name: 'shuffle',
   description: 'Baraja y divide en grupos una serie de elementos',
+  options: [{
+    name: 'grupos',
+    type: 'INTEGER',
+    description: 'Número de grupos',
+    required: true,
+  },
+  {
+    name: 'items',
+    type: 'STRING',
+    description: 'Items a barajar separados por comas',
+    required: true,
+  }],
   category: 'utility',
-  args: true,
-  usage: '<N. de grupos> <Items separados por comas>',
   cooldown: 30,
-  run: async (message, args) => {
-    const { util: { chunk, shuffle, randomColor } } = message.client;
-    const numberGroups = !Number.isNaN(args[0]) ? Number.parseInt(args[0], 10) : message.reply('El primer parámetro tiene que ser un número');
-    const itemsToShuffle = await args.slice(1).join(' ').split(',').map((element) => element.trim());
+  run: async (interaction) => {
+    const { util: { chunk, shuffle, randomColor } } = interaction.client;
+    const numberGroups = interaction.options.getInteger('grupos');
+    const items = interaction.options.getString('items');
 
-    if (numberGroups > itemsToShuffle.length) return message.reply('El número de grupos no puede ser mayor que el de items');
+    if (numberGroups <= 0) return interaction.reply({ content: 'Tienes que introducir un número positivo' });
+
+    const itemsToShuffle = await items.split(',').map((element) => element.trim());
+    if (numberGroups > itemsToShuffle.length) return interaction.reply({ content: 'El número de grupos no puede ser mayor que el de items' });
 
     const chunkedAndShuffled = await chunk(shuffle(itemsToShuffle), numberGroups);
 
@@ -18,7 +31,7 @@ module.exports = {
       title: 'Shuffle',
       color: randomColor(),
       thumbnail: {
-        url: message.client.user.avatarURL({ dynamic: true, format: 'png' }),
+        url: interaction.client.user.avatarURL({ dynamic: true, format: 'png' }),
       },
       fields: [],
     };
@@ -37,6 +50,6 @@ module.exports = {
       formattedGroups.fields.push(aux);
     }
 
-    return message.reply({ embed: formattedGroups });
+    return interaction.reply({ embeds: [formattedGroups] });
   },
 };
