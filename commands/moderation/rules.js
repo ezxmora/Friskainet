@@ -1,142 +1,137 @@
+const { MessageActionRow, MessageButton, Permissions } = require('discord.js');
+
 module.exports = {
   name: 'rules',
-  description: '',
+  description: 'Comando para administrar las reglas del servidor',
   category: 'moderation',
-  args: true,
   usage: '<Opción [add, remove, update]> <Título de la norma>',
-  permissions: 'ADMINISTRATOR',
+  permissions: [Permissions.FLAGS.ADMINISTRATOR],
   cooldown: 5,
-  run: async (message, args) => {
-    const { database: { Rule, Op }, util: { randomColor }, logger } = message.client;
-    const option = args[0].toLowerCase();
-    const ruleTitle = args.slice(1).join(' ');
-    const ruleExists = await Rule.findOne({ where: { title: { [Op.like]: `%${ruleTitle}%` } } });
+  run: async (interaction) => {
+    const { database: { Rule }, util, logger } = interaction.client;
+    const rules = await Rule.findAll();
+
+    const ruleList = {
+      color: util.randomColor(),
+      fields: rules.length > 0 ? rules.map((rule) => ({ name: `${rule.ruleId} | ${rule.title}`, value: rule.content })) : [{ name: 'No hay ninguna regla', value: '¯\\_(ツ)_/¯' }],
+      thumbnail: {
+        url: interaction.client.user.avatarURL({ dynamic: true, format: 'png' }),
+      },
+    };
 
     const filters = {
-      sameAuthor: (msg) => msg.author.id === message.author.id,
-      emojiYesNo: (reaction, user) => ['✔️', '❌'].includes(reaction.emoji.name) && user.id === message.author.id,
+      sameAuthor: (m) => m.author.id === interaction.user.id,
+      emojiYesNo: (reaction, user) => ['✔️', '❌'].includes(reaction.emoji.name) && user.id === interaction.user.id,
     };
+
+    const mainOptions = new MessageActionRow()
+      .addComponents(new MessageButton().setCustomId('add').setLabel('Añadir').setStyle('PRIMARY'))
+      .addComponents(new MessageButton().setCustomId('update').setLabel('Modificar').setStyle('SECONDARY'))
+      .addComponents(new MessageButton().setCustomId('remove').setLabel('Borrar').setStyle('DANGER'));
+
+    await interaction.reply({ content: 'Elige una de las opciones:', components: [mainOptions] });
+
+    const mainMenuCollector = interaction.channel.createMessageComponentCollector(
+      { filter: (msg) => msg.user.id === interaction.user.id },
+    );
 
     const rulesOptions = {
-      add: () => {
-        if (!ruleExists) {
-          message.reply({ content: 'OK, ese será el título de la norma, ahora introduce el contenido:' })
-            .then(() => {
-              message.channel.awaitMessages(filters.sameAuthor, { max: 1, time: 30000, errors: ['time'] })
-                .then((response) => {
-                  const ruleContent = response.first().content;
-                  if (ruleContent) {
-                    message.reply({ embeds: [{ color: randomColor(), title: '¿Está todo correcto?', fields: [{ name: ruleTitle, value: ruleContent }] }] })
-                      .then(async (m) => {
-                        await m.react('✔️');
-                        await m.react('❌');
-
-                        m.awaitReactions(filters.emojiYesNo, { max: 1, time: 30000, errors: ['time'] })
-                          .then((collected) => {
-                            const reaction = collected.first();
-                            if (reaction.emoji.name === '✔️') {
-                              try {
-                                Rule.create({ title: ruleTitle, content: ruleContent });
-                                message.channel.send({ content: 'Se ha añadido la norma a la base de datos' });
-                                logger.db(`${ruleTitle} ha sido añadido a la base de datos`);
-                              }
-                              catch (err) {
-                                logger.error(err);
-                              }
-                            }
-                          })
-                          .catch(() => message.channel.send({ content: 'Has superado el tiempo de espera, vuelve a empezar' }));
-                      });
-                  }
+      add: (inter) => {
+        inter.update({
+          content: 'Se va a crear una nueva norma, responde a este mensaje con el título y el contenido separados por este limitador `///`.\nActualmente existen estas normas:',
+          embeds: [ruleList],
+          components: [],
+        })
+          .then(() => {
+            interaction.channel.awaitMessages({ filter: filters.sameAuthor, max: 1 })
+              .then((collected) => {
+                const userMessageParsed = collected.first().content.split('///');
+                Rule.create({
+                  title: userMessageParsed[0].trim(),
+                  content: userMessageParsed[1].trim(),
                 })
-                .catch(() => message.channel.send({ content: 'Has superado el tiempo de espera, vuelve a empezar' }));
-            });
-        }
-        else {
-          message.reply({ content: 'Una norma con ese título ya existe' });
-        }
+                  .then((createdRule) => {
+                    logger.db(`Se ha creado una norma con la ID ${createdRule.ruleId}`);
+                    return interaction.channel.send({ content: `Se ha creado una norma con la ID \`${createdRule.ruleId}\`` });
+                  })
+                  .catch((err) => logger.error(`Ha habido un error al intentar crear la norma\n${err}`));
+              });
+          });
       },
 
-      update: () => {
-        if (ruleExists) {
-          const { title, content } = ruleExists;
+      update: (inter) => {
+        inter.update({
+          content: 'Se va a modificar una norma, responde a este mensaje con la ID, título y contenido de la norma separador por este limitador `///`.\nActualmente existen estas normas:',
+          embeds: [ruleList],
+          components: [],
+        })
+          .then(() => {
+            interaction.channel.awaitMessages({ filter: filters.sameAuthor, max: 1 })
+              .then(async (collected) => {
+                const userMessageParsed = collected.first().content.split('///');
 
-          message.reply({ embed: { color: randomColor(), description: 'Utiliza ✔️ para modificar el título y ❌ para modificar la descripción', fields: [{ name: title, value: content }] } })
-            .then(async (m) => {
-              await m.react('✔️');
-              await m.react('❌');
+                Rule.findOne({ where: { ruleId: userMessageParsed[0].trim() } })
+                  .then((rule) => {
+                    if (rule) {
+                      const updatedRule = {};
+                      if (userMessageParsed.length >= 2) {
+                        if (userMessageParsed[1]) updatedRule.title = userMessageParsed[1].trim();
+                        if (userMessageParsed[2]) updatedRule.content = userMessageParsed[2].trim();
 
-              m.awaitReactions(filters.emojiYesNo, { max: 1, time: 30000, errors: ['time'] })
-                .then((collected) => {
-                  const reaction = collected.first();
-
-                  if (reaction.emoji.name === '✔️') {
-                    message.channel.awaitMessages(filters.sameAuthor, { max: 1, time: 30000, errors: ['time'] })
-                      .then((response) => {
-                        const newTitle = response.first().content;
-                        ruleExists.update({ title: newTitle })
-                          .then((result) => {
-                            logger.db(`Se ha modificado una norma (${result.title})`);
-                            message.reply(`La norma con el título \`${title}\` ahora es \`${result.title}\``);
+                        rule.update(updatedRule, { where: rule.ruleId })
+                          .then(() => {
+                            logger.db(`Se ha actualizado la norma ${rule.ruleId}\``);
+                            return interaction.channel.send({ content: `Se ha actualizado la norma \`${rule.ruleId}\`` });
                           })
-                          .catch((err) => logger.error(err));
-                      })
-                      .catch(() => message.reply('Has superado el tiempo de espera, vuelve a empezar'));
-                  }
-                  else {
-                    message.channel.awaitMessages(filters.sameAuthor, { max: 1, time: 30000, errors: ['time'] })
-                      .then((response) => {
-                        const newContent = response.first().content;
-                        ruleExists.update({ content: newContent })
-                          .then((result) => {
-                            logger.db(`Se ha modificado una norma (${result.content})`);
-                            message.reply(`La norma con el contenido \`${content}\` ahora es \`${result.content}\``);
-                          })
-                          .catch((err) => logger.error(err));
-                      })
-                      .catch(() => message.reply('Has superado el tiempo de espera, vuelve a empezar'));
-                  }
-                })
-                .catch(() => message.reply('Has superado el tiempo de espera, vuelve a empezar'));
-            });
-        }
-        else {
-          message.reply('No existe una norma con algo así en el título');
-        }
+                          .catch((err) => {
+                            logger.error(`Ha habido un error al intentar actualizar la norma:\n${err}`);
+                            return interaction.channel.send({ content: 'Ha habido un error al intentar actualizar la norma.' });
+                          });
+                      }
+                      return interaction.channel.send({ content: 'Faltan argumentos para poder modificar la norma.' });
+                    }
+                    return interaction.channel.send({ content: `No existe ninguna norma con la ID \`${userMessageParsed[0].trim()}\`, vuelve a intentarlo.` });
+                  });
+              });
+          });
       },
 
-      remove: () => {
-        if (ruleExists) {
-          const { title, content } = ruleExists;
+      remove: (inter) => {
+        inter.update({
+          content: 'Se va a borrar una norma, responde a este mensaje con la ID de la misma.\nActualmente existen estas normas:',
+          embeds: [ruleList],
+          components: [],
+        })
+          .then(() => {
+            interaction.channel.awaitMessages({ filter: filters.sameAuthor, max: 1 })
+              .then(async (collected) => {
+                const userMessageParsed = collected.first().content;
 
-          message.reply({ embed: { color: randomColor(), title: '¿Deseas borrar esta norma?', fields: [{ name: title, value: content }] } })
-            .then(async (m) => {
-              await m.react('✔️');
-              await m.react('❌');
-
-              m.awaitReactions(filters.emojiYesNo, { max: 1, time: 30000, errors: ['time'] })
-                .then((collected) => {
-                  const reaction = collected.first();
-
-                  if (reaction.emoji.name === '✔️') {
-                    ruleExists.destroy()
-                      .then((result) => {
-                        message.reply('La norma se ha borrado correctamente');
-                        logger.db(`Se ha borrado una norma (${result.title})`);
-                      })
-                      .catch((err) => logger.error(err));
-                  }
-                })
-                .catch(() => message.reply('Has superado el tiempo de espera, vuelve a empezar'));
-            });
-        }
+                Rule.findOne({ where: { ruleId: userMessageParsed.trim() } })
+                  .then((rule) => {
+                    if (rule) {
+                      rule.destroy()
+                        .then(() => {
+                          logger.db(`La norma con ID ${rule.ruleId} ha sido borrada.`);
+                          return interaction.channel.send({ content: `La norma con ID \`${rule.ruleId}\` ha sido borrada.` });
+                        })
+                        .catch((err) => {
+                          logger.error(`Ha habido un error al intentar borrar la norma:\n${err}`);
+                          return interaction.channel.send({ content: 'Ha habido un error al intentar borrar la norma.' });
+                        });
+                    }
+                    return interaction.channel.send({ content: 'No se ha encontrado una norma con esa ID' });
+                  });
+              });
+          });
       },
     };
 
-    if (option.match(/add|update|remove/g)) {
-      return rulesOptions[option]();
-    }
-
-    return message.reply('El primer argumento no es una opción válida');
+    mainMenuCollector.on('collect', (inter) => {
+      if (inter.customId.match(/add|update|remove/g)) {
+        return rulesOptions[inter.customId](inter);
+      }
+      return interaction.reply({ content: 'No sé cómo lo habrás hecho, pero has seleccionado una opción que no existe' });
+    });
   },
 };

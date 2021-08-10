@@ -1,6 +1,4 @@
-const {
-  Sequelize, DataTypes, Op,
-} = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 const { database } = require('../../resources/config');
 const logger = require('../logger');
 
@@ -37,6 +35,5 @@ module.exports = {
   Rule,
   Warn,
   syncAll,
-  Op,
   sequelize,
 };

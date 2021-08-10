@@ -28,10 +28,10 @@ module.exports = {
     };
 
     return interaction.member.send({ embeds: [embed] })
-      .then(() => interaction.reply({ content: 'Te he mandado un DM con todos mis comandos' }))
+      .then(() => interaction.reply({ content: 'Te he mandado un DM con todos mis comandos', ephemeral: true }))
       .catch((error) => {
         logger.error(`No le he podido mandar un DM a ${interaction.user.tag}.\n${error}`);
-        return interaction.reply({ content: 'Parece que no te puedo mandar un DM. ¿Los tienes desactivados?' });
+        return interaction.reply({ content: 'Parece que no te puedo mandar un DM. ¿Los tienes desactivados?', ephemeral: true });
       });
   },
 };

@@ -19,19 +19,19 @@ const bot = new Friskainet({
   ],
 });
 
+// Folder creation
+if (!existsSync('./resources/voice')) {
+  mkdirSync('./resources/voice');
+  mkdirSync('./resources/voice/join');
+  mkdirSync('./resources/voice/leave');
+  mkdirSync('./resources/voice/say');
+}
+
+if (!existsSync('./resources/tmp')) {
+  mkdirSync('./resources/tmp');
+}
+
 const init = async () => {
-  // Folder creation
-  if (!existsSync('./resources/voice')) {
-    mkdirSync('./resources/voice');
-    mkdirSync('./resources/voice/join');
-    mkdirSync('./resources/voice/leave');
-    mkdirSync('./resources/voice/say');
-  }
-
-  if (!existsSync('./resources/tmp')) {
-    mkdirSync('./resources/tmp');
-  }
-
   // Database and slash commands deployment
   syncAll(async () => {
     const commands = await bot.commands.loadFiles();
@@ -43,6 +43,7 @@ const init = async () => {
         .then((cmds) => {
           cmds.forEach((command) => {
             command.delete();
+            logger.warn(`${command.name} ha sido borrado`);
           });
         });
 
@@ -60,6 +61,4 @@ const init = async () => {
   });
 };
 
-bot.login(discordToken);
-init();
-
+bot.login(discordToken).then(() => init());
