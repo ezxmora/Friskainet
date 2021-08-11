@@ -5,3 +5,4 @@ package-lock.json
 # Multimedia
 *.mp3
 *.mp4
+resources/config.js
