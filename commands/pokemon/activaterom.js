@@ -1,3 +1,4 @@
+const deactivaterom = require('./deactivaterom');
 const { PokemonRom } = require('../../libs/database/index');
 
 module.exports = {
@@ -10,13 +11,12 @@ module.exports = {
   run: async (message, args) => {
     const rom = await PokemonRom.findOne({ where: { id: args[0] } });
     if (rom !== null) {
-      await PokemonRom.update({ currentlyRunning: false }, { where: { currentlyRunning: true } });
+      await deactivaterom.run(message);
       await PokemonRom.update({ currentlyRunning: true }, { where: { id: rom.id } });
       message.reply('Esta ROM es la activa actualmente.');
     }
     else {
       message.reply('El ID no ha sido encontrado');
     }
-    console.log(rom);
   },
 };

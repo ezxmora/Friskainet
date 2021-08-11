@@ -4,3 +4,5 @@ blacklist.json
 package-lock.json
 *.mp3
 normas.js
+pokefiles/*
+!pokefiles/PokeRandoZX.jar

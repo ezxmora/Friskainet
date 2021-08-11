@@ -19,6 +19,8 @@ const PokemonRom = require('./models/PokemonRom')(sequelize, DataTypes);
 // Relations
 User.hasOne(Experience, { as: 'fk_userId_xp', foreignKey: 'userId' });
 User.hasMany(Warn, { as: 'fk_userId_warn', foreignKey: 'userId' });
+User.belongsToMany(PokemonRom, { as: 'pokemonRom', foreignKey: 'userId', through: 'PokemonRomUser' });
+PokemonRom.belongsTo(User, { as: 'user', foreignKey: 'pokemonRomId', through: 'PokemonRomUser' });
 
 // Methods
 User.prototype.isBlacklisted = () => this.blacklisted;

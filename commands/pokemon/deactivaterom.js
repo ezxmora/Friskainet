@@ -7,7 +7,9 @@ module.exports = {
   args: false,
   cooldown: 5,
   run: async (message) => {
-    await PokemonRom.update({ currentlyRunning: false }, { where: { currentlyRunning: true } });
-    message.reply('La ROM ya no está activa.');
+    await PokemonRom.update(
+      { currentlyRunning: false }, { where: { currentlyRunning: true } },
+    );
+    message.reply('La ROM activa ya no lo está.');
   },
 };

@@ -12,10 +12,14 @@ module.exports = {
     let reply = '';
     roms.forEach((rom) => {
       reply = reply.concat(
-        `**ID:** ${rom.id}\n**Activo:** ${(rom.currentlyRunning ? 'Sí' : 'No')}\n**ROM:** ${path.basename(rom.currentROMPath)}\n**Config:** ${path.basename(rom.currentSettingsPath)}\n\n
-        `,
+        `**ID:** ${rom.id}\n**Activo:** ${(rom.currentlyRunning ? 'Sí' : 'No')}\n**ROM:** ${path.basename(rom.currentROMPath)}\n**Config:** ${path.basename(rom.currentSettingsPath)}\n\n`,
       );
     });
-    message.channel.send(reply);
+    if (!reply) {
+      message.channel.send('No existen ROMs en el sistema. Prueba a subir una.');
+    }
+    else {
+      message.channel.send(reply);
+    }
   },
 };
