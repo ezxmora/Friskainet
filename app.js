@@ -3,7 +3,7 @@ process.title = 'Friskainet';
 global.basedir = __dirname;
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
-// require('./classes/extenders/GuildMember');
+
 const { Intents } = require('discord.js');
 const Friskainet = require('./classes/Friskainet');
 const { discordToken } = require('./resources/config');
