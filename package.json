@@ -20,6 +20,8 @@
 		"dotenv": "^10.0.0",
 		"fast-glob": "^3.2.7",
 		"libsodium-wrappers": "^0.7.9",
+		"form-data": "^4.0.0",
+		"mkdirp": "^1.0.4",
 		"moment": "^2.29.1",
 		"node-cron": "^3.0.0",
 		"node-fetch": "^2.6.1",

@@ -1,0 +1,22 @@
+module.exports = (sequelize, DataTypes) => sequelize.define('PokemonRom', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+    allowNull: false,
+  },
+  currentROMPath: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  currentSettingsPath: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  currentlyRunning: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
+}, {
+  timestamps: false,
+});

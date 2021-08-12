@@ -11,10 +11,14 @@ const sequelize = new Sequelize(database.databaseName, database.username, databa
 const User = require('./models/User')(sequelize, DataTypes);
 const Rule = require('./models/Rule')(sequelize, DataTypes);
 const Warn = require('./models/Warn')(sequelize, DataTypes);
+const PokemonRom = require('./models/PokemonRom')(sequelize, DataTypes);
 
 // Relations
 User.hasMany(Warn, { foreignKey: 'userId' });
 Warn.belongsTo(User, { foreignKey: 'userId' });
+
+User.belongsToMany(PokemonRom, { as: 'pokemonRom', foreignKey: 'userId', through: 'PokemonRomUser' });
+PokemonRom.belongsTo(User, { as: 'user', foreignKey: 'pokemonRomId', through: 'PokemonRomUser' });
 
 // Methods
 User.prototype.isBlacklisted = () => this.blacklisted;
@@ -34,6 +38,7 @@ module.exports = {
   User,
   Rule,
   Warn,
+  PokemonRom,
   syncAll,
   sequelize,
 };
