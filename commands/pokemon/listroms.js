@@ -1,13 +1,12 @@
 const path = require('path');
-const { PokemonRom } = require('../../libs/database/index');
 
 module.exports = {
   name: 'listroms',
   description: 'Lista toda las ROMs subidas al servidor',
   category: 'pokemon',
-  args: false,
   cooldown: 5,
-  run: async (message) => {
+  run: async (interaction) => {
+    const { PokemonRom } = interaction.client.database;
     const roms = await PokemonRom.findAll();
     let reply = '';
     roms.forEach((rom) => {
@@ -16,10 +15,9 @@ module.exports = {
       );
     });
     if (!reply) {
-      message.channel.send('No existen ROMs en el sistema. Prueba a subir una.');
+      return interaction.reply('No existen ROMs en el sistema. Prueba a subir una.');
     }
-    else {
-      message.channel.send(reply);
-    }
+
+    return interaction.channel.send(reply);
   },
 };

@@ -14,17 +14,17 @@ module.exports = {
     host: process.env.FRISKAINET_DATABASE_HOST,
     dialect: process.env.FRISKAINET_DATABASE_DIALECT.toLowerCase(),
   },
-  guilds: ['LIST OF YOUR GUILD IDs'],
+  guilds: ['234313904317136906'],
   presence: {
     // Anything you want here
-    name: 'Hey, I\'m running Friskainet',
+    name: 'Friskainet dev env :D',
     // Check https://discord.js.org/#/docs/main/stable/typedef/ActivityType
-    type: 'CUSTOM',
+    type: 'PLAYING',
     // Check https://discord.js.org/#/docs/main/stable/typedef/ClientPresenceStatus
     status: 'online',
   },
   greetings: [
     'Sup {{user}}?',
   ],
-  randomizerRoute: process.env.FRISKAINET_RANDOMIZER_ROUTE
+  randomizerRoute: process.env.FRISKAINET_RANDOMIZER_ROUTE,
 };

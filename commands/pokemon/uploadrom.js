@@ -9,18 +9,17 @@ module.exports = {
   category: 'pokemon',
   args: false,
   cooldown: 5,
-  run: async (message) => {
-    const { logger } = message.client;
-    const { config } = message.client;
+  run: async (interaction) => {
+    const { logger, config } = interaction.client;
     try {
       const filter = (m) => m.attachments.size > 0;
-      message.reply('Sube la ROM');
-      let collected = await message.channel.awaitMessages(filter, {
+      interaction.reply('Sube la ROM');
+      let collected = await interaction.channel.awaitMessages(filter, {
         max: 1, time: 60000, errors: ['time'],
       });
       const romAttach = collected.first().attachments.first();
       collected.first().reply('Sube la configuración del randomizer');
-      collected = await message.channel.awaitMessages(filter, {
+      collected = await interaction.channel.awaitMessages(filter, {
         max: 1, time: 60000, errors: ['time'],
       });
       const configAttach = collected.first().attachments.first();
@@ -35,11 +34,11 @@ module.exports = {
         currentROMPath: romPath,
         currentSettingsPath: configPath,
       });
-      collected.first().reply('La ROM se ha subido correctamente.');
+      return collected.first().reply('La ROM se ha subido correctamente.');
     }
     catch (error) {
-      message.reply(`Ha habido un error al subir la rom: ${error}`);
       logger.error(`Ha habido un error al subir la rom: ${error}`);
+      return interaction.reply(`Ha habido un error al subir la rom: ${error}`);
     }
   },
 };

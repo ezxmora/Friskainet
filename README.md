@@ -31,7 +31,7 @@ It was the first image that I used for my bot and I think that it's a funny one.
 ## Requirements
 -   [NodeJS](https://nodejs.org/) >= 12.22.1
 -   SQL database
--   Java Runtime for pokémon randomizer
+-   Java Runtime for Pokémon randomizer
 
 ## Supported Languages
 - Spanish
