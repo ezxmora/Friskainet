@@ -69,4 +69,6 @@ module.exports = {
     1: 'finished',
     2: 'lost',
   }),
+
+  isAColor: (color) => /^#[0-9A-F]{6}$/i.test(color),
 };
