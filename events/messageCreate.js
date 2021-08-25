@@ -22,7 +22,9 @@ module.exports = {
       for (let i = 0; i < splittedMessage.length; i++) {
         // Checks if its a Twitter URL
         if (/^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/(\d+)$/.test(splittedMessage[i])) {
-          bot.util.downloadVideo(splittedMessage[i], message);
+          message.reply({ content: splittedMessage[i].split('//')[1].replace(/^/, 'https://fx') });
+          // Disabled till I get a propper server
+          // bot.util.downloadVideo(splittedMessage[i], message);
         }
       }
     }
