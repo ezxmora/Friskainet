@@ -33,9 +33,10 @@ module.exports = {
           }
 
           // Checks if an user has a role with color
-          if (interaction.member.color) {
-            await interaction.member.roles.remove(interaction.member.color);
-            await interaction.member.roles.add(colorRole);
+          if (interaction.member.roles.color) {
+            await interaction.member.roles.remove(interaction.member.roles.color).then(() => {
+              interaction.member.roles.add(colorRole);
+            });
           }
           else {
             await interaction.member.roles.add(colorRole);
@@ -59,6 +60,7 @@ module.exports = {
             name: 'Lista de colores disponibles:',
             value: coloredRoles.map((r) => `<@&${r.id}>`).join(','),
           }],
+          footer: { text: 'Si no te gustan los colores disponibles siempre puedes crear uno con este mismo comando seguido del color en formato hexadecimal' },
         }],
       });
     }
