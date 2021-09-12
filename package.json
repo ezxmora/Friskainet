@@ -1,6 +1,6 @@
 {
 	"name": "discord-js-bot",
-	"version": "3.1.1",
+	"version": "3.1.2",
 	"description": "",
 	"main": "app.js",
 	"engines": {
@@ -19,17 +19,16 @@
 		"discord.js": "13.1.0",
 		"dotenv": "^10.0.0",
 		"fast-glob": "^3.2.7",
-		"libsodium-wrappers": "^0.7.9",
 		"form-data": "^4.0.0",
+		"libsodium-wrappers": "^0.7.9",
 		"mkdirp": "^1.0.4",
 		"moment": "^2.29.1",
 		"node-cron": "^3.0.0",
-		"node-fetch": "^2.6.1",
+		"node-fetch": "^3.0.0",
 		"opusscript": "^0.0.8",
 		"sequelize": "^6.6.5",
 		"slot-machine": "^2.1.0",
-		"urban": "^0.3.4",
-		"youtube-dl-exec": "^1.2.4"
+		"urban": "^0.3.4"
 	},
 	"devDependencies": {
 		"eslint": "^7.32.0",
@@ -37,6 +36,7 @@
 		"eslint-plugin-import": "^2.24.2",
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-promise": "^5.1.0",
-		"mariadb": "^2.5.4"
+		"pg": "^8.7.1",
+		"pg-hstore": "^2.3.4"
 	}
 }

@@ -1,11 +1,15 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const { database } = require('../../resources/config');
+const { databaseURL } = require('../../resources/config');
 const logger = require('../logger');
 
-const sequelize = new Sequelize(database.databaseName, database.username, database.password, {
-  host: database.host,
-  dialect: database.dialect,
+const sequelize = new Sequelize(databaseURL, {
   logging: false,
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  },
 });
 
 const User = require('./models/User')(sequelize, DataTypes);

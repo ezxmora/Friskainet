@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => sequelize.define('Rule', {
+module.exports = (sequelize, DataTypes) => sequelize.define('rule', {
   ruleId: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,

@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => sequelize.define('PokemonRom', {
+module.exports = (sequelize, DataTypes) => sequelize.define('pokemonrom', {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,

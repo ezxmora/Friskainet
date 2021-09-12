@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => sequelize.define('PokemonRomUser', {
+module.exports = (sequelize, DataTypes) => sequelize.define('pokemonromuser', {
   // 0: 'playing',
   // 1: 'finished',
   // 2: 'lost',
