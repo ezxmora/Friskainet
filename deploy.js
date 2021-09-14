@@ -37,16 +37,21 @@ const init = async () => {
     const commands = await bot.commands.loadFiles();
 
     // Fetchs, removes and re-adds all Friskainet's commands
-    await guilds.forEach(async (guild) => {
-      const currentGuild = await bot.guilds.cache.get(guild);
-      await currentGuild?.commands.fetch()
-        .then((cmds) => {
-          cmds.forEach((command) => {
-            command.delete();
-            logger.warn(`${command.name} ha sido borrado`);
-          });
-        });
-
+    guilds.forEach(async (guild) => {
+      const currentGuild = bot.guilds.cache.first();
+      const cmds = await currentGuild?.commands.fetch();
+      const promises = [];
+      cmds.forEach((command) => {
+        promises.push(command.delete());
+      });
+      try {
+        const deletedCommands = await Promise.all(promises);
+        logger.warn('Los siguientes comandos han sido borrados');
+        logger.warn(deletedCommands.map((c) => c.name));
+      }
+      catch (error) {
+        logger.error(error);
+      }
       await currentGuild?.commands.set(commands);
     });
 
