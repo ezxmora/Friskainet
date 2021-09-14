@@ -41,7 +41,8 @@ module.exports = class Friskainet extends Client {
   }
 
   getAllUsers() {
-    return this.config.guilds.reduce(async (i, guild) => {
+    const guilds = this.guilds.cache.map((guild) => guild.id);
+    return guilds.reduce(async (i, guild) => {
       const currentGuild = await this.guilds.fetch(guild);
       if (currentGuild.available) {
         const guildMembers = await currentGuild.members.fetch({ force: true });

@@ -4,7 +4,7 @@ require('dotenv').config();
 const { Intents } = require('discord.js');
 const { mkdirSync, existsSync } = require('fs');
 const Friskainet = require('./classes/Friskainet');
-const { discordToken, guilds } = require('./resources/config');
+const { discordToken } = require('./resources/config');
 const { User, syncAll } = require('./libs/database/index');
 const logger = require('./libs/logger');
 
@@ -35,6 +35,7 @@ const init = async () => {
   // Database and slash commands deployment
   syncAll(async () => {
     const commands = await bot.commands.loadFiles();
+    const guilds = await bot.guilds.cache.map((guild) => guild.id);
 
     // Fetchs, removes and re-adds all Friskainet's commands
     await guilds.forEach(async (guild) => {

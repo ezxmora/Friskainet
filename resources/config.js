@@ -9,10 +9,9 @@ module.exports = {
   betRatio: process.env.FRISKAINET_BETTING_RATIO,
   databaseURL: process.env.FRISKAINET_DATABASE_URL,
   voicerssToken: process.env.FRISKAINET_VOICERSS,
-  guilds: ['YOUR GUILD IDs'],
   presence: {
     // Anything you want here
-    name: 'Running Friskainet :D',
+    name: 'Konchinpiro',
     // Check https://discord.js.org/#/docs/main/stable/typedef/ActivityType
     type: 'PLAYING',
     // Check https://discord.js.org/#/docs/main/stable/typedef/ClientPresenceStatus
