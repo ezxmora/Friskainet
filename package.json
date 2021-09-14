@@ -1,10 +1,10 @@
 {
 	"name": "discord-js-bot",
-	"version": "3.1.2",
+	"version": "3.3.0",
 	"description": "",
 	"main": "app.js",
 	"engines": {
-		"node": ">=12.22.1"
+		"node": ">=16.6.0"
 	},
 	"scripts": {
 		"deploy": "node deploy.js",
@@ -29,15 +29,14 @@
 		"sequelize": "^6.6.5",
 		"slot-machine": "^2.1.0",
 		"urban": "^0.3.4",
-		"youtube-dl-exec": "^1.2.6"
+		"pg": "^8.7.1",
+		"pg-hstore": "^2.3.4"
 	},
 	"devDependencies": {
 		"eslint": "^7.32.0",
 		"eslint-config-airbnb-base": "^14.2.1",
 		"eslint-plugin-import": "^2.24.2",
 		"eslint-plugin-node": "^11.1.0",
-		"eslint-plugin-promise": "^5.1.0",
-		"pg": "^8.7.1",
-		"pg-hstore": "^2.3.4"
+		"eslint-plugin-promise": "^5.1.0"
 	}
 }

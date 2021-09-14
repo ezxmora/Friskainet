@@ -27,7 +27,7 @@ module.exports = {
         { name: '**Balance:**', value: `${userInfo.balance} tokens`, inline: true },
         { name: '**Apodo:**', value: user.nickname || 'No tiene', inline: true },
         { name: `**Role(s):** - ${roles.length}`, value: roles.join(','), inline: false },
-        { name: `**Warn(s):** - ${userInfo.Warns.length || 0}`, value: userInfo.Warns.map((w) => `\`${w.reason}\``).join(',') || 'Ninguno', inline: false },
+        { name: `**Warn(s):** - ${userInfo.warns.length || 0}`, value: userInfo.warns.map((w) => `\`${w.reason}\``).join(',') || 'Ninguno', inline: false },
         {
           name: '**Fecha de ingreso:**',
           value: `${moment(user.joinedTimestamp).format('D MMM YYYY, HH:m:ss')} - ${moment(user.joinedTimestamp).fromNow()}`,
