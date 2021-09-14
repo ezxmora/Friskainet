@@ -1,10 +1,10 @@
 {
 	"name": "discord-js-bot",
-	"version": "3.1.2",
+	"version": "3.2.0",
 	"description": "",
 	"main": "app.js",
 	"engines": {
-		"node": ">=12.22.1"
+		"node": ">=16.6.0"
 	},
 	"scripts": {
 		"deploy": "node deploy.js",

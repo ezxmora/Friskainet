@@ -9,7 +9,7 @@
 
 
 ## Before doing anything
-You are going to need ffmpeg, Node.js and an SQL database (Postgres, MySQL, MariaDB or Microsoft SQL Server) installed in your system (or in a Docker container).
+You are going to need Node.js and an SQL database (Postgres, MySQL, MariaDB or Microsoft SQL Server) installed in your system (or in a Docker container).
 
 ## Local setup
 1. Run `git clone https://github.com/ezxmora/Friskainet.git && cd Friskainet` to clone and access the repo
@@ -19,8 +19,9 @@ You are going to need ffmpeg, Node.js and an SQL database (Postgres, MySQL, Mari
    * `npm install --save mariadb` - MariaDB
    * `npm install --save tedious` - Microsoft SQL Server
 3. Rename `.env.example` into `.env` and tweak the options to your likings
-4. Access to your [DBMS](https://en.wikipedia.org/wiki/Database#Database_management_system) and create a new database with whatever name you gave it in `.env - (FRISKAINET_DATABASE_NAME)`
+4. Access to your [DBMS](https://en.wikipedia.org/wiki/Database#Database_management_system) and create a new database
 5. Run `npm run deploy` to setup the database and folders
+   > This thing tends to delay a little bit, nothing I can do about it, Discord rate limits I guess. When it prints the last LOG after the long WARN messages list you are safe to kill the script.
 6. Run `npm run start` or `node app`
 
 ## Extra
