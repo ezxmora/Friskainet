@@ -18,6 +18,6 @@ module.exports = {
       return interaction.reply('No existen ROMs en el sistema. Prueba a subir una.');
     }
 
-    return interaction.channel.send(reply);
+    return interaction.reply(reply);
   },
 };

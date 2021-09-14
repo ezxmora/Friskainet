@@ -16,9 +16,9 @@ module.exports = {
 
     const rom = await PokemonRom.findOne({ where: { id: interaction.options.getString('id') } });
     if (rom !== null) {
-      await deactivaterom.run(interaction);
+      await deactivaterom.deactivate();
       await PokemonRom.update({ currentlyRunning: true }, { where: { id: rom.id } });
-      return interaction.reply('Esta ROM es la activa actualmente.');
+      return interaction.reply(`Esta ROM es la activa actualmente: ${rom.id}`);
     }
 
     return interaction.reply('El ID no ha sido encontrado');
