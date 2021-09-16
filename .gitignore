@@ -6,5 +6,5 @@ package-lock.json
 *.mp3
 *.mp4
 
-!resources/PokeRandoZX.jar
-
+resources/pokemon/*
+!resources/pokemon/PokeRandoZX.jar
