@@ -60,7 +60,7 @@ module.exports = {
             name: 'Lista de colores disponibles:',
             value: coloredRoles.map((r) => `<@&${r.id}>`).join(','),
           }],
-          footer: { text: 'Si no te gustan los colores disponibles siempre puedes crear uno con este mismo comando seguido del color en formato hexadecimal' },
+          footer: { text: 'Si no te gustan los colores disponibles siempre puedes crear uno con este mismo comando seguido del color en formato hexadecimal. Por ejemplo: /color #123123' },
         }],
       });
     }

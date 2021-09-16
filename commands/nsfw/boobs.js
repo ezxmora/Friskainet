@@ -4,28 +4,28 @@ module.exports = {
   name: 'boobs',
   description: 'Envía una foto de unos pechos',
   category: 'nsfw',
-  args: false,
   cooldown: 5,
-  run: async (message) => {
-    const { util } = message.client;
+  run: async (interaction) => {
+    const { util } = interaction.client;
 
-    if (!message.member.roles.cache.some((r) => r.name === 'NSFW')) {
-      return message.reply({ content: 'No tienes permisos para usar este comando' });
+    if (!interaction.member.roles.cache.some((r) => r.name === 'NSFW')) {
+      return interaction.reply({ content: 'No tienes permisos para usar este comando' });
     }
 
-    if (!message.channel.nsfw) return message.reply({ content: 'No puedes usar este comando aquí' });
+    if (!interaction.channel.nsfw) return interaction.reply({ content: 'No puedes usar este comando aquí' });
 
     return fetch('http://api.oboobs.ru/boobs/0/1/random')
-      .then((res) => res.json())
-      .then((json) => {
-        const embed = {
-          color: util.randomColor(),
-          timestamp: `${message.createdAt}`,
-          image: {
-            url: `http://media.oboobs.ru/${json[0].preview}`,
-          },
-        };
-        message.channel.send({ embeds: [embed] });
+      .then(async (response) => {
+        const responseJson = await response.json();
+        interaction.channel.send({
+          embeds: [{
+            color: util.randomColor(),
+            timestamp: `${interaction.createdAt}`,
+            image: {
+              url: `http://media.oboobs.ru/${responseJson[0].preview}`,
+            },
+          }],
+        });
       });
   },
 };
