@@ -17,6 +17,8 @@ To be honest the name came from a chat that a friend and I were having about an 
 It also comes from Free [Skynet](<https://en.wikipedia.org/wiki/Skynet_(Terminator)>).
 #### Why the RuneScape gnome as logo?
 It was the first image that I used for my bot and I think that it's a funny one. I haven't played RuneScape in my life and I'm not affiliated with Jagex either.
+#### WHY X THING DOESN'T WORK!!one!!!11!111uno?
+I'm a bit absent minded and I tend to forget or ignore things sometimes ¯\\_(ツ)_/¯. Issues and pull requests are open tho :)
 
 ## Features
 -   Announcer
@@ -27,6 +29,7 @@ It was the first image that I used for my bot and I think that it's a funny one.
 -   NSFW
 -   Utility
 -   Leveling system
+-   Message pinner
 
 ## Requirements
 -   [NodeJS](https://nodejs.org/) >= 12.22.1
@@ -43,7 +46,7 @@ Check [SETUP.md](docs/SETUP.md)
 -   More commands
 -   Multilanguage support
 -   ~~C~~R~~UD~~ Rules
--   Gambling <sub><sup>(Actually working on it)</sup></sub>
+-   Gambling <sub><sup>(Actually working on it, sometimes hehe)</sup></sub>
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details

@@ -4,7 +4,7 @@ global.basedir = __dirname;
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
-const { Intents } = require('discord.js');
+const { Intents, Options } = require('discord.js');
 const Friskainet = require('./classes/Friskainet');
 const { discordToken } = require('./resources/config');
 
@@ -14,8 +14,13 @@ const bot = new Friskainet({
     Intents.FLAGS.GUILD_BANS,
     Intents.FLAGS.GUILD_MEMBERS,
     Intents.FLAGS.GUILD_MESSAGES,
+    Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
     Intents.FLAGS.GUILD_VOICE_STATES,
   ],
+  partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
+  makeCache: Options.cacheWithLimits({
+    MessageManager: 5000,
+  }),
 });
 
 bot.login(discordToken);
