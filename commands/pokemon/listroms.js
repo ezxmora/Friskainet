@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = {
   name: 'listroms',
   description: 'Lista toda las ROMs subidas al servidor',
@@ -11,7 +9,7 @@ module.exports = {
     let reply = '';
     roms.forEach((rom) => {
       reply = reply.concat(
-        `**ID:** ${rom.id}\n**Activo:** ${(rom.currentlyRunning ? 'Sí' : 'No')}\n**ROM:** ${path.basename(rom.currentROMPath)}\n**Config:** ${path.basename(rom.currentSettingsPath)}\n\n`,
+        `**ID:** ${rom.id}\n**Activo:** ${(rom.currentlyRunning ? 'Sí' : 'No')}\n**ROM:** ${rom.name}\n**Config:** ${rom.currentSettingsPath}\n\n`,
       );
     });
     if (!reply) {

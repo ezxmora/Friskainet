@@ -5,6 +5,11 @@ module.exports = (sequelize, DataTypes) => sequelize.define('pokemonromuser', {
   playing: {
     type: DataTypes.INTEGER,
     defaultValue: false,
+    allowNull: false,
+  },
+  romURL: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
 }, {
   timestamps: false,
