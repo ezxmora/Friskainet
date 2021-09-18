@@ -5,6 +5,10 @@ module.exports = (sequelize, DataTypes) => sequelize.define('pokemonrom', {
     primaryKey: true,
     allowNull: false,
   },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   currentROMPath: {
     type: DataTypes.STRING,
     allowNull: false,

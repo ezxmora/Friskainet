@@ -1,6 +1,3 @@
-const fs = require('fs');
-const fetch = require('node-fetch');
-const path = require('path');
 const { PokemonRom } = require('../../libs/database/index');
 
 function filter(message) {
@@ -23,36 +20,34 @@ let lastMessage;
  * Note: Maybe some checks are unnecessary given the filter in the awaitMessages
  * @param {*} message Discord Message
  * @param {*} interaction Discord interaction
- * @param {*} route Path of directory to save the file
+ * @param {*} askIfURL ask for name of file if an URL is detected
  * @returns path to file in file system
  */
-async function downloadFile(message, interaction, route) {
+async function downloadFile(message, interaction, askIfURL) {
   const attach = message.attachments.first();
-  let file;
   let name;
+  let url;
   if (attach) {
-    file = await fetch(attach.url);
     name = attach.name;
+    url = new URL(attach.url);
   }
   else {
     // Throws error if message content is not an URL
-    const url = new URL(message.content);
-    if (url.protocol === 'http:' || url.protocol === 'https:') {
-      lastMessage = await message.reply('URL detectada, elige un nombre para el fichero (recuerda añadir la extensión de fichero correcta por ej.: rom.nds):');
-      const collectedName = await interaction.channel.awaitMessages({
-        max: 1, time: 60000, errors: ['time'],
-      });
-      name = collectedName.first().content;
-      file = await fetch(url);
-    }
-    else {
-      throw new Error('Invalid URL');
+    url = new URL(message.content);
+    if (askIfURL) {
+      if (url.protocol === 'http:' || url.protocol === 'https:') {
+        lastMessage = await message.reply('URL detectada, elige un nombre para el fichero (recuerda añadir la extensión de fichero correcta por ej.: rom.nds):');
+        const collectedName = await interaction.channel.awaitMessages({
+          max: 1, time: 60000, errors: ['time'],
+        });
+        name = collectedName.first().content;
+      }
+      else {
+        throw new Error('Invalid URL');
+      }
     }
   }
-  const filePath = path.resolve(route, name);
-  const destRom = fs.createWriteStream(filePath);
-  file.body.pipe(destRom);
-  return filePath;
+  return { url: url.toString(), name };
 }
 
 module.exports = {
@@ -62,22 +57,22 @@ module.exports = {
   args: false,
   cooldown: 5,
   run: async (interaction) => {
-    const { logger, config } = interaction.client;
+    const { logger } = interaction.client;
     try {
       lastMessage = await interaction.reply('Sube la ROM (pasa una URL o adjunta el archivo en un mensaje):');
       const collectedRom = await interaction.channel.awaitMessages({
         filter, max: 1, time: 60000, errors: ['time'],
       });
-      const romPath = await downloadFile(collectedRom.first(), interaction, config.randomizerRoute);
+      const romPath = await downloadFile(collectedRom.first(), interaction, true);
       lastMessage = await collectedRom.first().reply('Sube la configuración del randomizer (pasa una URL o adjunta el archivo en un mensaje):');
       const collectedConfig = await interaction.channel.awaitMessages({
         filter, max: 1, time: 60000, errors: ['time'],
       });
-      const settingsPath = await downloadFile(collectedConfig.first(),
-        interaction, config.randomizerRoute);
+      const settingsPath = await downloadFile(collectedConfig.first(), interaction, false);
       PokemonRom.create({
-        currentROMPath: romPath,
-        currentSettingsPath: settingsPath,
+        currentROMPath: romPath.url,
+        currentSettingsPath: settingsPath.url,
+        name: romPath.name,
       });
       return collectedConfig.first().reply('La ROM se ha subido correctamente.');
     }
