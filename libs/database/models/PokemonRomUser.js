@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => sequelize.define('pokemonromuser', {
   team: {
     type: DataTypes.STRING,
   },
+  winner: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
 }, {
   timestamps: false,
 });
