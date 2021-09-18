@@ -1,12 +1,12 @@
-const deactivaterom = require('./deactivaterom');
+const deactivaterom = require('./endtournament');
 
 module.exports = {
-  name: 'activaterom',
-  description: 'Indica que una ROM está siendo usada para un torneo',
+  name: 'startrunning',
+  description: 'Comienza un torneo (fase de jugar). Un torneo tiene la fase de jugar el juego y la fase de competir',
   options: [{
     name: 'id',
     type: 'STRING',
-    description: 'Id de la ROM',
+    description: 'Id de la ROM a jugar',
     required: true,
   }],
   category: 'pokemon',
@@ -18,7 +18,7 @@ module.exports = {
     if (rom !== null) {
       await deactivaterom.deactivate();
       await PokemonRom.update({ currentlyRunning: true }, { where: { id: rom.id } });
-      return interaction.reply(`Esta ROM es la activa actualmente: ${rom.id}`);
+      return interaction.reply(`El torneo con esta ROM ha empezado!: ${rom.id}`);
     }
 
     return interaction.reply('El ID no ha sido encontrado');

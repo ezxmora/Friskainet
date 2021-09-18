@@ -17,7 +17,13 @@ module.exports = (sequelize, DataTypes) => sequelize.define('pokemonrom', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  // Currently playing the game
   currentlyRunning: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
+  // Currently competing against each other
+  currentlyCompeting: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },

@@ -69,12 +69,12 @@ module.exports = {
         filter, max: 1, time: 60000, errors: ['time'],
       });
       const settingsPath = await downloadFile(collectedConfig.first(), interaction, false);
-      PokemonRom.create({
+      const rom = PokemonRom.create({
         currentROMPath: romPath.url,
         currentSettingsPath: settingsPath.url,
         name: romPath.name,
       });
-      return collectedConfig.first().reply('La ROM se ha subido correctamente.');
+      return collectedConfig.first().reply(`La ROM se ha subido correctamente con id: ${rom.id}`);
     }
     catch (error) {
       logger.error(`Ha habido un error al subir la rom: ${error}`);
