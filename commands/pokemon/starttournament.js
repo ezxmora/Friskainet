@@ -1,26 +1,26 @@
-const { currentActiveROM } = require('../../utils/pokemon/commonQueries');
+const deactivaterom = require('./endtournament');
 
 module.exports = {
   name: 'starttournament',
-  description: 'Comienza la fase de competir del torneo actual.',
+  description: 'Comienza un torneo (fase de jugar o primera fase).',
+  options: [{
+    name: 'id',
+    type: 'STRING',
+    description: 'Id de la ROM a jugar',
+    required: true,
+  }],
   category: 'pokemon',
   cooldown: 5,
   run: async (interaction) => {
-    const { PokemonRom, PokemonRomUser } = interaction.client.database;
+    const { PokemonRom } = interaction.client.database;
 
-    const rom = await currentActiveROM();
+    const rom = await PokemonRom.findOne({ where: { id: interaction.options.getString('id') } });
     if (rom !== null) {
-      await PokemonRom.update(
-        { currentlyCompeting: true, currentlyRunning: false },
-        { where: { id: rom.id } },
-      );
-      await PokemonRomUser.update(
-        { playing: 2 },
-        { where: { pokemonRomId: rom.id, playing: 0 } },
-      );
-      return interaction.reply('¡La fase de competir ha empezado! Todos los jugadores que no hayan completado la run han sido descalificados.');
+      await deactivaterom.deactivate();
+      await PokemonRom.update({ currentlyRunning: true }, { where: { id: rom.id } });
+      return interaction.reply(`El torneo con esta ROM ha empezado!: ${rom.id}`);
     }
 
-    return interaction.reply('No se está jugando ningun torneo actualmente.');
+    return interaction.reply('El ID no ha sido encontrado');
   },
 };
