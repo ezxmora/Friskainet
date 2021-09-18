@@ -3,7 +3,13 @@ const { databaseURL } = require('../../resources/config');
 const logger = require('../logger');
 
 const sequelize = new Sequelize(databaseURL, {
-  logging: console.log,
+  logging: false,
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  },
 });
 
 const User = require('./models/User')(sequelize, DataTypes);
