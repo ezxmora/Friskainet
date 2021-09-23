@@ -18,7 +18,7 @@ It also comes from Free [Skynet](<https://en.wikipedia.org/wiki/Skynet_(Terminat
 #### Why the RuneScape gnome as logo?
 It was the first image that I used for my bot and I think that it's a funny one. I haven't played RuneScape in my life and I'm not affiliated with Jagex either.
 #### WHY X THING DOESN'T WORK!!one!!!11!111uno?
-I'm a bit absent minded and I tend to forget or ignore things sometimes ¯\\_(ツ)_/¯. Issues and pull requests are open tho :)
+I'm a bit absent minded and I tend to forget or ignore things sometimes ¯\\\_(ツ)\_/¯. Issues and pull requests are open tho :)
 
 ## Features
 -   Announcer

@@ -30,13 +30,13 @@ module.exports = {
     }
 
     // It gives away some tokens [1-10].
-    bot.giveTokens(message.author.id, bot.util.getRandomInt(1, 10));
+    // bot.giveTokens(message.author.id, bot.util.getRandomInt(1, 10));
 
     // It gives away some experience [100-200]
-    const levelUp = await bot.giveExperience(message.author.id, bot.util.getRandomInt(100, 200));
+    // const levelUp = await bot.giveExperience(message.author.id, bot.util.getRandomInt(100, 200));
 
-    if (levelUp.level > userInfo.level) {
-      message.channel.send({ content: `🎉 ${message.author} ha subido al nivel ${levelUp.level} 🎉` });
-    }
+    // if (levelUp.level > userInfo.level) {
+    //   message.channel.send({ content: `🎉 ${message.author} ha subido al nivel ${levelUp.level} 🎉` });
+    // }
   },
 };
