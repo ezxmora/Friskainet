@@ -15,6 +15,7 @@ const sequelize = new Sequelize(databaseURL, {
 const User = require('./models/User')(sequelize, DataTypes);
 const Rule = require('./models/Rule')(sequelize, DataTypes);
 const Warn = require('./models/Warn')(sequelize, DataTypes);
+const Pin = require('./models/Pin')(sequelize, DataTypes);
 const PokemonRom = require('./models/PokemonRom')(sequelize, DataTypes);
 
 // Relations
@@ -43,6 +44,7 @@ module.exports = {
   Rule,
   Warn,
   PokemonRom,
+  Pin,
   syncAll,
   sequelize,
 };

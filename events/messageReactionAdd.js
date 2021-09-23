@@ -3,6 +3,16 @@ module.exports = {
   once: false,
   execute: async (reaction, user, bot) => {
     if (reaction.emoji.name === '📌') {
+      const pin = bot.database.Pin;
+      const isPinned = await pin.findOne({
+        where: {
+          messageId: reaction.message.id,
+        },
+      });
+
+      // We ommit messages that are already pinned
+      if (isPinned?.pinned) return;
+
       // Message might not be cached, so we fetch it
       if (reaction.partial) {
         try {
@@ -16,7 +26,7 @@ module.exports = {
 
       const serverOwner = await reaction.message.guild.fetchOwner();
 
-      if (reaction.count >= 2 || serverOwner.user.id === user.id) {
+      if (reaction.count >= 3 || serverOwner.user.id === user.id) {
         const channel = await reaction.message.guild.channels.cache.find((c) => c.name === bot.config.channels.pinneds);
 
         const embedPin = {
@@ -38,7 +48,8 @@ module.exports = {
           }
         }
 
-        channel.send({ embeds: [embedPin] });
+        const pinnedMessage = await channel.send({ embeds: [embedPin] });
+        pin.create({ pinId: pinnedMessage.id, messageId: reaction.message.id, pinned: true });
       }
     }
   },
