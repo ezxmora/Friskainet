@@ -70,4 +70,18 @@ module.exports = {
   }),
 
   isAColor: (color) => /^#[0-9A-F]{6}$/i.test(color),
+
+  progressBarGenerator: (percentage, size) => {
+    let progressBar = '';
+    for (let i = 0; i < size; i++) {
+      if (percentage < (i + 1) * 5) {
+        progressBar += '▱';
+      }
+      else {
+        progressBar += '▰';
+      }
+    }
+
+    return progressBar;
+  },
 };
