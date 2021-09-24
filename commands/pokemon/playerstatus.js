@@ -14,7 +14,7 @@ module.exports = {
     let reply = '';
     await users.forEach(async (user) => {
       const userProfile = await interaction.client.users.fetch(user.userId);
-      const status = util.playingStatus[user.playing];
+      const status = util.playingState[user.playing];
       reply = reply.concat(
         `**Usuario:** ${userProfile.username}\n**Estado:** ${status}\n`,
       );
