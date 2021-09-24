@@ -1,4 +1,5 @@
 const deactivaterom = require('./endtournament');
+const config = require('../../resources/config');
 
 module.exports = {
   name: 'starttournament',
@@ -11,6 +12,7 @@ module.exports = {
   }],
   category: 'pokemon',
   cooldown: 5,
+  roles: [config.pokemonRole],
   run: async (interaction) => {
     const { PokemonRom } = interaction.client.database;
 

@@ -1,8 +1,11 @@
+const config = require('../../resources/config');
+
 module.exports = {
   name: 'endrunphase',
   description: 'Comienza la fase de competir o segunda fase del torneo actual.',
   category: 'pokemon',
   cooldown: 5,
+  roles: [config.pokemonRole],
   run: async (interaction) => {
     const { PokemonRom, PokemonRomUser } = interaction.client.database;
     const { util } = interaction.client;

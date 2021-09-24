@@ -17,8 +17,10 @@ module.exports = {
     // The command needs permissions
     if (command.permissions) {
       const authorPerms = interaction.channel.permissionsFor(interaction.member);
+      const permittedRole = interaction.member
+        .roles.cache.some((r) => command.roles.indexOf(r) >= 0);
 
-      if (!authorPerms || !authorPerms.has(command.permissions)) {
+      if (!authorPerms || !authorPerms.has(command.permissions) || !permittedRole) {
         return interaction.reply({ content: 'No tienes los permisos adecuados para ejecutar ese comando', ephemeral: true });
       }
     }

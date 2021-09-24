@@ -1,5 +1,6 @@
 const { Op } = require('sequelize');
 const { PokemonRom } = require('../../libs/database/index');
+const config = require('../../resources/config');
 
 async function deactivateRom() {
   return PokemonRom.update(
@@ -19,6 +20,7 @@ module.exports = {
   }],
   category: 'pokemon',
   cooldown: 5,
+  roles: [config.pokemonRole],
   deactivate: async () => {
     await deactivateRom();
   },

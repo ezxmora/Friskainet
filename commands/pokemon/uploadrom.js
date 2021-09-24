@@ -1,4 +1,5 @@
 const { PokemonRom } = require('../../libs/database/index');
+const config = require('../../resources/config');
 
 function filter(message) {
   const isAttachment = message.attachments.size > 0;
@@ -56,6 +57,7 @@ module.exports = {
   category: 'pokemon',
   args: false,
   cooldown: 5,
+  roles: [config.pokemonRole],
   run: async (interaction) => {
     const { logger } = interaction.client;
     try {

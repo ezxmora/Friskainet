@@ -1,3 +1,5 @@
+const config = require('../../resources/config');
+
 module.exports = {
   name: 'usercomplete',
   description: 'Marca que un usuario ha completado la fase de jugar del torneo activo.',
@@ -14,6 +16,7 @@ module.exports = {
   }],
   category: 'pokemon',
   cooldown: 5,
+  roles: [config.pokemonRole],
   run: async (interaction) => {
     const { PokemonRomUser } = interaction.client.database;
     const { util } = interaction.client;

@@ -21,4 +21,5 @@ module.exports = {
     'Sup {{user}}?',
   ],
   randomizerRoute: process.env.FRISKAINET_RANDOMIZER_ROUTE,
+  pokemonRole: process.env.FRISKAINET_POKEMON_ROLE_ID,
 };
