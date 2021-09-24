@@ -1,5 +1,3 @@
-const { currentActiveROM } = require('../../utils/pokemon/commonQueries');
-
 module.exports = {
   name: 'endrunphase',
   description: 'Comienza la fase de competir o segunda fase del torneo actual.',
@@ -7,8 +5,8 @@ module.exports = {
   cooldown: 5,
   run: async (interaction) => {
     const { PokemonRom, PokemonRomUser } = interaction.client.database;
-
-    const rom = await currentActiveROM();
+    const { util } = interaction.client;
+    const rom = await util.currentActiveROM();
     if (rom !== null) {
       await PokemonRom.update(
         { currentlyCompeting: true, currentlyRunning: false },

@@ -1,6 +1,3 @@
-const { playingStatus } = require('../../utils/pokemon/playingStatus');
-const { currentActiveROM } = require('../../utils/pokemon/commonQueries');
-
 module.exports = {
   name: 'playerstatus',
   description: 'Muestra la lista de jugadores en el torneo actual',
@@ -8,7 +5,8 @@ module.exports = {
   cooldown: 5,
   run: async (interaction) => {
     const { PokemonRomUser } = interaction.client.database;
-    const rom = await currentActiveROM();
+    const { util } = interaction.client;
+    const rom = await util.currentActiveROM();
     if (rom === null) {
       return interaction.reply('No hay un torneo activo.');
     }
@@ -16,7 +14,7 @@ module.exports = {
     let reply = '';
     await users.forEach(async (user) => {
       const userProfile = await interaction.client.users.fetch(user.userId);
-      const status = playingStatus[user.playing];
+      const status = util.playingStatus[user.playing];
       reply = reply.concat(
         `**Usuario:** ${userProfile.username}\n**Estado:** ${status}\n`,
       );

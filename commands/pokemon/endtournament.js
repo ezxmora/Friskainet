@@ -1,6 +1,5 @@
 const { Op } = require('sequelize');
 const { PokemonRom } = require('../../libs/database/index');
-const { currentActiveROM } = require('../../utils/pokemon/commonQueries');
 
 async function deactivateRom() {
   return PokemonRom.update(
@@ -25,7 +24,8 @@ module.exports = {
   },
   run: async (interaction) => {
     const { PokemonRomUser } = interaction.client.database;
-    const rom = await currentActiveROM();
+    const { util } = interaction.client;
+    const rom = await util.currentActiveROM();
     if (rom !== null) {
       const userId = interaction.options.getString('id');
       const userInfo = await PokemonRomUser.findOne({ where: { userId, pokemonRomId: rom.id } });

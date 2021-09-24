@@ -1,5 +1,3 @@
-const { currentActiveROM } = require('../../utils/pokemon/commonQueries');
-
 module.exports = {
   name: 'addteam',
   description: 'Añade un equipo a un usuario que ha completado la fase de juego.',
@@ -18,7 +16,8 @@ module.exports = {
   cooldown: 5,
   run: async (interaction) => {
     const { PokemonRomUser } = interaction.client.database;
-    const rom = await currentActiveROM();
+    const { util } = interaction.client;
+    const rom = await util.currentActiveROM();
     if (rom !== null) {
       const userId = interaction.options.getString('id');
       const userInfo = await PokemonRomUser.findOne({ where: { userId, pokemonRomId: rom.id } });

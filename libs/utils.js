@@ -1,5 +1,6 @@
 // const { MessageAttachment } = require('discord.js');
 // const { unlinkSync } = require('fs');
+const { PokemonRom } = require('./database');
 
 module.exports = {
   replaceAll: (string, mapObject) => {
@@ -70,4 +71,6 @@ module.exports = {
   }),
 
   isAColor: (color) => /^#[0-9A-F]{6}$/i.test(color),
+
+  currentActiveROM: async () => PokemonRom.findOne({ where: { currentlyRunning: true } }),
 };
