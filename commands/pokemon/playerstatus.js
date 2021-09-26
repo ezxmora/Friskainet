@@ -20,7 +20,7 @@ module.exports = {
       );
       const hasTeam = user.team !== null;
       if (hasTeam) {
-        reply = reply.concat(`**Equipo:** ${user.team}`);
+        reply = reply.concat(`**Equipo:** ${user.team}\n`);
       }
       reply = reply.concat('\n');
     });

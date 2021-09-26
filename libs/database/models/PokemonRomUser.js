@@ -19,6 +19,13 @@ module.exports = (sequelize, DataTypes) => sequelize.define('pokemonromuser', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+  bountyPoints: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  challongeId: {
+    type: DataTypes.STRING,
+  },
 }, {
   timestamps: false,
 });

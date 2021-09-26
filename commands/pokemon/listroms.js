@@ -5,11 +5,12 @@ module.exports = {
   cooldown: 5,
   run: async (interaction) => {
     const { PokemonRom } = interaction.client.database;
+    const { util } = interaction.client;
     const roms = await PokemonRom.findAll();
     let reply = '';
     roms.forEach((rom) => {
       reply = reply.concat(
-        `**ID:** ${rom.id}\n**Activo:** ${(rom.currentlyRunning ? 'Sí' : 'No')}\n**ROM:** ${rom.name}\n**Config:** ${rom.currentSettingsPath}\n\n`,
+        `**ID:** ${rom.id}\n**Estado del torneo:** ${util.tournamentPhase[rom.tournamentPhase]}\n**ROM:** ${rom.name}\n**Config:** ${rom.currentSettingsPath}\n\n`,
       );
     });
     if (!reply) {
