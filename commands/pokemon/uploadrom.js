@@ -1,4 +1,5 @@
 const { PokemonRom } = require('../../libs/database/index');
+const config = require('../../resources/config');
 
 function filter(message) {
   const isAttachment = message.attachments.size > 0;
@@ -56,25 +57,28 @@ module.exports = {
   category: 'pokemon',
   args: false,
   cooldown: 5,
+  roles: [config.pokemonRole],
   run: async (interaction) => {
     const { logger } = interaction.client;
     try {
-      lastMessage = await interaction.reply('Sube la ROM (pasa una URL o adjunta el archivo en un mensaje):');
+      await interaction.reply('Sube la ROM (pasa una URL o adjunta el archivo en un mensaje):');
       const collectedRom = await interaction.channel.awaitMessages({
         filter, max: 1, time: 60000, errors: ['time'],
       });
-      const romPath = await downloadFile(collectedRom.first(), interaction, true);
-      lastMessage = await collectedRom.first().reply('Sube la configuración del randomizer (pasa una URL o adjunta el archivo en un mensaje):');
+      lastMessage = collectedRom.first();
+      const romPath = await downloadFile(lastMessage, interaction, true);
+      await lastMessage.reply('Sube la configuración del randomizer (pasa una URL o adjunta el archivo en un mensaje):');
       const collectedConfig = await interaction.channel.awaitMessages({
         filter, max: 1, time: 60000, errors: ['time'],
       });
-      const settingsPath = await downloadFile(collectedConfig.first(), interaction, false);
-      PokemonRom.create({
+      lastMessage = collectedConfig.first();
+      const settingsPath = await downloadFile(lastMessage, interaction, false);
+      const rom = await PokemonRom.create({
         currentROMPath: romPath.url,
         currentSettingsPath: settingsPath.url,
         name: romPath.name,
       });
-      return collectedConfig.first().reply('La ROM se ha subido correctamente.');
+      return lastMessage.reply(`La ROM se ha subido correctamente con id: ${rom.id}`);
     }
     catch (error) {
       logger.error(`Ha habido un error al subir la rom: ${error}`);

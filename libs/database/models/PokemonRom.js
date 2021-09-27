@@ -17,9 +17,22 @@ module.exports = (sequelize, DataTypes) => sequelize.define('pokemonrom', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  currentlyRunning: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
+  // 0: 'not started',
+  // 1: 'playing or running phase',
+  // 2: 'tournament phase',
+  // 3: 'finished'
+  tournamentPhase: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  channelId: {
+    type: DataTypes.STRING,
+  },
+  challongeTournamentId: {
+    type: DataTypes.STRING,
+  },
+  tournamentName: {
+    type: DataTypes.STRING,
   },
 }, {
   timestamps: false,

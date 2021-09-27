@@ -15,7 +15,7 @@ module.exports = {
     const userMember = interaction.member;
     const userAndRom = await Promise.all([
       User.findOne({ where: { userId: userMember.id } }),
-      PokemonRom.findOne({ where: { currentlyRunning: true } }),
+      PokemonRom.findOne({ where: { tournamentPhase: 1 } }),
     ]);
     const user = userAndRom[0];
     const rom = userAndRom[1];

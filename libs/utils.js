@@ -1,5 +1,7 @@
 // const { MessageAttachment } = require('discord.js');
 // const { unlinkSync } = require('fs');
+const { Op } = require('sequelize');
+const { PokemonRom } = require('./database');
 
 module.exports = {
   replaceAll: (string, mapObject) => {
@@ -64,10 +66,28 @@ module.exports = {
     + Math.ceil(min),
 
   playingState: Object.freeze({
-    0: 'playing',
-    1: 'finished',
-    2: 'lost',
+    0: 'Jugando',
+    1: 'Completado',
+    2: 'Retirado',
   }),
 
+  tournamentPhase: Object.freeze({
+    0: 'No comenzado',
+    1: 'Fase de juego',
+    2: 'Fase de competición',
+    3: 'Finalizado',
+  }),
+
+
   isAColor: (color) => /^#[0-9A-F]{6}$/i.test(color),
+
+  currentActiveROM: async () => PokemonRom.findOne({
+    where:
+    {
+      tournamentPhase: {
+        [Op.gt]: 0,
+        [Op.lt]: 3,
+      },
+    },
+  }),
 };
