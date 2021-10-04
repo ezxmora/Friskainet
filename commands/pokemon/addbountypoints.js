@@ -24,12 +24,12 @@ module.exports = {
     if (rom === null) {
       return interaction.reply({ content: 'No hay torneo activo' });
     }
-    const player = await PokemonRomUser.findOne({ where: { pokemonRomId: rom.id, userId: interaction.options.getString('id') } });
+    const player = await PokemonRomUser.findOne({ where: { pokemonromId: rom.id, userId: interaction.options.getString('id') } });
     if (player === null) {
       return interaction.reply({ content: 'No se ha encontrado el jugador indicado' });
     }
     await PokemonRomUser.update({ bountyPoints: player.bountyPoints + interaction.options.getInteger('points') },
-      { where: { pokemonRomId: rom.id, userId: player.userId } });
+      { where: { pokemonromId: rom.id, userId: player.userId } });
     return interaction.reply({ content: 'Puntos añadidos correctamente.' });
   },
 };

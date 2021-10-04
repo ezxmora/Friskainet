@@ -10,7 +10,7 @@ module.exports = {
     if (rom === null) {
       return interaction.reply('No hay un torneo activo.');
     }
-    const users = await PokemonRomUser.findAll({ where: { pokemonRomId: rom.id }, order: [['playing', 'ASC']] });
+    const users = await PokemonRomUser.findAll({ where: { pokemonromId: rom.id }, order: [['playing', 'ASC']] });
     let reply = '';
     await users.forEach(async (user) => {
       const userProfile = await interaction.client.users.fetch(user.userId);

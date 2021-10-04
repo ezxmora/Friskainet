@@ -51,7 +51,7 @@ module.exports = {
           ),
           PokemonRomUser.update(
             { playing: 2 },
-            { where: { pokemonRomId: rom.id, playing: 0 } },
+            { where: { pokemonromId: rom.id, playing: 0 } },
           ),
           challongeapi.start(challongeTournament.tournament.id),
         ]);
