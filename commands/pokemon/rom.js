@@ -79,7 +79,6 @@ module.exports = {
           });
           java.stderr.on('data', (data) => {
             logger.error(data);
-            userMember.send({ content: `Ha ocurrido un error randomizando la ROM: ${data}` });
           });
         });
     }
