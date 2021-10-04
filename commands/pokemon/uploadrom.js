@@ -37,7 +37,7 @@ async function downloadFile(message, interaction, askIfURL) {
     url = new URL(message.content);
     if (askIfURL) {
       if (url.protocol === 'http:' || url.protocol === 'https:') {
-        lastMessage = await message.reply('URL detectada, elige un nombre para el fichero (recuerda añadir la extensión de fichero correcta por ej.: rom.nds):');
+        lastMessage = await message.reply({ content: 'URL detectada, elige un nombre para el fichero (recuerda añadir la extensión de fichero correcta por ej.: rom.nds):' });
         const collectedName = await interaction.channel.awaitMessages({
           max: 1, time: 60000, errors: ['time'],
         });
@@ -61,13 +61,13 @@ module.exports = {
   run: async (interaction) => {
     const { logger } = interaction.client;
     try {
-      await interaction.reply('Sube la ROM (pasa una URL o adjunta el archivo en un mensaje):');
+      await interaction.reply({ content: 'Sube la ROM (pasa una URL o adjunta el archivo en un mensaje):' });
       const collectedRom = await interaction.channel.awaitMessages({
         filter, max: 1, time: 60000, errors: ['time'],
       });
       lastMessage = collectedRom.first();
       const romPath = await downloadFile(lastMessage, interaction, true);
-      await lastMessage.reply('Sube la configuración del randomizer (pasa una URL o adjunta el archivo en un mensaje):');
+      await lastMessage.reply({ content: 'Sube la configuración del randomizer (pasa una URL o adjunta el archivo en un mensaje):' });
       const collectedConfig = await interaction.channel.awaitMessages({
         filter, max: 1, time: 60000, errors: ['time'],
       });
@@ -78,11 +78,11 @@ module.exports = {
         currentSettingsPath: settingsPath.url,
         name: romPath.name,
       });
-      return lastMessage.reply(`La ROM se ha subido correctamente con id: ${rom.id}`);
+      return lastMessage.reply({ content: `La ROM se ha subido correctamente con id: ${rom.id}` });
     }
     catch (error) {
       logger.error(`Ha habido un error al subir la rom: ${error}`);
-      return lastMessage.reply(`Ha habido un error al subir la rom: ${error}`);
+      return lastMessage.reply({ content: `Ha habido un error al subir la rom: ${error}` });
     }
   },
 };

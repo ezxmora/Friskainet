@@ -36,13 +36,13 @@ module.exports = {
     if (categoryId) {
       category = interaction.guild.channels.cache.find((c) => c.id === categoryId && c.type === 'GUILD_CATEGORY');
       if (!category) {
-        return interaction.reply(`No se ha encontrado la categoría: ${categoryId}`);
+        return interaction.reply({ content: `No se ha encontrado la categoría: ${categoryId}` });
       }
     }
     const { PokemonRom } = interaction.client.database;
     const rom = await PokemonRom.findOne({ where: { id: interaction.options.getString('id') } });
     if (rom !== null) {
-      await interaction.reply('Sube las normas del torneo (formato texto o Markdown).');
+      await interaction.reply({ content: 'Sube las normas del torneo (formato texto o Markdown).' });
       const filter = (message) => message.attachments.size > 0;
       const collectedRules = await interaction.channel.awaitMessages({
         filter, max: 1, time: 60000, errors: ['time'],
@@ -101,9 +101,9 @@ module.exports = {
           files: [rom.currentSettingsPath],
         });
       }
-      return collectedRules.first().reply(`¡El torneo con esta ROM ha empezado!: ${rom.id}`);
+      return collectedRules.first().reply({ content: `¡El torneo con esta ROM ha empezado!: ${rom.id}` });
     }
 
-    return interaction.reply('El ID no ha sido encontrado');
+    return interaction.reply({ content: 'El ID no ha sido encontrado' });
   },
 };

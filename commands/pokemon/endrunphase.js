@@ -74,6 +74,6 @@ module.exports = {
     })
       .then(() => logger.log('La fase de competición ha empezado.'))
       .catch((error) => logger.error(error));
-    return interaction.reply('La fase de competición está comenzando.');
+    return interaction.reply({ content: 'La fase de competición está comenzando.' });
   },
 };

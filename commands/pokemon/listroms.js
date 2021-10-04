@@ -14,9 +14,9 @@ module.exports = {
       );
     });
     if (!reply) {
-      return interaction.reply('No existen ROMs en el sistema. Prueba a subir una.');
+      return interaction.reply({ content: 'No existen ROMs en el sistema. Prueba a subir una.' });
     }
 
-    return interaction.reply(reply);
+    return interaction.reply({ content: reply });
   },
 };

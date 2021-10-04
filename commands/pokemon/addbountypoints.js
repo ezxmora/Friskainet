@@ -22,14 +22,14 @@ module.exports = {
     const { util } = interaction.client;
     const rom = await util.currentActiveROM();
     if (rom === null) {
-      return interaction.reply('No hay torneo activo');
+      return interaction.reply({ content: 'No hay torneo activo' });
     }
     const player = await PokemonRomUser.findOne({ where: { pokemonRomId: rom.id, userId: interaction.options.getString('id') } });
     if (player === null) {
-      return interaction.reply('No se ha encontrado el jugador indicado');
+      return interaction.reply({ content: 'No se ha encontrado el jugador indicado' });
     }
     await PokemonRomUser.update({ bountyPoints: player.bountyPoints + interaction.options.getInteger('points') },
       { where: { pokemonRomId: rom.id, userId: player.userId } });
-    return interaction.reply('Puntos añadidos correctamente.');
+    return interaction.reply({ content: 'Puntos añadidos correctamente.' });
   },
 };

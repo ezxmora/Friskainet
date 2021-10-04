@@ -19,9 +19,9 @@ module.exports = {
     ]);
     const user = userAndRom[0];
     const rom = userAndRom[1];
-    if (user === null) return interaction.reply('No existes en la base de datos. Contacta con el administrador o yo que sé.');
+    if (user === null) return interaction.reply({ content: 'No existes en la base de datos. Contacta con el administrador o yo que sé.' });
 
-    if (rom === null) return interaction.reply('No hay ningún torneo activo en este momento.');
+    if (rom === null) return interaction.reply({ content: 'No hay ningún torneo activo en este momento.' });
 
     const randomizerRoute = path.resolve(config.randomizerRoute, 'PokeRandoZX.jar');
     try {
@@ -70,24 +70,24 @@ module.exports = {
                 return user.addPokemonRom(rom, { through: { playing: 0, romURL: url } });
               })
               .then(() => {
-                userMember.send(`Aquí tienes tu ROM randomizada: ${url}`);
+                userMember.send({ content: `Aquí tienes tu ROM randomizada: ${url}` });
               })
               .catch((err) => {
                 logger.error(err);
-                return interaction.reply(`No se te ha podido enviar la ROM: ${err}`);
+                return interaction.reply({ content: `No se te ha podido enviar la ROM: ${err}` });
               });
           });
           java.stderr.on('data', (data) => {
             logger.error(data);
-            return interaction.reply(`Ha ocurrido un error randomizando la ROM: ${data}`);
+            return interaction.reply({ content: `Ha ocurrido un error randomizando la ROM: ${data}` });
           });
         });
     }
     catch (err) {
       logger.error(err);
-      return interaction.reply('El ejecutable del randomizer no ha sido encontrado. Avisa al administrador de este problema.');
+      return interaction.reply({ content: 'El ejecutable del randomizer no ha sido encontrado. Avisa al administrador de este problema.' });
     }
 
-    return interaction.reply('¡Gracias por apuntarte al torneo! Tu ROM se está randomizando y se enviará por mensaje directo. ¡Asegúrate de leerte las normas del torneo! Puedes re-randomizar la ROM ejecutándo este commando de nuevo');
+    return interaction.reply({ content: '¡Gracias por apuntarte al torneo! Tu ROM se está randomizando y se enviará por mensaje directo. ¡Asegúrate de leerte las normas del torneo! Puedes re-randomizar la ROM ejecutándo este commando de nuevo' });
   },
 };

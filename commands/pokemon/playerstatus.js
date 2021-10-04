@@ -25,9 +25,9 @@ module.exports = {
       reply = reply.concat('\n');
     });
     if (!reply) {
-      return interaction.reply('No hay jugadores apuntados a este torneo.');
+      return interaction.reply({ content: 'No hay jugadores apuntados a este torneo.' });
     }
 
-    return interaction.reply(reply);
+    return interaction.reply({ content: reply });
   },
 };
