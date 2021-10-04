@@ -74,12 +74,12 @@ module.exports = {
               })
               .catch((err) => {
                 logger.error(err);
-                return interaction.reply({ content: `No se te ha podido enviar la ROM: ${err}` });
+                userMember.send({ content: `No se te ha podido enviar la ROM: ${err}` });
               });
           });
           java.stderr.on('data', (data) => {
             logger.error(data);
-            return interaction.reply({ content: `Ha ocurrido un error randomizando la ROM: ${data}` });
+            userMember.send({ content: `Ha ocurrido un error randomizando la ROM: ${data}` });
           });
         });
     }
