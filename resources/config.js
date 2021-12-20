@@ -9,6 +9,10 @@ module.exports = {
   betRatio: process.env.FRISKAINET_BETTING_RATIO,
   databaseURL: process.env.FRISKAINET_DATABASE_URL,
   voicerssToken: process.env.FRISKAINET_VOICERSS,
+  spotify: {
+    clientId: process.env.FRISKAINET_SPOTIFY_CLIENTID,
+    clientSecret: process.env.FRISKAINET_SPOTIFY_CLIENTSECRET,
+  },
   presence: {
     // Anything you want here
     name: 'Konchinpiro',

@@ -8,16 +8,17 @@ module.exports = {
     // Ignore all bots
     if (newState.member.user.bot || oldState.member.user.bot) return;
 
+    // TODO: Disabled till I decided what I do with the announcer
     // Ignores all the mute, deaf, stream, etc events
-    if (oldState.channelId !== newState.channelId) {
-      const botChannelId = await channelId(oldState?.guild.id || newState.guild.id);
+    // if (oldState.channelId !== newState.channelId) {
+    //   const botChannelId = await channelId(oldState?.guild.id || newState.guild.id);
 
-      if (oldState.channelId === undefined && newState.channelId !== undefined) {
-        userJoined(newState, voicePlayer);
-      }
-      else if (botChannelId === oldState.channelId) {
-        userLeft(oldState, voicePlayer);
-      }
-    }
+    //   if (oldState.channelId === undefined && newState.channelId !== undefined) {
+    //     userJoined(newState, voicePlayer);
+    //   }
+    //   else if (botChannelId === oldState.channelId) {
+    //     userLeft(oldState, voicePlayer);
+    //   }
+    // }
   },
 };

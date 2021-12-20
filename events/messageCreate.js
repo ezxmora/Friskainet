@@ -17,26 +17,14 @@ module.exports = {
       message.react(reactionEmoji);
     }
 
-    if (message.content.includes('http')) {
-      const splittedMessage = message.content.split(' ');
-      for (let i = 0; i < splittedMessage.length; i++) {
-        // Checks if its a Twitter URL
-        if (/^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/(\d+)$/.test(splittedMessage[i])) {
-          message.reply({ content: splittedMessage[i].split('//')[1].replace(/^/, 'https://fx') });
-          // Disabled till I get a propper server
-          // bot.util.downloadVideo(splittedMessage[i], message);
-        }
-      }
-    }
-
     // It gives away some tokens [1-10].
-    // bot.giveTokens(message.author.id, bot.util.getRandomInt(1, 10));
+    bot.giveTokens(message.author.id, bot.util.getRandomInt(1, 10));
 
     // It gives away some experience [100-200]
-    // const levelUp = await bot.giveExperience(message.author.id, bot.util.getRandomInt(100, 200));
+    const levelUp = await bot.giveExperience(message.author.id, bot.util.getRandomInt(100, 200));
 
-    // if (levelUp.level > userInfo.level) {
-    //   message.channel.send({ content: `🎉 ${message.author} ha subido al nivel ${levelUp.level} 🎉` });
-    // }
+    if (levelUp.level > userInfo.level) {
+      message.channel.send({ content: `🎉 ${message.author} ha subido al nivel ${levelUp.level} 🎉` });
+    }
   },
 };
