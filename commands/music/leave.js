@@ -3,7 +3,7 @@ const { getVoiceConnection } = require('@discordjs/voice');
 module.exports = {
   name: 'leave',
   description: 'Hace que el bot se vaya del canal de voz',
-  category: 'announcer',
+  category: 'music',
   cooldown: 0,
   run: async (interaction) => {
     const { logger } = interaction.client;

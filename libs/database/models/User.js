@@ -25,9 +25,6 @@ module.exports = (sequelize, DataTypes) => sequelize.define('user', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
-  birthday: {
-    type: DataTypes.DATEONLY,
-  },
 }, {
   timestamps: false,
 });

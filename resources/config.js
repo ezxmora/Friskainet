@@ -4,6 +4,7 @@ module.exports = {
     welcome: process.env.FRISKAINET_WELCOME_CHANNEL,
     volatile: process.env.FRISKAINET_VOLATILE_CHANNEL,
     pinneds: process.env.FRISKAINET_PINS_CHANNEL,
+    logs: process.env.FRISKAINET_LOGS_CHANNEL,
   },
   adminRole: process.env.FRISKAINET_ADMIN_ROLE,
   betRatio: process.env.FRISKAINET_BETTING_RATIO,

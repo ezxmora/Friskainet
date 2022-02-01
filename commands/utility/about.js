@@ -19,8 +19,9 @@ module.exports = {
     const roles = await user.roles.cache.map((role) => `<@&${role.id}>`);
     roles.pop();
 
-    const userNeedexExperience = 500 * (databaseInfo.level ** 2) - (500 * databaseInfo.level);
-    const experiencePercentage = Math.floor((databaseInfo.experience / userNeedexExperience) * 100);
+    const nextLevel = databaseInfo.level + 1;
+    const neededExperience = 500 * (nextLevel ** 2) - (500 * nextLevel);
+    const experiencePercentage = (100 * databaseInfo.experience) / neededExperience;
 
     const embed = {
       color: randomColor(),
@@ -29,7 +30,7 @@ module.exports = {
       fields: [
         { name: '**Apodo:**', value: user.nickname || 'No tiene', inline: true },
         { name: '**Nivel:**', value: `${databaseInfo.level}`, inline: true },
-        { name: '**Experiencia:**', value: `${databaseInfo.experience}/${userNeedexExperience} - ${experiencePercentage}%\n${progressBarGenerator(experiencePercentage, 20)}` },
+        { name: '**Experiencia:**', value: `${databaseInfo.experience}/${neededExperience} - ${experiencePercentage}%\n${progressBarGenerator(experiencePercentage, 20)}` },
         { name: '**Balance:**', value: `${databaseInfo.balance} tokens` },
         { name: `**Role(s):** - ${roles.length}`, value: roles.join(','), inline: false },
         { name: `**Warn(s):** - ${databaseInfo.warns.length || 0}`, value: databaseInfo.warns.map((w) => `\`${w.reason}\``).join(',') || 'Ninguno', inline: false },
