@@ -21,7 +21,7 @@ It was the first image that I used for my bot and I think that it's a funny one.
 I'm a bit absent minded and I tend to forget or ignore things sometimes ¯\\\_(ツ)\_/¯. Issues and pull requests are open tho :)
 
 ## Features
--   Announcer
+-   Announcer <sub><sup>(Disabled at the moment)</sup></sub>
 -   Fun
 -   Economy
 -   Gambling
@@ -30,6 +30,8 @@ I'm a bit absent minded and I tend to forget or ignore things sometimes ¯\\\_(�
 -   Utility
 -   Leveling system
 -   Message pinner
+-   Music
+-   Voice state logger
 
 ## Requirements
 -   [NodeJS](https://nodejs.org/) >= 12.22.1
