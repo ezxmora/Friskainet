@@ -13,12 +13,12 @@
 	"author": "ezxmora",
 	"license": "MIT",
 	"dependencies": {
-		"@discordjs/opus": "^0.6.0",
-		"@discordjs/voice": "^0.6.0",
-		"chalk": "^4.1.2",
-		"discord.js": "13.1.0",
-		"dotenv": "^10.0.0",
-		"fast-glob": "^3.2.7",
+		"@discordjs/opus": "^0.7.0",
+		"@discordjs/voice": "^0.7.5",
+		"chalk": "^4.1.0",
+		"discord.js": "13.6.0",
+		"dotenv": "^12.0.4",
+		"fast-glob": "^3.2.11",
 		"form-data": "^4.0.0",
 		"libsodium-wrappers": "^0.7.9",
 		"mkdirp": "^1.0.4",
@@ -28,9 +28,11 @@
 		"opusscript": "^0.0.8",
 		"pg": "^8.7.1",
 		"pg-hstore": "^2.3.4",
-		"sequelize": "^6.6.5",
+		"play-dl": "^1.7.8",
+		"sequelize": "^6.13.0",
 		"slot-machine": "^2.1.0",
-		"urban": "^0.3.4"
+		"urban": "^0.3.4",
+		"youtube-dl-exec": "^2.0.2"
 	},
 	"devDependencies": {
 		"eslint": "^7.32.0",

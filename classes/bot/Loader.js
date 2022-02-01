@@ -1,7 +1,7 @@
 const { Collection } = require('discord.js');
 const glob = require('fast-glob');
 const path = require('path');
-const logger = require('../libs/logger');
+const logger = require('../../libs/logger');
 
 module.exports = class FileLoader extends Collection {
   constructor(client, name) {

@@ -1,5 +1,3 @@
-// const { MessageAttachment } = require('discord.js');
-// const { unlinkSync } = require('fs');
 const { Op } = require('sequelize');
 const { PokemonRom } = require('./database');
 
@@ -37,30 +35,6 @@ module.exports = {
     return chunks;
   },
 
-  // downloadVideo: (url, message) => {
-  //   const filePath = `./resources/tmp/${url.split('/')[url.split('/').length - 1]}.mp4`;
-  //   ytdl(url, { noWarnings: true, output: filePath })
-  //     .then(async () => {
-  //       const file = new MessageAttachment(filePath);
-  //       await message.reply({ files: [file] });
-  //       unlinkSync(filePath);
-  //     })
-  //     .catch((err) => {
-  //       if (!err.message.includes('There\'s no video')) {
-  //         if (err.message.includes('403')) {
-  //           return message.channel.send({ content: 'Parece que el vídeo ha sido borrado :(' });
-  //         }
-
-  //         if (err.message.toLowerCase().includes('unknown message')) {
-  //           unlinkSync(filePath);
-  //           return message.channel.send({ content: 'Parece que has borrado el mensaje con el enlance...' });
-  //         }
-
-  //         return message.reply({ content: `No sé que ha pasado :( \`\`\`${err}\`\`\`` });
-  //       }
-  //     });
-  // },
-
   getRandomInt: (min, max) => Math.floor(Math.random()
     * (Math.floor(max) - Math.ceil(min) + 1))
     + Math.ceil(min),
@@ -81,6 +55,27 @@ module.exports = {
 
   isAColor: (color) => /^#[0-9A-F]{6}$/i.test(color),
 
+  progressBarGenerator: (percentage, size) => {
+    let progressBar = '';
+    for (let i = 0; i < size; i++) {
+      if (percentage < (i + 1) * 5) {
+        progressBar += '▱';
+      }
+      else {
+        progressBar += '▰';
+      }
+    }
+
+    return progressBar;
+  },
+
+  isToday(inputDate) {
+    const today = new Date();
+
+    return inputDate.getDate() === today.getDate()
+      && inputDate.getMonth() === today.getMonth();
+  },
+
   currentActiveROM: async () => PokemonRom.findOne({
     where:
     {
@@ -90,4 +85,5 @@ module.exports = {
       },
     },
   }),
+
 };

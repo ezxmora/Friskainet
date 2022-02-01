@@ -4,11 +4,16 @@ module.exports = {
     welcome: process.env.FRISKAINET_WELCOME_CHANNEL,
     volatile: process.env.FRISKAINET_VOLATILE_CHANNEL,
     pinneds: process.env.FRISKAINET_PINS_CHANNEL,
+    logs: process.env.FRISKAINET_LOGS_CHANNEL,
   },
   adminRole: process.env.FRISKAINET_ADMIN_ROLE,
   betRatio: process.env.FRISKAINET_BETTING_RATIO,
   databaseURL: process.env.FRISKAINET_DATABASE_URL,
   voicerssToken: process.env.FRISKAINET_VOICERSS,
+  spotify: {
+    clientId: process.env.FRISKAINET_SPOTIFY_CLIENTID,
+    clientSecret: process.env.FRISKAINET_SPOTIFY_CLIENTSECRET,
+  },
   presence: {
     // Anything you want here
     name: 'Konchinpiro',
