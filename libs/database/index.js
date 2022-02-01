@@ -17,20 +17,22 @@ const Rule = require('./models/Rule')(sequelize, DataTypes);
 const Warn = require('./models/Warn')(sequelize, DataTypes);
 const Pin = require('./models/Pin')(sequelize, DataTypes);
 const PokemonRom = require('./models/PokemonRom')(sequelize, DataTypes);
+const PokemonRomUser = require('./models/PokemonRomUser')(sequelize, DataTypes);
 
 // Relations
 User.hasMany(Warn, { foreignKey: 'userId' });
 Warn.belongsTo(User, { foreignKey: 'userId' });
-
-User.belongsToMany(PokemonRom, { as: 'pokemonRom', foreignKey: 'userId', through: 'PokemonRomUser' });
-PokemonRom.belongsTo(User, { as: 'user', foreignKey: 'pokemonRomId', through: 'PokemonRomUser' });
+User.belongsToMany(PokemonRom, { as: 'pokemonRom', foreignKey: 'userId', through: PokemonRomUser });
+PokemonRom.belongsTo(User, { as: 'user', foreignKey: 'pokemonRomId', through: PokemonRomUser });
 
 // Methods
 User.prototype.isBlacklisted = () => this.blacklisted;
 
 // Drops all the tables and creates them again.
 const syncAll = (callback) => {
-  sequelize.sync({ force: true })
+  sequelize.query('SET FOREIGN_KEY_CHECKS = 0')
+    .then(() => sequelize.sync({ force: true }))
+    .then(() => sequelize.query('SET FOREIGN_KEY_CHECKS = 1'))
     .then(() => {
       logger.db('Se ha reseteado la base de datos');
 
@@ -45,6 +47,7 @@ module.exports = {
   Warn,
   PokemonRom,
   Pin,
+  PokemonRomUser,
   syncAll,
   sequelize,
 };

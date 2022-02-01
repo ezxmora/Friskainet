@@ -26,4 +26,7 @@ module.exports = {
     'Sup {{user}}?',
   ],
   randomizerRoute: process.env.FRISKAINET_RANDOMIZER_ROUTE,
+  pokemonRole: process.env.FRISKAINET_POKEMON_ROLE_ID,
+  challongeUsername: process.env.FRISKAINET_CHALLONGE_USERNAME,
+  challongeApiKey: process.env.FRISKAINET_CHALLONGE_API_KEY,
 };
