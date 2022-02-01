@@ -3,7 +3,7 @@ process.title = 'Friskainet - Deploy script';
 require('dotenv').config();
 const { Intents } = require('discord.js');
 const { mkdirSync, existsSync } = require('fs');
-const Friskainet = require('./classes/Friskainet');
+const Friskainet = require('./classes/bot/Friskainet');
 const { discordToken } = require('./resources/config');
 const { User, syncAll } = require('./libs/database/index');
 const logger = require('./libs/logger');
