@@ -30,9 +30,7 @@ User.prototype.isBlacklisted = () => this.blacklisted;
 
 // Drops all the tables and creates them again.
 const syncAll = (callback) => {
-  sequelize.query('SET FOREIGN_KEY_CHECKS = 0')
-    .then(() => sequelize.sync({ force: true }))
-    .then(() => sequelize.query('SET FOREIGN_KEY_CHECKS = 1'))
+  sequelize.sync({ alter: true })
     .then(() => {
       logger.db('Se ha reseteado la base de datos');
 
