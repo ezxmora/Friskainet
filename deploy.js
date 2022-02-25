@@ -56,7 +56,7 @@ const init = async () => {
     const users = await bot.getAllUsers();
 
     users.forEach((member) => {
-      User.create({ userId: member.user.id, birthday: null })
+      User.create({ userId: member.user.id })
         .then((result) => logger.db(`[${member.guild.name}] - [${result.userId}] - ${member.user.tag} ha sido añadid@ a la base de datos`))
         .catch((err) => logger.error(err));
     });

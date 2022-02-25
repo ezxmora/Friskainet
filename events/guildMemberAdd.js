@@ -13,10 +13,7 @@ module.exports = {
       const userExists = await bot.database.User.findOne({ where: { discordID: member.id } });
 
       if (!userExists) {
-        bot.database.User.create({
-          discordID: member.id,
-          birthday: null,
-        })
+        bot.database.User.create({ userId: member.id })
           .then((user) => {
             bot.logger.db(`${user.discordID} ha sido añadido a la base de datos`);
           })
