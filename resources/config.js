@@ -1,7 +1,6 @@
 module.exports = {
   discordToken: process.env.FRISKAINET_TOKEN,
   channels: {
-    welcome: process.env.FRISKAINET_WELCOME_CHANNEL,
     volatile: process.env.FRISKAINET_VOLATILE_CHANNEL,
     pinneds: process.env.FRISKAINET_PINS_CHANNEL,
     logs: process.env.FRISKAINET_LOGS_CHANNEL,
@@ -22,8 +21,5 @@ module.exports = {
     // Check https://discord.js.org/#/docs/main/stable/typedef/ClientPresenceStatus
     status: 'online',
   },
-  greetings: [
-    'Sup {{user}}?',
-  ],
   randomizerRoute: process.env.FRISKAINET_RANDOMIZER_ROUTE,
 };
