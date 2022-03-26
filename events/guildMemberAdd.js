@@ -2,12 +2,16 @@ module.exports = {
   name: 'guildMemberAdd',
   once: false,
   execute: async (member, bot) => {
-    const { config: { channels, greetings } } = bot;
+    const { config: { channels } } = bot;
     if (!member.user.bot) {
-      const channel = await member.guild.channels.cache.find((c) => c.name === channels.welcome);
-      const greet = greetings[Math.floor(Math.random() * greetings.length)];
+      const channel = await member.guild.channels.cache.find((c) => c.name === channels.logs);
 
-      channel.send({ content: greet.replace('{{user}}', member) });
+      channel.send({
+        embeds: [{
+          color: '#00AAFF',
+          description: `[${member.id}] - **${member.user.tag}** se unió al servidor`,
+        }],
+      });
 
       // Checks if the user exists and if it doesn't adds it
       const userExists = await bot.database.User.findOne({ where: { discordID: member.id } });
