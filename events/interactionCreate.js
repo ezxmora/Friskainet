@@ -49,13 +49,13 @@ module.exports = {
     setTimeout(() => timestamps.delete(interaction.member.id), cooldownAmount);
 
     // It gives away some tokens [1-10].
-    // bot.giveTokens(interaction.member.id, bot.util.getRandomInt(1, 10));
+    bot.giveTokens(interaction.member.id, bot.util.getRandomInt(1, 10));
 
     // It gives away some experience [100-200]
-    // const levelUp = await bot.giveExperience(interaction.member.id, bot.util.getRandomInt(100, 200));
-    // if (levelUp.level > userInfo.level) {
-    //   interaction.channel.send({ content: `🎉 ${interaction.user} ha subido al nivel ${levelUp.level} 🎉` });
-    // }
+    const levelUp = await bot.giveExperience(interaction.member.id, bot.util.getRandomInt(100, 200));
+    if (levelUp.level > userInfo.level) {
+      interaction.channel.send({ content: `🎉 ${interaction.user} ha subido al nivel ${levelUp.level} 🎉` });
+    }
 
     try {
       bot.logger.cmd(`${interaction.user.tag} ha ejecutado ${cmd}`);
