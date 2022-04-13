@@ -6,7 +6,8 @@ const JobLoader = require('./JobLoader');
 
 const config = require('../../resources/config');
 const database = require('../../libs/database');
-const logger = require('../../libs/logger');
+// const logger = require('../../libs/logger');
+const Logger = require('./Logger');
 const util = require('../../libs/utils');
 const voice = require('../../libs/voice');
 
@@ -20,7 +21,7 @@ module.exports = class Friskainet extends Client {
     this.database = database;
     this.events = new EventLoader(this);
     this.jobs = new JobLoader(this);
-    this.logger = logger;
+    this.logger = new Logger();
     this.util = util;
     this.voiceConnections = new Map();
     this.voiceLib = voice;

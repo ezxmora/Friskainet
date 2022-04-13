@@ -34,7 +34,7 @@ I'm a bit absent minded and I tend to forget or ignore things sometimes ¯\\\_(�
 -   Voice state logger
 
 ## Requirements
--   [NodeJS](https://nodejs.org/) >= 12.22.1
+-   [NodeJS](https://nodejs.org/) >=16.6.0
 -   SQL database
 -   Java Runtime for Pokémon randomizer
 
