@@ -1,7 +1,8 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const { databaseURL } = require('../../resources/config');
-const logger = require('../logger');
+const Logger = require('../../classes/bot/Logger');
 
+const logger = new Logger();
 const sequelize = new Sequelize(databaseURL, {
   logging: false,
   dialectOptions: {
@@ -17,6 +18,7 @@ const Rule = require('./models/Rule')(sequelize, DataTypes);
 const Warn = require('./models/Warn')(sequelize, DataTypes);
 const Pin = require('./models/Pin')(sequelize, DataTypes);
 const PokemonRom = require('./models/PokemonRom')(sequelize, DataTypes);
+const Command = require('./models/Command')(sequelize, DataTypes);
 
 // Relations
 User.hasMany(Warn, { foreignKey: 'userId' });
@@ -30,7 +32,7 @@ User.prototype.isBlacklisted = () => this.blacklisted;
 
 // Drops all the tables and creates them again.
 const syncAll = (callback) => {
-  sequelize.sync({ force: true })
+  sequelize.sync({ alter: true })
     .then(() => {
       logger.db('Se ha reseteado la base de datos');
 
@@ -45,6 +47,7 @@ module.exports = {
   Warn,
   PokemonRom,
   Pin,
+  Command,
   syncAll,
   sequelize,
 };

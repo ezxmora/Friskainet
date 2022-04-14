@@ -3,7 +3,7 @@ process.title = 'Friskainet - Deploy script';
 const { Intents } = require('discord.js');
 const Friskainet = require('./classes/bot/Friskainet');
 const { token } = require('./resources/config');
-const { User, syncAll } = require('./libs/database/index');
+const { User, Command, syncAll } = require('./libs/database/index');
 
 
 const bot = new Friskainet({
@@ -16,15 +16,22 @@ const bot = new Friskainet({
   ],
 });
 
-
-const init = async () => {
+bot.login(token).then(async () => {
   // Database and slash commands deployment
   syncAll(async () => {
     const commands = await bot.commands.loadFiles();
-    const guilds = await bot.guilds.cache.map((guild) => guild.id);
+    const slashCommands = commands.map((cmd) => {
+      Command.create({ name: cmd.name, category: cmd.category })
+        .then((result) => bot.logger.db(`El comando ${result.name} ha sido añadido a la base de datos`))
+        .catch((error) => bot.logger.error(`Ha habido un error al intentar añadir un comando ${error}`));
+
+      delete cmd.category;
+      return cmd;
+    });
+    const guilds = bot.guilds.cache.map((guild) => guild.id);
 
     // Fetchs, removes and re-adds all Friskainet's commands
-    await guilds.forEach(async (guild) => {
+    guilds.forEach(async (guild) => {
       const currentGuild = await bot.guilds.cache.get(guild);
       const currentGuildCommands = await currentGuild?.commands.fetch();
 
@@ -33,7 +40,7 @@ const init = async () => {
         bot.logger.warn(`${command.name} ha sido borrado`);
       }));
 
-      await currentGuild?.commands.set(commands)
+      await currentGuild?.commands.set(slashCommands)
         .then(() => bot.logger.log('Se han añadido todos los comandos correctamente'))
         .catch((error) => bot.logger.error(`Ha habido un error al intentar añadir un comando ${error}`));
     });
@@ -47,6 +54,4 @@ const init = async () => {
         .catch((err) => bot.logger.error(err));
     });
   });
-};
-
-bot.login(token).then(() => init());
+});

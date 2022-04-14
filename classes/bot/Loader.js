@@ -1,7 +1,6 @@
 const { Collection } = require('discord.js');
 const glob = require('fast-glob');
 const path = require('path');
-const logger = require('../../libs/logger');
 
 module.exports = class FileLoader extends Collection {
   constructor(client, name) {
@@ -22,7 +21,7 @@ module.exports = class FileLoader extends Collection {
       return fileSetter;
     }
     catch (error) {
-      logger.error(`Ha fallado ${this.name.slice(0, -1)}\n${error.stack || error}`);
+      this.client.logger.error(`Ha fallado ${this.name.slice(0, -1)}\n${error.stack || error}`);
 
       return null;
     }
@@ -37,6 +36,7 @@ module.exports = class FileLoader extends Collection {
 
       obj.name = v.name;
       obj.description = v.description ?? null;
+      obj.category = v.category;
 
       if (Array.isArray(v.options)) {
         obj.options = v.options;
