@@ -14,6 +14,7 @@ module.exports = class SoundPlayer {
     this.audioPlayer = createAudioPlayer();
     this.queueLock = false;
     this.readyLock = false;
+    this.timer = null;
 
     this.voiceConnection.on('stateChange', async (_, newState) => {
       if (newState.status === VoiceConnectionStatus.Disconnected) {
@@ -59,10 +60,15 @@ module.exports = class SoundPlayer {
     this.audioPlayer.on('stateChange', (oldState, newState) => {
       if (newState.status === AudioPlayerStatus.Idle
         && oldState.status !== AudioPlayerStatus.Idle) {
+        this.timer = null;
         this.processQueue();
       }
       else if (newState.status === AudioPlayerStatus.Playing) {
         newState.resource.metadata.onStart();
+      }
+      else if (newState.status === AudioPlayerStatus.Idle
+        && oldState.status === AudioPlayerStatus.Idle) {
+        this.timer = setTimeout(() => voiceConnection.destroy(), 30_000);
       }
     });
 
