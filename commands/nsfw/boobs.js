@@ -17,7 +17,8 @@ module.exports = {
     return fetch('http://api.oboobs.ru/boobs/0/1/random')
       .then(async (response) => {
         const responseJson = await response.json();
-        interaction.channel.send({
+
+        interaction.reply({
           embeds: [{
             color: util.randomColor(),
             timestamp: `${interaction.createdAt}`,

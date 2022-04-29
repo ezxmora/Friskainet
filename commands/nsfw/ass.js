@@ -18,7 +18,7 @@ module.exports = {
       .then(async (response) => {
         const responseJson = await response.json();
 
-        interaction.channel.send({
+        interaction.reply({
           embeds: [{
             color: util.randomColor(),
             timestamp: `${interaction.createdAt}`,
