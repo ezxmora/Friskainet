@@ -1,7 +1,8 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const { databaseURL } = require('../../resources/config');
-const logger = require('../logger');
+const Logger = require('../../classes/bot/Logger');
 
+const logger = new Logger();
 const sequelize = new Sequelize(databaseURL, {
   logging: false,
   dialectOptions: {
@@ -17,6 +18,7 @@ const Rule = require('./models/Rule')(sequelize, DataTypes);
 const Warn = require('./models/Warn')(sequelize, DataTypes);
 const Pin = require('./models/Pin')(sequelize, DataTypes);
 const PokemonRom = require('./models/PokemonRom')(sequelize, DataTypes);
+const Command = require('./models/Command')(sequelize, DataTypes);
 const PokemonRomUser = require('./models/PokemonRomUser')(sequelize, DataTypes);
 
 // Relations
@@ -45,6 +47,7 @@ module.exports = {
   Warn,
   PokemonRom,
   Pin,
+  Command,
   PokemonRomUser,
   syncAll,
   sequelize,

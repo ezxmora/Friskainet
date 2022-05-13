@@ -32,8 +32,8 @@ I'm a bit absent minded and I tend to forget or ignore things sometimes Â¯\\\_(ã
 -   Message pinner
 -   Music
 -   Voice state logger
-
 -   Pokemon ROM randomizer and tournament creator
+
 ## Requirements
 -   [NodeJS](https://nodejs.org/) >= 16.6.0
 -   SQL database
