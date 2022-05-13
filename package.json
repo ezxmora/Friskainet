@@ -13,9 +13,12 @@
 	"author": "ezxmora",
 	"license": "MIT",
 	"dependencies": {
+		"@discordjs/builders": "^0.13.0",
 		"@discordjs/opus": "^0.7.0",
+		"@discordjs/rest": "^0.4.1",
 		"@discordjs/voice": "^0.8.0",
 		"chalk": "^4.1.2",
+		"discord-api-types": "^0.32.0",
 		"discord.js": "13.6.0",
 		"fast-glob": "^3.2.11",
 		"form-data": "^4.0.0",
