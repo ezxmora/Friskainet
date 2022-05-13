@@ -1,6 +1,6 @@
 const { Util } = require('discord.js');
-const config = require('../../resources/config');
-const challongeapi = require('../../libs/challongeapi');
+const config = require('@config');
+const challongeapi = require('@libs/apis/challongeapi');
 
 module.exports = {
   name: 'endrunphase',

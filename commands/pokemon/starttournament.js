@@ -1,7 +1,7 @@
 const { Util, Permissions } = require('discord.js');
 const fetch = require('node-fetch');
+const config = require('@config');
 const deactivaterom = require('./endtournament');
-const config = require('../../resources/config');
 
 module.exports = {
   name: 'starttournament',

@@ -1,4 +1,4 @@
-const config = require('../../resources/config');
+const config = require('@config');
 
 module.exports = {
   name: 'usercomplete',

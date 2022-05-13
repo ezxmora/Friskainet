@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const { databaseURL } = require('../../resources/config');
-const Logger = require('../../classes/bot/Logger');
+const { databaseURL } = require('@config');
+const Logger = require('@bot/Logger');
 
 const logger = new Logger();
 const sequelize = new Sequelize(databaseURL, {

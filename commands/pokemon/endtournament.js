@@ -1,7 +1,7 @@
 const { Op } = require('sequelize');
-const { PokemonRom } = require('../../libs/database/index');
-const config = require('../../resources/config');
-const challongeapi = require('../../libs/challongeapi');
+const { PokemonRom } = require('@libs/database/index');
+const config = require('@config');
+const challongeapi = require('@libs/apis/challongeapi');
 
 async function deactivateRom() {
   return PokemonRom.update(

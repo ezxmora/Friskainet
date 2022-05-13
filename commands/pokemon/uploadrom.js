@@ -1,5 +1,5 @@
-const { PokemonRom } = require('../../libs/database/index');
-const config = require('../../resources/config');
+const { PokemonRom } = require('@libs/database/index');
+const config = require('@config');
 
 function filter(message) {
   const isAttachment = message.attachments.size > 0;

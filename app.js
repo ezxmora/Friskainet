@@ -1,8 +1,9 @@
 process.title = 'Friskainet';
 
+require('module-alias/register');
 const { Intents, Options } = require('discord.js');
-const Friskainet = require('./classes/bot/Friskainet');
-const { token } = require('./resources/config');
+const Friskainet = require('@bot/Friskainet');
+const { token } = require('@config');
 
 const bot = new Friskainet({
   intents: [

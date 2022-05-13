@@ -1,5 +1,5 @@
 const { SlotMachine } = require('slot-machine');
-const { slotSymbols } = require('../../resources/slots-symbols');
+const { slotSymbols } = require('@resources/slots-symbols');
 
 module.exports = {
   name: 'slot',

@@ -4,9 +4,9 @@ const { Intents } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const Friskainet = require('./classes/bot/Friskainet');
-const { token, guildID, applicationID } = require('./resources/config');
-const { User, syncAll } = require('./libs/database/index');
+const Friskainet = require('@bot/Friskainet');
+const { token, guildID, applicationID } = require('@config');
+const { User, syncAll } = require('@libs/database/index');
 
 
 const bot = new Friskainet({
