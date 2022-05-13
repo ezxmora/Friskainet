@@ -6,7 +6,7 @@ const Spotify = require('../../classes/music/Spotify');
 
 module.exports = {
   name: 'play',
-  description: 'Reproduce o añade una canción a la cola ',
+  description: 'Reproduce o añade una canción a la cola',
   options: [{
     name: 'cancion',
     type: 'STRING',
