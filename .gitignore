@@ -10,6 +10,5 @@ resources/config.js
 *.mp3
 *.mp4
 
-pokefiles/*
-!pokefiles/PokeRandoZX.jar
-
+resources/pokemon/*
+!resources/pokemon/PokeRandoZX.jar

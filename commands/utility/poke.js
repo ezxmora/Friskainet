@@ -32,7 +32,9 @@ module.exports = {
         },
       };
 
-      return userMention.send({ embeds: [embed] });
+      await userMention.send({ embeds: [embed] });
+
+      return interaction.reply({ content: 'Se ha mandado el poke correctamente', ephemeral: true });
     }
     catch (error) {
       logger.error(`Ha habido un error al intentar pokear a ${userMention.tag}: \n${error.message}`);

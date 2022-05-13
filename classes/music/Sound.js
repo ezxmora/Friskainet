@@ -1,5 +1,5 @@
 const { demuxProbe, createAudioResource } = require('@discordjs/voice');
-const { raw } = require('youtube-dl-exec');
+const { exec } = require('youtube-dl-exec');
 const play = require('play-dl');
 const Spotify = require('./Spotify');
 const { spotify } = require('../../resources/config');
@@ -20,7 +20,7 @@ module.exports = class Sound {
 
   createAudioResource() {
     return new Promise((resolve, reject) => {
-      const videoProcess = raw(this.url, {
+      const videoProcess = exec(this.url, {
         o: '-',
         q: '',
         f: 'bestaudio[ext=webm+acodec=opus+asr=48000]/bestaudio',

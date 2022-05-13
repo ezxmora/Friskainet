@@ -19,13 +19,13 @@ const Warn = require('./models/Warn')(sequelize, DataTypes);
 const Pin = require('./models/Pin')(sequelize, DataTypes);
 const PokemonRom = require('./models/PokemonRom')(sequelize, DataTypes);
 const Command = require('./models/Command')(sequelize, DataTypes);
+const PokemonRomUser = require('./models/PokemonRomUser')(sequelize, DataTypes);
 
 // Relations
 User.hasMany(Warn, { foreignKey: 'userId' });
 Warn.belongsTo(User, { foreignKey: 'userId' });
-
-User.belongsToMany(PokemonRom, { as: 'pokemonRom', foreignKey: 'userId', through: 'PokemonRomUser' });
-PokemonRom.belongsTo(User, { as: 'user', foreignKey: 'pokemonRomId', through: 'PokemonRomUser' });
+User.belongsToMany(PokemonRom, { as: 'pokemonRom', foreignKey: 'userId', through: PokemonRomUser });
+PokemonRom.belongsTo(User, { as: 'user', foreignKey: 'pokemonRomId', through: PokemonRomUser });
 
 // Methods
 User.prototype.isBlacklisted = () => this.blacklisted;
@@ -48,6 +48,7 @@ module.exports = {
   PokemonRom,
   Pin,
   Command,
+  PokemonRomUser,
   syncAll,
   sequelize,
 };
