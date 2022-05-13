@@ -4,13 +4,21 @@ module.exports = {
   // Only works with debug enabled
   prefix: '!',
   ownerID: 'BOT OWNER ID',
+  guildID: 'GUILD ID',
+  applicationID: 'YOUR APPLICATION ID',
   token: process.env.FRISKAINET_TOKEN ?? 'DISCORD TOKEN',
+  roleAssignerMessageId: 'MESSAGE TO ASSIGN ROLES',
   channels: {
     volatile: 'VOLATILE CHANNEL NAME',
     pinneds: 'PINS CHANNEL NAME',
     logs: 'LOGS CHANNEL NAME',
   },
-  adminRole: 'ADMIN ROLE NAME',
+  roles: {
+    admin: 'Admin Role Name',
+    vip: 'Vip Role Name',
+    random: 'Normal user Role Name',
+    pokemon: 'Pokemon Admin Role Name',
+  },
   betRatio: 'BETTING SYSTEM PROFIT RATIO',
   databaseURL: process.env.FRISKAINET_DATABASE_URL ?? 'DATABASE URL',
   voicerssToken: process.env.FRISKAINET_VOICERSS ?? 'VOICE RSS TOKEN',

@@ -17,14 +17,33 @@ module.exports = {
       message.react(reactionEmoji);
     }
 
-    // It gives away some tokens [1-10].
-    bot.giveTokens(message.author.id, bot.util.getRandomInt(1, 10));
+    const { config: { prefix, debug }, commands, logger } = bot;
+    if (!debug) {
+      // It gives away some tokens [1-10].
+      bot.giveTokens(message.author.id, bot.util.getRandomInt(1, 10));
 
-    // It gives away some experience [100-200]
-    const levelUp = await bot.giveExperience(message.author.id, bot.util.getRandomInt(100, 200));
+      // It gives away some experience [100-200]
+      const levelUp = await bot.giveExperience(message.author.id, bot.util.getRandomInt(100, 200));
 
-    if (levelUp.level > userInfo.level) {
-      message.channel.send({ content: `🎉 ${message.author} ha subido al nivel ${levelUp.level} 🎉` });
+      if (levelUp.level > userInfo.level) {
+        message.channel.send({ content: `🎉 ${message.author} ha subido al nivel ${levelUp.level} 🎉` });
+      }
+    }
+    else {
+      // This is only for testing and developing commands, don't use it in production
+      if (!message.content.startsWith(prefix)) return;
+
+      const args = message.content.toLowerCase().substring(prefix.length).split(' ');
+      const cmd = args[0];
+      if (!commands.has(cmd)) return;
+
+      const command = commands.get(cmd);
+      try {
+        command.run(message, args);
+      }
+      catch (error) {
+        logger.error(`Ha habido un error\n ${error}`);
+      }
     }
   },
 };
