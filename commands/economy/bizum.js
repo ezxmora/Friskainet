@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'transfer',
+  name: 'bizum',
   description: 'Envía tokens a otro usuario',
   options: [{
     name: 'usuario',
