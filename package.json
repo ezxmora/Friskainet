@@ -7,7 +7,8 @@
 		"node": ">=16.6.0"
 	},
 	"scripts": {
-		"deploy-cmd": "node resources/deploy-users-commands.js",
+		"deploy-cmd": "node resources/scripts/deploy-db-commands.js",
+		"deploy-rules": "node resources/scripts/deploy-rules-roles.js",
 		"start": "node app.js"
 	},
 	"author": "ezxmora",

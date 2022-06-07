@@ -1,13 +1,12 @@
-process.title = 'Friskainet - Deploy script';
+process.title = 'Friskainet - Deploy commands & database script';
 
+require('module-alias/register');
 const { Intents } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Friskainet = require('@bot/Friskainet');
 const { token, guildID, applicationID } = require('@config');
-const { User, syncAll } = require('@libs/database/index');
-
 
 const bot = new Friskainet({
   intents: [
@@ -21,6 +20,7 @@ const bot = new Friskainet({
 
 // Database and slash commands deployment
 bot.login(token).then(async () => {
+  const { databse: { User, syncAll } } = bot;
   syncAll(async () => {
     const commands = [
       new SlashCommandBuilder()

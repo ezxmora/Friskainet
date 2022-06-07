@@ -12,3 +12,4 @@ resources/config.js
 
 resources/pokemon/*
 !resources/pokemon/PokeRandoZX.jar
+resources/rules.json
