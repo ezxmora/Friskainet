@@ -12,6 +12,7 @@ module.exports = {
     volatile: 'VOLATILE CHANNEL NAME',
     pinneds: 'PINS CHANNEL NAME',
     logs: 'LOGS CHANNEL NAME',
+    serverInfoId: 'SERVER INFO ID',
   },
   roles: {
     admin: 'Admin Role Name',
