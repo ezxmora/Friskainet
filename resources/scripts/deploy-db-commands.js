@@ -3,7 +3,7 @@ process.title = 'Friskainet - Deploy commands & database script';
 require('module-alias/register');
 const { Intents } = require('discord.js');
 const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
+const { Routes, PermissionFlagsBits } = require('discord-api-types/v10');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Friskainet = require('@bot/Friskainet');
 const { token, guildID, applicationID } = require('@config');
@@ -78,12 +78,12 @@ bot.login(token).then(async () => {
       new SlashCommandBuilder()
         .setName('disconnect')
         .setDescription('Desconecta a un usuario de un canal de voz')
-        .setDefaultPermission(false)
+        .setDefaultMemberPermission(PermissionFlagsBits.Administrator)
         .addUserOption((u) => u.setName('usuario').setDescription('Usuario a desconectar').setRequired(true)),
       new SlashCommandBuilder()
         .setName('warn')
         .setDescription('Le añade un warn a un usuario')
-        .setDefaultPermission(false)
+        .setDefaultMemberPermission(PermissionFlagsBits.Administrator)
         .addUserOption((u) => u.setName('usuario').setDescription('Usuario al que añadir el aviso').setRequired(true))
         .addStringOption((s) => s.setName('motivo').setDescription('Motivo por el que se sanciona al usuario').setRequired(true)),
       new SlashCommandBuilder().setName('clear').setDescription('Vacía la cola de canciones'),
