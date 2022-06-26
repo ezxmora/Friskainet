@@ -20,7 +20,8 @@ const bot = new Friskainet({
 
 // Database and slash commands deployment
 bot.login(token).then(async () => {
-  const { databse: { User, syncAll } } = bot;
+  const { database: { User, syncAll } } = bot;
+
   syncAll(async () => {
     const commands = [
       new SlashCommandBuilder()
@@ -78,12 +79,12 @@ bot.login(token).then(async () => {
       new SlashCommandBuilder()
         .setName('disconnect')
         .setDescription('Desconecta a un usuario de un canal de voz')
-        .setDefaultMemberPermission(PermissionFlagsBits.Administrator)
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
         .addUserOption((u) => u.setName('usuario').setDescription('Usuario a desconectar').setRequired(true)),
       new SlashCommandBuilder()
         .setName('warn')
         .setDescription('Le añade un warn a un usuario')
-        .setDefaultMemberPermission(PermissionFlagsBits.Administrator)
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
         .addUserOption((u) => u.setName('usuario').setDescription('Usuario al que añadir el aviso').setRequired(true))
         .addStringOption((s) => s.setName('motivo').setDescription('Motivo por el que se sanciona al usuario').setRequired(true)),
       new SlashCommandBuilder().setName('clear').setDescription('Vacía la cola de canciones'),
@@ -129,6 +130,11 @@ bot.login(token).then(async () => {
         .setDescription('Baraja y divide en grupos una serie de elementos')
         .addIntegerOption((i) => i.setName('grupos').setDescription('Número de grupos').setRequired(true))
         .addStringOption((s) => s.setName('items').setDescription('Items a barajar separados por comas').setRequired(true)),
+      new SlashCommandBuilder()
+        .setName('stalk')
+        .setDescription('Hace una captura de una web')
+        .addStringOption((s) => s.setName('url').setDescription('URL de la página').setRequired(true))
+        .addBooleanOption((b) => b.setName('full').setDescription('¿Quieres que se imprima toda la web?').setRequired(false)),
     ].map((command) => command.toJSON());
 
     // Adds all Friskainet's commands

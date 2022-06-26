@@ -7,8 +7,8 @@
 		"node": ">=16.6.0"
 	},
 	"scripts": {
-		"deploy-cmd": "node resources/scripts/deploy-db-commands.js",
-		"deploy-rules": "node resources/scripts/deploy-rules-roles.js",
+		"deploy:cmd": "node resources/scripts/deploy-db-commands.js",
+		"deploy:rules": "node resources/scripts/deploy-rules-roles.js",
 		"start": "node app.js"
 	},
 	"author": "ezxmora",
@@ -32,6 +32,10 @@
 		"pg": "^8.7.3",
 		"pg-hstore": "^2.3.4",
 		"play-dl": "^1.9.5",
+		"puppeteer": "^15.1.1",
+		"puppeteer-extra": "^3.3.0",
+		"puppeteer-extra-plugin-adblocker": "^2.13.0",
+		"puppeteer-extra-plugin-stealth": "^2.10.1",
 		"sequelize": "^6.21.1",
 		"slot-machine": "^2.1.0",
 		"urban": "^0.3.4",
