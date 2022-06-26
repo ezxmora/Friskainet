@@ -1,18 +1,6 @@
 module.exports = {
   name: 'shuffle',
   description: 'Baraja y divide en grupos una serie de elementos',
-  options: [{
-    name: 'grupos',
-    type: 'INTEGER',
-    description: 'Número de grupos',
-    required: true,
-  },
-  {
-    name: 'items',
-    type: 'STRING',
-    description: 'Items a barajar separados por comas',
-    required: true,
-  }],
   category: 'utility',
   cooldown: 30,
   run: async (interaction) => {

@@ -3,12 +3,6 @@ const moment = require('moment');
 module.exports = {
   name: 'about',
   description: 'Obtiene toda la información de un usuario',
-  options: [{
-    name: 'usuario',
-    type: 'USER',
-    description: 'Usuario del que obtener información',
-    required: false,
-  }],
   category: 'utility',
   run: async (interaction) => {
     const { util: { randomColor, progressBarGenerator } } = interaction.client;
