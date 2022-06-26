@@ -13,17 +13,6 @@ async function deactivateRom() {
 module.exports = {
   name: 'endtournament',
   description: 'Termina el torneo activo.',
-  options: [{
-    name: 'winner',
-    type: 'STRING',
-    description: 'Id del usuario a marcar como ganador.',
-    required: true,
-  }, {
-    name: 'category',
-    type: 'STRING',
-    description: 'ID de la categoría a la que mover el canal designado para el torneo',
-    required: false,
-  }],
   category: 'pokemon',
   cooldown: 5,
   roles: [config.pokemonRole],

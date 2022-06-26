@@ -3,18 +3,6 @@ const { Permissions } = require('discord.js');
 module.exports = {
   name: 'delete',
   description: 'Borra los mensajes que cumplan cierto criterio',
-  options: [{
-    name: 'cantidad',
-    type: 'INTEGER',
-    description: 'Cantidad de mensajes a borrar',
-    required: true,
-  },
-  {
-    name: 'criterio',
-    type: 'STRING',
-    description: 'Criterio con el que se borrarán los mensajes, se pueden usar expresiones regulares',
-    required: false,
-  }],
   category: 'moderation',
   cooldown: 30,
   run: async (interaction) => {

@@ -3,17 +3,6 @@ const config = require('@config');
 module.exports = {
   name: 'addteam',
   description: 'Añade un equipo a un usuario que ha completado la fase de juego.',
-  options: [{
-    name: 'id',
-    type: 'STRING',
-    description: 'Id del usuario a marcar como run completada',
-    required: true,
-  }, {
-    name: 'team',
-    type: 'STRING',
-    description: 'URL con el equipo a usar',
-    required: true,
-  }],
   category: 'pokemon',
   cooldown: 5,
   roles: [config.pokemonRole],

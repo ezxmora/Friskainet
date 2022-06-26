@@ -1,36 +1,6 @@
 module.exports = {
   name: 'dice',
   description: 'Tira unos dados',
-  options: [{
-    name: 'dados',
-    type: 'INTEGER',
-    description: 'Número de dados',
-    required: true,
-    choices: Array(10).fill({ name: '', value: '' }).map((item, iterator) => {
-      const obj = { ...item };
-      obj.name = `${iterator + 1}`;
-      obj.value = iterator + 1;
-      return obj;
-    }),
-  },
-  {
-    name: 'apuesta',
-    type: 'INTEGER',
-    description: 'Cantidad a apostar',
-    required: true,
-  },
-  {
-    name: 'cara',
-    type: 'INTEGER',
-    description: 'Cara del dado a adivinar',
-    required: true,
-    choices: Array(6).fill({ name: '', value: '' }).map((item, iterator) => {
-      const obj = { ...item };
-      obj.name = `${iterator + 1}`;
-      obj.value = iterator + 1;
-      return obj;
-    }),
-  }],
   category: 'economy',
   cooldown: 5,
   run: async (interaction) => {

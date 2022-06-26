@@ -7,12 +7,6 @@ const Spotify = require('@music/Spotify');
 module.exports = {
   name: 'play',
   description: 'Reproduce o añade una canción a la cola',
-  options: [{
-    name: 'cancion',
-    type: 'STRING',
-    description: 'La URL o título de la canción',
-    required: true,
-  }],
   category: 'music',
   cooldown: 2,
   run: async (interaction) => {

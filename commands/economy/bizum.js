@@ -1,18 +1,6 @@
 module.exports = {
   name: 'bizum',
   description: 'Envía tokens a otro usuario',
-  options: [{
-    name: 'usuario',
-    type: 'USER',
-    description: 'Usuario al que transferir monedas',
-    required: true,
-  },
-  {
-    name: 'cantidad',
-    type: 'INTEGER',
-    description: 'Cantidad de tokens a transferir',
-    required: true,
-  }],
   category: 'economy',
   cooldown: 10,
   run: async (interaction) => {

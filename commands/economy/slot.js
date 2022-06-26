@@ -4,24 +4,6 @@ const { slotSymbols } = require('@resources/slots-symbols');
 module.exports = {
   name: 'slot',
   description: 'Hace una tirada en la tragaperras',
-  options: [{
-    name: 'lineas',
-    type: 'INTEGER',
-    description: 'Cantidas de líneas para tirar en la tragaperras',
-    required: true,
-    choices: [
-      { name: '3', value: 3 },
-      { name: '5', value: 5 },
-      { name: '7', value: 7 },
-      { name: '9', value: 9 },
-    ],
-  },
-  {
-    name: 'apuesta',
-    type: 'INTEGER',
-    description: 'Cantidad a apostar',
-    required: true,
-  }],
   category: 'economy',
   cooldown: 0,
   run: async (interaction) => {
