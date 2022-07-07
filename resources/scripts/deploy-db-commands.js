@@ -64,6 +64,31 @@ bot.login(token).then(async () => {
         .addIntegerOption((i) => i.setName('cantidad').setDescription('Cantidad de tokens a transferir')
           .setRequired(true)
           .setMinValue(1)),
+      new SlashCommandBuilder()
+        .setName('activities')
+        .setDescription('Empieza o inicia una actividad en un canal de voz')
+        .addStringOption((s) => s.setName('actividad').setDescription('Actividad para hacer en el canal')
+          .setRequired(true)
+          .addChoices(
+            { name: 'Watch Together', value: '880218394199220334' },
+            { name: 'Poker Night (Se necesita un Boost de nivel 1)', value: '755827207812677713' },
+            { name: 'Betrayal.io', value: '773336526917861400' },
+            { name: 'Fishington.io', value: '814288819477020702' },
+            { name: 'Chess In The Park (Se necesita un Boost de nivel 1)', value: '832012774040141894' },
+            { name: 'Sketchy Artist', value: '879864070101172255' },
+            { name: 'Awkword', value: '879863881349087252' },
+            { name: 'Doodle Crew', value: '878067389634314250' },
+            { name: 'Sketch Heads', value: '902271654783242291' },
+            { name: 'Letter Tile (Se necesita un Boost de nivel 1)', value: '879863686565621790' },
+            { name: 'Word Snacks', value: '879863976006127627' },
+            { name: 'SpellCast (Se necesita un Boost de nivel 1)', value: '852509694341283871' },
+            { name: 'Checkers In The Park (Se necesita un Boost de nivel 1)', value: '832013003968348200' },
+            { name: 'Blazing 8s (Se necesita un Boost de nivel 1)', value: '832025144389533716' },
+            { name: 'Putt Party', value: '945737671223947305' },
+            { name: 'Land-io (Se necesita un Boost de nivel 1)', value: '903769130790969345' },
+            { name: 'Bobble League', value: '947957217959759964' },
+            { name: 'Ask Away', value: '976052223358406656' },
+          )),
       new SlashCommandBuilder().setName('kanye').setDescription('Devuelve una frase de Kanye West'),
       new SlashCommandBuilder()
         .setName('urban')
@@ -138,7 +163,7 @@ bot.login(token).then(async () => {
     ].map((command) => command.toJSON());
 
     // Adds all Friskainet's commands
-    const rest = new REST({ version: '9' }).setToken(token);
+    const rest = new REST({ version: '10' }).setToken(token);
     await rest.put(Routes.applicationGuildCommands(applicationID, guildID), { body: commands })
       .then(() => bot.logger.log('Se han añadido todos los comandos correctamente'))
       .catch((error) => bot.logger.error(`Ha habido un error al intentar añadir un comando ${error}`));
