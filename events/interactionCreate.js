@@ -2,7 +2,7 @@ module.exports = {
   name: 'interactionCreate',
   once: false,
   execute: async (interaction, bot) => {
-    const { logger } = interaction.client;
+    const { logger, database: { Stat } } = interaction.client;
     if (!interaction.isCommand()) return;
 
     // Checks if the user is in the blacklist
@@ -49,11 +49,12 @@ module.exports = {
     }
 
     try {
-      bot.logger.cmd(`${interaction.user.tag} ha ejecutado ${cmd}`);
+      Stat.increment('commands', { by: 1, where: { server: interaction.guildId } });
+      logger.cmd(`${interaction.user.tag} ha ejecutado ${cmd}`);
       command.run(interaction);
     }
     catch (error) {
-      bot.logger.error(`Ha habido un error\n ${error}`);
+      logger.error(`Ha habido un error\n ${error}`);
       await interaction.reply({ content: 'Ha habido un error al ejecutar este comando', ephemeral: true });
     }
   },

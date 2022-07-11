@@ -20,7 +20,7 @@ const bot = new Friskainet({
 
 // Database and slash commands deployment
 bot.login(token).then(async () => {
-  const { database: { User, syncAll } } = bot;
+  const { database: { User, Stat, syncAll } } = bot;
 
   syncAll(async () => {
     const commands = [
@@ -167,6 +167,11 @@ bot.login(token).then(async () => {
     await rest.put(Routes.applicationGuildCommands(applicationID, guildID), { body: commands })
       .then(() => bot.logger.log('Se han añadido todos los comandos correctamente'))
       .catch((error) => bot.logger.error(`Ha habido un error al intentar añadir un comando ${error}`));
+
+    // Create server stats
+    Stat.create({ server: guildID })
+      .then(() => bot.logger.db('Se han creado las estadísticas del servidor'))
+      .catch((err) => bot.logger.error(err));
 
     // Fetchs and adds users to the database
     const users = await bot.getAllUsers();

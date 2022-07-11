@@ -29,6 +29,7 @@ const Pin = require('./models/Pin')(sequelize, DataTypes);
 const PokemonRom = require('./models/PokemonRom')(sequelize, DataTypes);
 const Command = require('./models/Command')(sequelize, DataTypes);
 const PokemonRomUser = require('./models/PokemonRomUser')(sequelize, DataTypes);
+const Stat = require('./models/Stat')(sequelize, DataTypes);
 
 // Relations
 User.hasMany(Warn, { foreignKey: 'userId' });
@@ -58,6 +59,7 @@ module.exports = {
   Pin,
   Command,
   PokemonRomUser,
+  Stat,
   syncAll,
   sequelize,
 };

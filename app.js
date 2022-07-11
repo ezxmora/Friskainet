@@ -12,6 +12,7 @@ const bot = new Friskainet({
     Intents.FLAGS.GUILD_MEMBERS,
     Intents.FLAGS.GUILD_MESSAGES,
     Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+    Intents.FLAGS.GUILD_PRESENCES,
     Intents.FLAGS.GUILD_VOICE_STATES,
   ],
   partials: ['MESSAGE', 'CHANNEL', 'REACTION'],

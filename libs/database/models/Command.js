@@ -14,9 +14,11 @@ module.exports = (sequelize, DataTypes) => sequelize.define('command', {
     type: DataTypes.STRING(15),
     allowNull: false,
   },
-  isEnabled: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: true,
+  uses: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+    allowNull: false,
+    min: 0,
   },
 }, {
   timestamps: false,
