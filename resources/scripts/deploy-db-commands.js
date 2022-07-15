@@ -20,7 +20,11 @@ const bot = new Friskainet({
 
 // Database and slash commands deployment
 bot.login(token).then(async () => {
-  const { database: { User, Stat, syncAll } } = bot;
+  const {
+    database: {
+      User, Command, Stat, syncAll,
+    }, logger,
+  } = bot;
 
   syncAll(async () => {
     const commands = [
@@ -168,18 +172,25 @@ bot.login(token).then(async () => {
       .then(() => bot.logger.log('Se han añadido todos los comandos correctamente'))
       .catch((error) => bot.logger.error(`Ha habido un error al intentar añadir un comando ${error}`));
 
+    // Adds all commands to the database
+    commands.forEach((command) => {
+      Command.create({ name: command.name })
+        .then((result) => logger.db(`Se ha añadido el comando ${result.name} a la base de datos`))
+        .catch((err) => logger.error(err));
+    });
+
     // Create server stats
     Stat.create({ server: guildID })
-      .then(() => bot.logger.db('Se han creado las estadísticas del servidor'))
-      .catch((err) => bot.logger.error(err));
+      .then(() => logger.db('Se han creado las estadísticas del servidor'))
+      .catch((err) => logger.error(err));
 
     // Fetchs and adds users to the database
     const users = await bot.getAllUsers();
 
     users.forEach((member) => {
       User.create({ userId: member.user.id })
-        .then((result) => bot.logger.db(`[${member.guild.name}] - [${result.userId}] - ${member.user.tag} ha sido añadid@ a la base de datos`))
-        .catch((err) => bot.logger.error(err));
+        .then((result) => logger.db(`[${member.guild.name}] - [${result.userId}] - ${member.user.tag} ha sido añadid@ a la base de datos`))
+        .catch((err) => logger.error(err));
     });
   });
 });
