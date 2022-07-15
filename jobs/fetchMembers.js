@@ -1,13 +1,12 @@
 module.exports = {
   name: 'fetchMembers',
-  expression: '* * */1 * * *',
+  expression: '0 0 */1 * * *',
   run: async (bot) => {
-    const guildInfo = await bot.guilds.fetch(bot.config.guildID);
-    const guildMembers = await guildInfo.members.fetch({ withPresences: true });
+    const guildMembers = await bot.getAllUsers();
     const online = guildMembers.filter((m) => !m.user.bot && m.presence?.status !== undefined);
 
     bot.database.Stat.update(
-      { onlineUsers: online.size, totalUsers: guildInfo.memberCount },
+      { onlineUsers: online.size, totalUsers: guildMembers.size },
       { where: { server: bot.config.guildID } },
     );
   },

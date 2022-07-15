@@ -2,7 +2,9 @@ const { Client, Collection } = require('discord.js');
 
 const config = require('@config');
 const database = require('@libs/database');
+const { app: website } = require('@libs/website');
 const util = require('@libs/utils');
+
 const Loader = require('./Loader');
 const EventLoader = require('./EventLoader');
 const JobLoader = require('./JobLoader');
@@ -29,6 +31,7 @@ module.exports = class Friskainet extends Client {
       this.commands.loadFiles(),
       this.events.loadFiles(),
       this.jobs.loadFiles(),
+      this.#runWebServer(),
       super.login(token),
     ]);
 
@@ -37,15 +40,17 @@ module.exports = class Friskainet extends Client {
     this.logger.log(`Se han cargado ${loaders[2].length} cron-jobs`);
   }
 
-  getAllUsers() {
-    const guilds = this.guilds.cache.map((guild) => guild.id);
-    return guilds.reduce(async (i, guild) => {
-      const currentGuild = await this.guilds.fetch(guild);
-      if (currentGuild.available) {
-        const guildMembers = await currentGuild.members.fetch({ force: true });
-        return guildMembers.filter((member) => !member.user.bot);
-      }
-    }, []);
+  #runWebServer() {
+    website.listen(this.config.webServer, () => {
+      this.logger.log(`El servidor web está funcionando en el puerto ${this.config.webServer}`);
+    });
+  }
+
+  async getAllUsers() {
+    const guildInfo = await this.guilds.fetch(this.config.guildID);
+    const guildMembers = await guildInfo.members.fetch({ withPresences: true });
+
+    return guildMembers;
   }
 
   async userInfo(userId) {
