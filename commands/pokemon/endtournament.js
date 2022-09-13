@@ -1,7 +1,7 @@
 const { Op } = require('sequelize');
-const { PokemonRom } = require('../../libs/database/index');
-const config = require('../../resources/config');
-const challongeapi = require('../../libs/challongeapi');
+const { PokemonRom } = require('@libs/database/index');
+const config = require('@config');
+const challongeapi = require('@libs/apis/challongeapi');
 
 async function deactivateRom() {
   return PokemonRom.update(
@@ -13,17 +13,6 @@ async function deactivateRom() {
 module.exports = {
   name: 'endtournament',
   description: 'Termina el torneo activo.',
-  options: [{
-    name: 'winner',
-    type: 'STRING',
-    description: 'Id del usuario a marcar como ganador.',
-    required: true,
-  }, {
-    name: 'category',
-    type: 'STRING',
-    description: 'ID de la categoría a la que mover el canal designado para el torneo',
-    required: false,
-  }],
   category: 'pokemon',
   cooldown: 5,
   roles: [config.pokemonRole],

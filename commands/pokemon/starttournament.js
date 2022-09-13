@@ -1,32 +1,11 @@
 const { Util, Permissions } = require('discord.js');
 const fetch = require('node-fetch');
+const config = require('@config');
 const deactivaterom = require('./endtournament');
-const config = require('../../resources/config');
 
 module.exports = {
   name: 'starttournament',
   description: 'Comienza un torneo (fase de jugar o primera fase), creando un canal de texto con las normas.',
-  options: [{
-    name: 'id',
-    type: 'STRING',
-    description: 'Id de la ROM a jugar',
-    required: true,
-  }, {
-    name: 'name',
-    type: 'STRING',
-    description: 'Nombre del torneo',
-    required: true,
-  }, {
-    name: 'channel',
-    type: 'STRING',
-    description: 'Nombre del canal a crear',
-    required: true,
-  }, {
-    name: 'category',
-    type: 'STRING',
-    description: 'ID de la categoría en la que añadir el canal nuevo',
-    required: false,
-  }],
   category: 'pokemon',
   cooldown: 5,
   roles: [config.pokemonRole],

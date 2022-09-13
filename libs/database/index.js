@@ -1,17 +1,26 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const { databaseURL } = require('../../resources/config');
-const Logger = require('../../classes/bot/Logger');
+const { databaseURL, debug } = require('@config');
+const Logger = require('@bot/Logger');
 
 const logger = new Logger();
-const sequelize = new Sequelize(databaseURL, {
-  logging: false,
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false,
+let sequelize;
+
+if (debug) {
+  sequelize = new Sequelize(databaseURL, {
+    logging: false,
+  });
+}
+else {
+  sequelize = new Sequelize(databaseURL, {
+    logging: false,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
     },
-  },
-});
+  });
+}
 
 const User = require('./models/User')(sequelize, DataTypes);
 const Rule = require('./models/Rule')(sequelize, DataTypes);
@@ -20,6 +29,7 @@ const Pin = require('./models/Pin')(sequelize, DataTypes);
 const PokemonRom = require('./models/PokemonRom')(sequelize, DataTypes);
 const Command = require('./models/Command')(sequelize, DataTypes);
 const PokemonRomUser = require('./models/PokemonRomUser')(sequelize, DataTypes);
+const Stat = require('./models/Stat')(sequelize, DataTypes);
 
 // Relations
 User.hasMany(Warn, { foreignKey: 'userId' });
@@ -49,6 +59,7 @@ module.exports = {
   Pin,
   Command,
   PokemonRomUser,
+  Stat,
   syncAll,
   sequelize,
 };

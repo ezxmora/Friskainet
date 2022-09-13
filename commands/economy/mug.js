@@ -1,12 +1,6 @@
 module.exports = {
   name: 'mug',
   description: 'Roba o no algunos tokens a un usuario',
-  options: [{
-    name: 'usuario',
-    type: 'USER',
-    description: 'Usuario al que robar',
-    required: true,
-  }],
   category: 'economy',
   // 86400s are 24h
   cooldown: 86400,

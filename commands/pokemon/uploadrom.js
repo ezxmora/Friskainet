@@ -1,5 +1,5 @@
-const { PokemonRom } = require('../../libs/database/index');
-const config = require('../../resources/config');
+const { PokemonRom } = require('@libs/database/index');
+const config = require('@config');
 
 function filter(message) {
   const isAttachment = message.attachments.size > 0;
@@ -55,7 +55,6 @@ module.exports = {
   name: 'uploadrom',
   description: 'Sube una rom y la configuración del randomizer',
   category: 'pokemon',
-  args: false,
   cooldown: 5,
   roles: [config.pokemonRole],
   run: async (interaction) => {

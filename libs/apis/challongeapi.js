@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const { challongeUsername, challongeApiKey } = require('../resources/config');
+const { challongeUsername, challongeApiKey } = require('@config');
 
 const url = 'https://api.challonge.com/v1/';
 const headers = {

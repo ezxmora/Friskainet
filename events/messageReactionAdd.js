@@ -59,6 +59,11 @@ module.exports = {
       }
     }
 
+    // Regional indicators so people don't do the funny
+    if (reaction.emoji.name.indexOf('regional_indicator') === -1) {
+      await reaction.users.remove(user);
+    }
+
     // Role assigner
     if (reaction.message.id === roleAssignerMessageId) {
       const [randomRole, vipRole] = reaction.message.guild.roles.cache.filter((r) => r.name === random || r.name === vip);

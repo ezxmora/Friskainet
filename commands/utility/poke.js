@@ -1,18 +1,6 @@
 module.exports = {
   name: 'poke',
   description: 'Manda un DM a un usuario con un mensaje',
-  options: [{
-    name: 'usuario',
-    type: 'USER',
-    description: 'Usuario al que pokear',
-    required: true,
-  },
-  {
-    name: 'mensaje',
-    type: 'STRING',
-    description: 'Mensaje a enviar',
-    required: false,
-  }],
   category: 'utility',
   run: async (interaction) => {
     const { logger, util } = interaction.client;

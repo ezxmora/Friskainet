@@ -2,7 +2,7 @@ module.exports = {
   name: 'interactionCreate',
   once: false,
   execute: async (interaction, bot) => {
-    const { logger } = interaction.client;
+    const { logger, database: { Stat } } = interaction.client;
     if (!interaction.isCommand()) return;
 
     // Checks if the user is in the blacklist
@@ -14,34 +14,6 @@ module.exports = {
     if (!bot.commands.has(cmd)) return;
 
     const command = bot.commands.get(cmd);
-
-    // The command needs permissions
-    if (command.permissions || command.roles) {
-      const authorPerms = interaction.channel.permissionsFor(interaction.member);
-      let hasAuthorPerms = true;
-      let permittedRole = true;
-      if (!authorPerms) {
-        hasAuthorPerms = false;
-      }
-      if (command.permissions) {
-        hasAuthorPerms = !authorPerms.has(command.permissions);
-      }
-      if (command.roles) {
-        permittedRole = interaction.member.roles.cache
-          .some((r) => command.roles.indexOf(r.id) >= 0);
-      }
-      if (!hasAuthorPerms || !permittedRole) {
-        logger.log(`User ${interaction.member.displayName} has no permissions to run command: ${cmd}`);
-        if (command.permissions) {
-          logger.log(`Permissions needed: ${command.permissions}`);
-        }
-        if (command.roles) {
-          logger.log(`Role needed: ${command.roles}`);
-        }
-        return interaction.reply({ content: 'No tienes los permisos adecuados para ejecutar ese comando', ephemeral: true });
-      }
-    }
-
     const cooldowns = bot.commandCooldowns;
 
     // Doesn't exist a cooldown
@@ -77,11 +49,12 @@ module.exports = {
     }
 
     try {
-      bot.logger.cmd(`${interaction.user.tag} ha ejecutado ${cmd}`);
+      Stat.increment('commands', { by: 1, where: { server: interaction.guildId } });
+      logger.cmd(`${interaction.user.tag} ha ejecutado ${cmd}`);
       command.run(interaction);
     }
     catch (error) {
-      bot.logger.error(`Ha habido un error\n ${error}`);
+      logger.error(`Ha habido un error\n ${error}`);
       await interaction.reply({ content: 'Ha habido un error al ejecutar este comando', ephemeral: true });
     }
   },

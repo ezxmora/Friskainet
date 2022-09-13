@@ -1,4 +1,4 @@
-const config = require('../../resources/config');
+const config = require('@config');
 
 module.exports = {
   name: 'addbountypoints',
@@ -6,17 +6,6 @@ module.exports = {
   category: 'pokemon',
   cooldown: 5,
   roles: [config.pokemonRole],
-  options: [{
-    name: 'id',
-    type: 'STRING',
-    description: 'Id del jugador',
-    required: true,
-  }, {
-    name: 'points',
-    type: 'INTEGER',
-    description: 'Puntos a añadir',
-    required: true,
-  }],
   run: async (interaction) => {
     const { PokemonRomUser } = interaction.client.database;
     const { util } = interaction.client;

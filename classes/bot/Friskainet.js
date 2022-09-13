@@ -1,15 +1,14 @@
 const { Client, Collection } = require('discord.js');
 
+const config = require('@config');
+const database = require('@libs/database');
+const util = require('@libs/utils');
+
 const Loader = require('./Loader');
 const EventLoader = require('./EventLoader');
 const JobLoader = require('./JobLoader');
 
-const config = require('../../resources/config');
-const database = require('../../libs/database');
-// const logger = require('../../libs/logger');
 const Logger = require('./Logger');
-const util = require('../../libs/utils');
-const voice = require('../../libs/voice');
 
 module.exports = class Friskainet extends Client {
   constructor(options = {}) {
@@ -24,7 +23,6 @@ module.exports = class Friskainet extends Client {
     this.logger = new Logger();
     this.util = util;
     this.voiceConnections = new Map();
-    this.voiceLib = voice;
   }
 
   async login(token) {
@@ -40,15 +38,11 @@ module.exports = class Friskainet extends Client {
     this.logger.log(`Se han cargado ${loaders[2].length} cron-jobs`);
   }
 
-  getAllUsers() {
-    const guilds = this.guilds.cache.map((guild) => guild.id);
-    return guilds.reduce(async (i, guild) => {
-      const currentGuild = await this.guilds.fetch(guild);
-      if (currentGuild.available) {
-        const guildMembers = await currentGuild.members.fetch({ force: true });
-        return guildMembers.filter((member) => !member.user.bot);
-      }
-    }, []);
+  async getAllUsers() {
+    const guildInfo = await this.guilds.fetch(this.config.guildID);
+    const guildMembers = await guildInfo.members.fetch({ withPresences: true });
+
+    return guildMembers;
   }
 
   async userInfo(userId) {

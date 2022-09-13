@@ -3,12 +3,6 @@ const urban = require('urban');
 module.exports = {
   name: 'urban',
   description: 'Hace una búsqueda en UrbanDictionary',
-  options: [{
-    name: 'termino',
-    type: 'STRING',
-    description: 'Término a buscar',
-    required: true,
-  }],
   category: 'fun',
   cooldown: 5,
   run: async (interaction) => {

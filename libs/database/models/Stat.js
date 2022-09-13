@@ -1,29 +1,20 @@
-module.exports = (sequelize, DataTypes) => sequelize.define('user', {
-  userId: {
+module.exports = (sequelize, DataTypes) => sequelize.define('stat', {
+  server: {
     type: DataTypes.STRING,
-    primaryKey: true,
-  },
-  balance: {
-    type: DataTypes.INTEGER,
-    defaultValue: 100,
     allowNull: false,
-    min: 0,
+    unique: true,
   },
-  experience: {
+  messages: {
     type: DataTypes.INTEGER,
     defaultValue: 0,
     allowNull: false,
     min: 0,
   },
-  level: {
+  links: {
     type: DataTypes.INTEGER,
-    defaultValue: 1,
+    defaultValue: 0,
     allowNull: false,
     min: 0,
-  },
-  blacklisted: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
   },
   mentions: {
     type: DataTypes.INTEGER,
@@ -31,7 +22,19 @@ module.exports = (sequelize, DataTypes) => sequelize.define('user', {
     allowNull: false,
     min: 0,
   },
-  messages: {
+  commands: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+    allowNull: false,
+    min: 0,
+  },
+  onlineUsers: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+    allowNull: false,
+    min: 0,
+  },
+  totalUsers: {
     type: DataTypes.INTEGER,
     defaultValue: 0,
     allowNull: false,

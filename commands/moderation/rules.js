@@ -3,20 +3,8 @@ const { MessageActionRow, MessageButton, Permissions } = require('discord.js');
 module.exports = {
   name: 'rules',
   description: 'Comando para administrar las reglas del servidor',
-  options: [{
-    name: 'funcionalidad',
-    type: 'STRING',
-    description: 'Función para hacer con las normas',
-    required: true,
-    choices: [
-      { name: 'add', value: 'add' },
-      { name: 'remove', value: 'remove' },
-      { name: 'update', value: 'update' },
-    ],
-  }],
   category: 'moderation',
   usage: '<Opción [add, remove, update]> <Título de la norma>',
-  permissions: [Permissions.FLAGS.ADMINISTRATOR],
   cooldown: 5,
   run: async (interaction) => {
     // const { database: { Rule }, util, logger } = interaction.client;

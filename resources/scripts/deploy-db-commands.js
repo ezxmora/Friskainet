@@ -1,13 +1,12 @@
-process.title = 'Friskainet - Deploy script';
+process.title = 'Friskainet - Deploy commands & database script';
 
+require('module-alias/register');
 const { Intents } = require('discord.js');
 const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
+const { Routes, PermissionFlagsBits } = require('discord-api-types/v10');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const Friskainet = require('./classes/bot/Friskainet');
-const { token, guildID, applicationID } = require('./resources/config');
-const { User, syncAll } = require('./libs/database/index');
-
+const Friskainet = require('@bot/Friskainet');
+const { token, guildID, applicationID } = require('@config');
 
 const bot = new Friskainet({
   intents: [
@@ -21,6 +20,12 @@ const bot = new Friskainet({
 
 // Database and slash commands deployment
 bot.login(token).then(async () => {
+  const {
+    database: {
+      User, Command, Stat, syncAll,
+    }, logger,
+  } = bot;
+
   syncAll(async () => {
     const commands = [
       new SlashCommandBuilder()
@@ -63,6 +68,31 @@ bot.login(token).then(async () => {
         .addIntegerOption((i) => i.setName('cantidad').setDescription('Cantidad de tokens a transferir')
           .setRequired(true)
           .setMinValue(1)),
+      new SlashCommandBuilder()
+        .setName('activities')
+        .setDescription('Empieza o inicia una actividad en un canal de voz')
+        .addStringOption((s) => s.setName('actividad').setDescription('Actividad para hacer en el canal')
+          .setRequired(true)
+          .addChoices(
+            { name: 'Watch Together', value: '880218394199220334' },
+            { name: 'Poker Night (Se necesita un Boost de nivel 1)', value: '755827207812677713' },
+            { name: 'Betrayal.io', value: '773336526917861400' },
+            { name: 'Fishington.io', value: '814288819477020702' },
+            { name: 'Chess In The Park (Se necesita un Boost de nivel 1)', value: '832012774040141894' },
+            { name: 'Sketchy Artist', value: '879864070101172255' },
+            { name: 'Awkword', value: '879863881349087252' },
+            { name: 'Doodle Crew', value: '878067389634314250' },
+            { name: 'Sketch Heads', value: '902271654783242291' },
+            { name: 'Letter Tile (Se necesita un Boost de nivel 1)', value: '879863686565621790' },
+            { name: 'Word Snacks', value: '879863976006127627' },
+            { name: 'SpellCast (Se necesita un Boost de nivel 1)', value: '852509694341283871' },
+            { name: 'Checkers In The Park (Se necesita un Boost de nivel 1)', value: '832013003968348200' },
+            { name: 'Blazing 8s (Se necesita un Boost de nivel 1)', value: '832025144389533716' },
+            { name: 'Putt Party', value: '945737671223947305' },
+            { name: 'Land-io (Se necesita un Boost de nivel 1)', value: '903769130790969345' },
+            { name: 'Bobble League', value: '947957217959759964' },
+            { name: 'Ask Away', value: '976052223358406656' },
+          )),
       new SlashCommandBuilder().setName('kanye').setDescription('Devuelve una frase de Kanye West'),
       new SlashCommandBuilder()
         .setName('urban')
@@ -78,12 +108,12 @@ bot.login(token).then(async () => {
       new SlashCommandBuilder()
         .setName('disconnect')
         .setDescription('Desconecta a un usuario de un canal de voz')
-        .setDefaultPermission(false)
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
         .addUserOption((u) => u.setName('usuario').setDescription('Usuario a desconectar').setRequired(true)),
       new SlashCommandBuilder()
         .setName('warn')
         .setDescription('Le añade un warn a un usuario')
-        .setDefaultPermission(false)
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
         .addUserOption((u) => u.setName('usuario').setDescription('Usuario al que añadir el aviso').setRequired(true))
         .addStringOption((s) => s.setName('motivo').setDescription('Motivo por el que se sanciona al usuario').setRequired(true)),
       new SlashCommandBuilder().setName('clear').setDescription('Vacía la cola de canciones'),
@@ -129,21 +159,38 @@ bot.login(token).then(async () => {
         .setDescription('Baraja y divide en grupos una serie de elementos')
         .addIntegerOption((i) => i.setName('grupos').setDescription('Número de grupos').setRequired(true))
         .addStringOption((s) => s.setName('items').setDescription('Items a barajar separados por comas').setRequired(true)),
+      new SlashCommandBuilder()
+        .setName('stalk')
+        .setDescription('Hace una captura de una web')
+        .addStringOption((s) => s.setName('url').setDescription('URL de la página').setRequired(true))
+        .addBooleanOption((b) => b.setName('full').setDescription('¿Quieres que se imprima toda la web?').setRequired(false)),
     ].map((command) => command.toJSON());
 
     // Adds all Friskainet's commands
-    const rest = new REST({ version: '9' }).setToken(token);
+    const rest = new REST({ version: '10' }).setToken(token);
     await rest.put(Routes.applicationGuildCommands(applicationID, guildID), { body: commands })
       .then(() => bot.logger.log('Se han añadido todos los comandos correctamente'))
       .catch((error) => bot.logger.error(`Ha habido un error al intentar añadir un comando ${error}`));
+
+    // Adds all commands to the database
+    commands.forEach((command) => {
+      Command.create({ name: command.name })
+        .then((result) => logger.db(`Se ha añadido el comando ${result.name} a la base de datos`))
+        .catch((err) => logger.error(err));
+    });
+
+    // Create server stats
+    Stat.create({ server: guildID })
+      .then(() => logger.db('Se han creado las estadísticas del servidor'))
+      .catch((err) => logger.error(err));
 
     // Fetchs and adds users to the database
     const users = await bot.getAllUsers();
 
     users.forEach((member) => {
       User.create({ userId: member.user.id })
-        .then((result) => bot.logger.db(`[${member.guild.name}] - [${result.userId}] - ${member.user.tag} ha sido añadid@ a la base de datos`))
-        .catch((err) => bot.logger.error(err));
+        .then((result) => logger.db(`[${member.guild.name}] - [${result.userId}] - ${member.user.tag} ha sido añadid@ a la base de datos`))
+        .catch((err) => logger.error(err));
     });
   });
 });

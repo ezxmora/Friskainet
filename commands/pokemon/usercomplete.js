@@ -1,19 +1,8 @@
-const config = require('../../resources/config');
+const config = require('@config');
 
 module.exports = {
   name: 'usercomplete',
   description: 'Marca que un usuario ha completado la fase de jugar del torneo activo.',
-  options: [{
-    name: 'id',
-    type: 'STRING',
-    description: 'Id del usuario a marcar como run completada',
-    required: true,
-  }, {
-    name: 'team',
-    type: 'STRING',
-    description: 'URL con el equipo a usar',
-    required: false,
-  }],
   category: 'pokemon',
   cooldown: 5,
   roles: [config.pokemonRole],

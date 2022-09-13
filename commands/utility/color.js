@@ -1,12 +1,6 @@
 module.exports = {
   name: 'color',
   description: 'Asigna un rol con el color especificado',
-  options: [{
-    name: 'color',
-    type: 'STRING',
-    description: 'Color en formato hexadecimal, #123123',
-    required: false,
-  }],
   category: 'utility',
   cooldown: 30,
   run: async (interaction) => {
