@@ -2,7 +2,6 @@ const { Client, Collection } = require('discord.js');
 
 const config = require('@config');
 const database = require('@libs/database');
-const { app: website } = require('@libs/website');
 const util = require('@libs/utils');
 
 const Loader = require('./Loader');
@@ -31,19 +30,12 @@ module.exports = class Friskainet extends Client {
       this.commands.loadFiles(),
       this.events.loadFiles(),
       this.jobs.loadFiles(),
-      this.#runWebServer(),
       super.login(token),
     ]);
 
     this.logger.log(`Se han cargado ${loaders[0].length} comandos`);
     this.logger.log(`Se han cargado ${loaders[1].length} eventos`);
     this.logger.log(`Se han cargado ${loaders[2].length} cron-jobs`);
-  }
-
-  #runWebServer() {
-    website.listen(this.config.webServer, () => {
-      this.logger.log(`El servidor web está funcionando en el puerto ${this.config.webServer}`);
-    });
   }
 
   async getAllUsers() {

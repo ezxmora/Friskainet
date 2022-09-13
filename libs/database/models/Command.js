@@ -10,10 +10,6 @@ module.exports = (sequelize, DataTypes) => sequelize.define('command', {
     allowNull: false,
     unique: true,
   },
-  category: {
-    type: DataTypes.STRING(15),
-    allowNull: false,
-  },
   uses: {
     type: DataTypes.INTEGER,
     defaultValue: 0,

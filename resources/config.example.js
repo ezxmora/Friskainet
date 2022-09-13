@@ -1,8 +1,7 @@
 module.exports = {
-  // If you want to see some extra output & commands without slash set to true
+  // If you want to see some extra output
   debug: false,
   // Only works with debug enabled
-  prefix: '!',
   ownerID: 'BOT OWNER ID',
   guildID: 'GUILD ID',
   applicationID: 'YOUR APPLICATION ID',

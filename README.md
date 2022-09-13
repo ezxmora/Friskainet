@@ -4,8 +4,6 @@
   <img alt="Language" src="https://img.shields.io/badge/Language-Node.js-red?style=flat-square&logo=node.js">
   <img alt="Discord" src="https://img.shields.io/discord/234313904317136906?style=flat-square">
   <a href="https://github.com/ezxmora/Friskainet/commits/main"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/ezxmora/Friskainet?style=flat-square"></a>
-  <a href="https://open.vscode.dev/ezxmora/Friskainet"><img alt="Open in VS Code" src="https://open.vscode.dev/badges/open-in-vscode.svg"></a>
-
 </p>
 
 # Friskainet
@@ -33,6 +31,7 @@ I'm a bit absent minded and I tend to forget or ignore things sometimes Â¯\\\_(ã
 -   Music
 -   Voice state logger
 -   Pokemon ROM randomizer and tournament creator
+-   Stats
 
 ## Requirements
 -   [NodeJS](https://nodejs.org/) >= 16.6.0
