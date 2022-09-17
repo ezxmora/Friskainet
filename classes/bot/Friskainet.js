@@ -41,8 +41,9 @@ module.exports = class Friskainet extends Client {
   async getAllUsers() {
     const guildInfo = await this.guilds.fetch(this.config.guildID);
     const guildMembers = await guildInfo.members.fetch({ withPresences: true });
+    const parsedMembers = guildMembers.filter((u) => !u.user.bot);
 
-    return guildMembers;
+    return parsedMembers;
   }
 
   async userInfo(userId) {

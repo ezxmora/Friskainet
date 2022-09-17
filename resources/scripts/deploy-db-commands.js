@@ -1,20 +1,20 @@
 process.title = 'Friskainet - Deploy commands & database script';
 
 require('module-alias/register');
-const { Intents } = require('discord.js');
+const { GatewayIntentBits, SlashCommandBuilder } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const { Routes, PermissionFlagsBits } = require('discord-api-types/v10');
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 const Friskainet = require('@bot/Friskainet');
 const { token, guildID, applicationID } = require('@config');
 
 const bot = new Friskainet({
   intents: [
-    Intents.FLAGS.GUILDS,
-    Intents.FLAGS.GUILD_BANS,
-    Intents.FLAGS.GUILD_MEMBERS,
-    Intents.FLAGS.GUILD_MESSAGES,
-    Intents.FLAGS.GUILD_VOICE_STATES,
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildBans,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildVoiceStates,
   ],
 });
 

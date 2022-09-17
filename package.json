@@ -1,6 +1,6 @@
 {
 	"name": "friskainet",
-	"version": "5.0.0",
+	"version": "5.1.0",
 	"description": "",
 	"main": "app.js",
 	"engines": {
@@ -14,12 +14,11 @@
 	"author": "ezxmora",
 	"license": "MIT",
 	"dependencies": {
-		"@discordjs/builders": "^1.2.0",
 		"@discordjs/opus": "^0.8.0",
 		"@discordjs/rest": "^1.1.0",
 		"@discordjs/voice": "^0.11.0",
 		"body-parser": "^1.20.0",
-		"chalk": "^5.0.1",
+		"chalk": "^4.1.2",
 		"cors": "^2.8.5",
 		"discord-api-types": "^0.37.9",
 		"discord.js": "14.3.0",

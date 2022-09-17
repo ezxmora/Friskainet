@@ -21,7 +21,7 @@ module.exports = {
         interaction.reply({
           embeds: [{
             color: util.randomColor(),
-            timestamp: `${interaction.createdAt}`,
+            timestamp: interaction.createdAt,
             image: {
               url: `http://media.obutts.ru/${responseJson[0].preview}`,
             },
