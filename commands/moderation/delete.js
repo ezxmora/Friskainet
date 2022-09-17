@@ -1,4 +1,4 @@
-const { Permissions } = require('discord.js');
+const { PermissionsBitField } = require('discord.js');
 
 module.exports = {
   name: 'delete',
@@ -17,7 +17,7 @@ module.exports = {
         let filteredMsg = messages.map((msg) => msg.content.toLowerCase().match(criteria)
         && !msg.pinned && msg.author.id === interaction.user.id);
 
-        if (interaction.member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) {
+        if (interaction.member.permissions.has(PermissionsBitField.Flags.ManageMessages)) {
           filteredMsg = messages.filter((m) => m.content.toLowerCase().match(criteria) && !m.pinned);
         }
 
