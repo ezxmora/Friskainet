@@ -1,3 +1,5 @@
+const { resolveColor } = require('discord.js');
+
 module.exports = {
   name: 'leaderboard',
   description: 'Muestra el top 3 de las personas más ricas del servidor',
@@ -8,7 +10,7 @@ module.exports = {
     const { database, util } = interaction.client;
     const topUsers = await database.User.findAll({ limit: 3, order: [['balance', 'DESC']] });
     const embed = {
-      color: util.randomColor(),
+      color: resolveColor(util.randomColor()),
       title: 'Usuarios más ricos del servidor',
       fields: [],
     };

@@ -1,3 +1,5 @@
+const { resolveColor } = require('discord.js');
+
 module.exports = {
   name: 'queue',
   description: 'Muestra la cola de canciones',
@@ -17,7 +19,7 @@ module.exports = {
       const queue = await songs.map((song, index) => `${index + 1}. ${song.title}`).join('\n');
       const embedObject = {
         title: 'Cola de canciones',
-        color: randomColor(),
+        color: resolveColor(randomColor()),
         description: `**Está sonando: ** ${songTitle}\n**En la cola:\n**${queue}`,
       };
       return interaction.editReply({ embeds: [embedObject] });

@@ -1,5 +1,6 @@
 const { SlotMachine } = require('slot-machine');
 const { slotSymbols } = require('@resources/slots-symbols');
+const { resolveColor } = require('discord.js');
 
 module.exports = {
   name: 'slot',
@@ -7,6 +8,7 @@ module.exports = {
   category: 'economy',
   cooldown: 0,
   run: async (interaction) => {
+    const { util } = interaction.client;
     const lines = interaction.options.getInteger('lineas');
 
     const userInfo = await interaction.client.userInfo(interaction.member.id);
@@ -20,7 +22,7 @@ module.exports = {
       await interaction.client.giveTokens(interaction.member.id, points);
 
       const embed = {
-        color: interaction.client.util.randomColor(),
+        color: resolveColor(util.randomColor()),
         title: 'Resultados de la tragaperras',
         thumbnail: {
           url: interaction.user.avatarURL({ dynamic: true, format: 'png' }),

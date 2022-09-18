@@ -1,3 +1,5 @@
+const { resolveColor } = require('discord.js');
+
 module.exports = {
   name: 'voiceStateUpdate',
   once: false,
@@ -13,7 +15,7 @@ module.exports = {
       if (oldState.channelId === null) {
         channel.send({
           embeds: [{
-            color: '#15FF00',
+            color: resolveColor('#15FF00'),
             description: `[${newState.id}] - **${newState.member.user.tag}** se unió a **${newState.channel.name}**`,
           }],
         });
@@ -21,7 +23,7 @@ module.exports = {
       else if (newState.channelId === null) {
         channel.send({
           embeds: [{
-            color: '#FF0000',
+            color: resolveColor('#FF0000'),
             description: `[${oldState.id}] - **${oldState.member.user.tag}** abandonó **${oldState.channel.name}**`,
           }],
         });
@@ -29,7 +31,7 @@ module.exports = {
       else {
         channel.send({
           embeds: [{
-            color: '#FF9900',
+            color: resolveColor('#FF9900'),
             description: `[${oldState.id}] - **${oldState.member.user.tag}** se movió a **${newState.channel.name}** desde **${oldState.channel.name}**`,
           }],
         });

@@ -1,3 +1,4 @@
+const { resolveColor } = require('discord.js');
 const urban = require('urban');
 
 module.exports = {
@@ -18,7 +19,7 @@ module.exports = {
         title: response.word,
         description: description.replace(/[[\]']+/g, ''),
         url: response.permalink,
-        color: randomColor(),
+        color: resolveColor(randomColor()),
         footer: {
           icon_url: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/180/thumbs-up-sign_1f44d.png',
           text: `Likes: ${response.thumbs_up}`,

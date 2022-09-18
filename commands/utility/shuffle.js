@@ -1,3 +1,5 @@
+const { resolveColor } = require('discord.js');
+
 module.exports = {
   name: 'shuffle',
   description: 'Baraja y divide en grupos una serie de elementos',
@@ -17,7 +19,7 @@ module.exports = {
 
     const formattedGroups = {
       title: 'Shuffle',
-      color: randomColor(),
+      color: resolveColor(randomColor()),
       thumbnail: {
         url: interaction.client.user.avatarURL({ dynamic: true, format: 'png' }),
       },

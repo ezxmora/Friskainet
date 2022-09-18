@@ -1,3 +1,5 @@
+const { resolveColor } = require('discord.js');
+
 module.exports = {
   name: 'guildMemberAdd',
   once: false,
@@ -8,7 +10,7 @@ module.exports = {
 
       channel.send({
         embeds: [{
-          color: '#00AAFF',
+          color: resolveColor('#00AAFF'),
           description: `[${member.id}] - **${member.user.tag}** se unió al servidor`,
         }],
       });

@@ -1,3 +1,5 @@
+const { resolveColor } = require('discord.js');
+
 module.exports = {
   name: 'color',
   description: 'Asigna un rol con el color especificado',
@@ -18,7 +20,7 @@ module.exports = {
           if (!colorRoleExists) {
             colorRole = await interaction.guild.roles.create({
               name: colorRoleName,
-              color,
+              color: resolveColor(color),
               reason: `${interaction.member.user.tag} ha creado el color ${color}`,
             });
           }
@@ -49,7 +51,7 @@ module.exports = {
     else {
       return interaction.reply({
         embeds: [{
-          color: util.randomColor(),
+          color: resolveColor(util.randomColor()),
           fields: [{
             name: 'Lista de colores disponibles:',
             value: coloredRoles.map((r) => `<@&${r.id}>`).join(','),

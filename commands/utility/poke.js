@@ -1,3 +1,5 @@
+const { resolveColor } = require('discord.js');
+
 module.exports = {
   name: 'poke',
   description: 'Manda un DM a un usuario con un mensaje',
@@ -13,7 +15,7 @@ module.exports = {
       const embed = {
         title: `${interaction.user.tag} te ha pokeado`,
         description: clientMessage,
-        color: util.randomColor(),
+        color: resolveColor(util.randomColor()),
         timestamp: interaction.createdAt,
         thumbnail: {
           url: `${interaction.user.avatarURL({ dynamic: true, format: 'png' })}`,

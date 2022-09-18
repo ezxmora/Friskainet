@@ -1,3 +1,4 @@
+const { resolveColor } = require('discord.js');
 const fetch = require('node-fetch');
 
 module.exports = {
@@ -20,7 +21,7 @@ module.exports = {
 
         interaction.reply({
           embeds: [{
-            color: util.randomColor(),
+            color: resolveColor(util.randomColor()),
             timestamp: interaction.createdAt,
             image: {
               url: `http://media.obutts.ru/${responseJson[0].preview}`,

@@ -1,3 +1,4 @@
+const { resolveColor } = require('discord.js');
 const { joinVoiceChannel, entersState, VoiceConnectionStatus } = require('@discordjs/voice');
 const play = require('play-dl');
 const Sound = require('@music/Sound');
@@ -64,7 +65,7 @@ module.exports = {
 
         interaction.followUp({
           embeds: [{
-            color: randomColor(),
+            color: resolveColor(randomColor()),
             author: {
               name: 'Está sonando:',
               icon_url: 'https://i.imgur.com/24gXH2p.gif',

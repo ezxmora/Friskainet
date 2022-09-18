@@ -1,7 +1,7 @@
 process.title = 'Friskainet - Deploy rules & role manager script';
 
 require('module-alias/register');
-const { GatewayIntentBits } = require('discord.js');
+const { GatewayIntentBits, resolveColor } = require('discord.js');
 const Friskainet = require('@bot/Friskainet');
 const { token, channels: { serverInfoId } } = require('@config');
 const { intro, rules, outro } = require('../rules.json');
@@ -23,13 +23,13 @@ bot.login(token).then(async () => {
       // Setting up server-info channel embeds
       const channelInfo = await bot.channels.fetch(serverInfoId);
       const embedRulesIntro = {
-        color: '#232323',
+        color: resolveColor('#232323'),
         title: intro.title,
         description: intro.description,
       };
 
       const embedRulesList = {
-        color: '#232323',
+        color: resolveColor('#232323'),
         fields: [],
       };
       embedRulesList.fields = rules.map((rule) => {
@@ -42,7 +42,7 @@ bot.login(token).then(async () => {
       });
 
       const embedRulesOutro = {
-        color: '#232323',
+        color: resolveColor('#232323'),
         description: outro,
       };
 

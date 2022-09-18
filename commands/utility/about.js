@@ -1,3 +1,4 @@
+const { resolveColor } = require('discord.js');
 const moment = require('moment');
 
 module.exports = {
@@ -18,7 +19,7 @@ module.exports = {
     const experiencePercentage = (100 * databaseInfo.experience) / neededExperience;
 
     const embed = {
-      color: randomColor(),
+      color: resolveColor(randomColor()),
       title: user.user.tag,
       thumbnail: { url: user.user.avatarURL({ dynamic: true, format: 'png' }) },
       fields: [

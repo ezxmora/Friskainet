@@ -1,3 +1,5 @@
+const { resolveColor } = require('discord.js');
+
 module.exports = {
   name: 'dice',
   description: 'Tira unos dados',
@@ -55,7 +57,7 @@ module.exports = {
     const embed = {
       title: 'Resultado(s) de la(s) apuesta(s)',
       description: output,
-      color: util.randomColor(),
+      color: resolveColor(util.randomColor()),
       footer: {
         text: result,
       },

@@ -1,3 +1,5 @@
+const { resolveColor } = require('discord.js');
+
 module.exports = {
   name: 'messageReactionAdd',
   once: false,
@@ -36,7 +38,7 @@ module.exports = {
         const channel = await reaction.message.guild.channels.cache.find((c) => c.name === pinneds);
 
         const embedPin = {
-          color: '#FF0000',
+          color: resolveColor('#FF0000'),
           author: {
             name: reaction.message.author.tag,
             icon_url: reaction.message.author.avatarURL({ dynamic: true, format: 'png' }),

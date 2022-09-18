@@ -1,3 +1,4 @@
+const { resolveColor } = require('discord.js');
 const fetch = require('node-fetch');
 
 module.exports = {
@@ -13,7 +14,7 @@ module.exports = {
         const jsonResponse = await response.json();
         interaction.reply({
           embeds: [{
-            color: randomColor(),
+            color: resolveColor(randomColor()),
             title: 'Kanye dijo una vez...',
             description: `_“${jsonResponse.quote}”_`,
             timestamp: interaction.createdAt,

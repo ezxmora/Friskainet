@@ -1,3 +1,5 @@
+const { resolveColor } = require('discord.js');
+
 module.exports = {
   name: 'guildMemberRemove',
   once: false,
@@ -7,7 +9,7 @@ module.exports = {
       const channel = await member.guild.channels.cache.find((c) => c.name === channels.logs);
       channel.send({
         embeds: [{
-          color: '#FFFF00',
+          color: resolveColor('#FFFF00'),
           description: `[${member.id}] - **${member.user.tag}** se abandonó al servidor`,
         }],
       });

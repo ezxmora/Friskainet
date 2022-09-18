@@ -1,3 +1,5 @@
+const { resolveColor } = require('discord.js');
+
 module.exports = {
   name: 'help',
   description: 'Lista todos los comandos o información específica de uno',
@@ -22,7 +24,7 @@ module.exports = {
     });
 
     const embed = {
-      color: util.randomColor(),
+      color: resolveColor(util.randomColor()),
       title: 'Comandos del bot',
       fields: commandList,
     };
