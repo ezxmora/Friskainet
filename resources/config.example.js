@@ -1,3 +1,5 @@
+const { ActivityType } = require('discord.js');
+
 module.exports = {
   // If you want to see some extra output
   debug: false,
@@ -29,7 +31,7 @@ module.exports = {
   presence: {
     name: 'Anything you want here',
     // Check https://discord.js.org/#/docs/main/stable/typedef/ActivityType
-    type: 'PLAYING',
+    type: ActivityType.Listening,
     // Check https://discord.js.org/#/docs/main/stable/typedef/ClientPresenceStatus
     status: 'online',
   },
