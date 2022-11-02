@@ -4,18 +4,21 @@ module.exports = {
   category: 'music',
   cooldown: 2,
   run: async (interaction) => {
+    const { player } = interaction.client;
     await interaction.deferReply();
-    const { voiceConnections } = interaction.client;
     const voiceChannel = interaction.member?.voice.channel;
-    const connectionExists = voiceConnections.get(interaction.guildId);
+    const queue = player.getQueue(interaction.guildId);
 
     if (!voiceChannel) return interaction.editReply({ content: 'Tienes que estar en un canal de voz' });
 
-    if (connectionExists) {
-      connectionExists.audioPlayer.pause();
-      return interaction.editReply({ content: 'El reproductor está ahora pausado' });
-    }
+    if (queue) {
+      if (interaction.guild.members.me.voice.channelId === voiceChannel.id) {
+        queue.pause();
+        return interaction.editReply({ content: 'El reproductor está ahora pausado' });
+      }
 
+      return interaction.editReply({ content: 'No estamos en el mismo canal de voz' });
+    }
     return interaction.editReply({ content: 'No hay nada sonando' });
   },
 };

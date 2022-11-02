@@ -1,7 +1,8 @@
 const Puppeteer = require('puppeteer-extra');
+const { executablePath } = require('puppeteer');
 const AdblockerPlugin = require('puppeteer-extra-plugin-adblocker');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-const { MessageAttachment } = require('discord.js');
+const { AttachmentBuilder } = require('discord.js');
 
 module.exports = {
   name: 'stalk',
@@ -18,14 +19,18 @@ module.exports = {
 
       Puppeteer.use(StealthPlugin()).use(AdblockerPlugin({ blockTrackers: true }));
 
-      await Puppeteer.launch({ headless: true, args: ['--no-sandbox'] }).then(async (browser) => {
+      await Puppeteer.launch({
+        headless: true,
+        args: ['--no-sandbox'],
+        executablePath: executablePath(),
+      }).then(async (browser) => {
         const page = await browser.newPage();
         await page.emulateMediaFeatures({ name: 'prefers-color-scheme', value: 'dark' });
         await page.goto(url, { waitUntil: 'networkidle2' });
         await page.waitForTimeout(1000);
         const screenshot = await page.screenshot(screenshotOptions);
 
-        const attachment = new MessageAttachment(screenshot, 'SPOILER_website.png').setSpoiler(true);
+        const attachment = new AttachmentBuilder(screenshot, { name: 'SPOILER_website.png' }).setSpoiler(true);
         await interaction.editReply({ files: [attachment] });
         await browser.close();
       });

@@ -1,5 +1,3 @@
-const { getVoiceConnection } = require('@discordjs/voice');
-
 module.exports = {
   name: 'leave',
   description: 'Hace que el bot se vaya del canal de voz',
@@ -7,18 +5,15 @@ module.exports = {
   cooldown: 0,
   run: async (interaction) => {
     await interaction.deferReply();
-    const { logger, voiceConnections } = interaction.client;
+    const { player, logger } = interaction.client;
     const voiceChannel = interaction.member?.voice.channel;
-    const connectionExists = voiceConnections.get(interaction.guildId);
+    const connection = player.getQueue(interaction.guildId);
 
     if (!voiceChannel) return interaction.reply({ content: 'No estás en un canal de voz' });
 
-    const connection = getVoiceConnection(voiceChannel.guild.id);
-
-    // Bot and user are in the same channel
-    if (connectionExists && voiceChannel.id === connection?.joinConfig.channelId) {
-      voiceConnections.delete(interaction.guildId);
-      connection.destroy();
+    if (connection && interaction.guild.members.me.voice.channelId === voiceChannel.id) {
+      // Bot and user are in the same channel
+      player.voices.leave(interaction);
       interaction.editReply({ content: `He abandonado el canal de voz **${voiceChannel.name}**` });
       return logger.log(`He abandonado el canal de voz ${voiceChannel.name} (${voiceChannel.id})`);
     }

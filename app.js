@@ -1,5 +1,6 @@
 process.title = 'Friskainet';
 
+require('dotenv').config();
 require('module-alias/register');
 const { Options, GatewayIntentBits, Partials } = require('discord.js');
 const Friskainet = require('@bot/Friskainet');
@@ -14,6 +15,7 @@ const bot = new Friskainet({
     GatewayIntentBits.GuildVoiceStates,
     GatewayIntentBits.GuildMessageReactions,
     GatewayIntentBits.GuildPresences,
+    GatewayIntentBits.MessageContent,
   ],
   partials: [Partials.Message, Partials.Channel, Partials.Reaction],
   makeCache: Options.cacheWithLimits({

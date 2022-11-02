@@ -4,15 +4,15 @@ module.exports = {
   category: 'music',
   cooldown: 2,
   run: async (interaction) => {
+    const { player } = interaction.client;
     await interaction.deferReply();
-    const { voiceConnections } = interaction.client;
     const voiceChannel = interaction.member?.voice.channel;
-    const connectionExists = voiceConnections.get(interaction.guildId);
+    const queue = player.getQueue(interaction.guildId);
 
     if (!voiceChannel) return interaction.editReply({ content: 'Tienes que estar en un canal de voz' });
 
-    if (connectionExists) {
-      connectionExists.queue = [];
+    if (queue) {
+      queue.songs = [queue.songs[0]];
       return interaction.editReply({ content: 'La cola ha sido limpiada' });
     }
 

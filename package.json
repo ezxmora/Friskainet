@@ -1,7 +1,7 @@
 {
 	"name": "friskainet",
-	"version": "5.1.3",
-	"description": "",
+	"version": "6.0.0",
+	"description": "Another Discord bot written in JavaScript using DiscordJS",
 	"main": "app.js",
 	"engines": {
 		"node": ">=16.6.0"
@@ -14,33 +14,34 @@
 	"author": "ezxmora",
 	"license": "MIT",
 	"dependencies": {
-		"@discordjs/opus": "^0.8.0",
-		"@discordjs/rest": "^1.1.0",
-		"@discordjs/voice": "^0.11.0",
-		"body-parser": "^1.20.0",
+		"@discordjs/opus": "^0.9.0",
+		"@discordjs/rest": "^1.3.0",
+		"@discordjs/voice": "^0.13.0",
+		"@distube/soundcloud": "^1.2.2",
+		"@distube/spotify": "^1.4.2",
+		"@distube/yt-dlp": "^1.1.3",
 		"chalk": "^4.1.2",
 		"cors": "^2.8.5",
-		"discord-api-types": "^0.37.9",
-		"discord.js": "14.3.0",
+		"discord-api-types": "^0.37.16",
+		"discord.js": "14.6.0",
+		"distube": "^4.0.4",
+		"dotenv": "^16.0.3",
 		"fast-glob": "^3.2.12",
 		"form-data": "^4.0.0",
 		"libsodium-wrappers": "^0.7.10",
 		"module-alias": "^2.2.2",
 		"moment": "^2.29.4",
 		"node-cron": "^3.0.2",
-		"node-fetch": "^2.6.7",
 		"opusscript": "^0.0.8",
 		"pg": "^8.8.0",
 		"pg-hstore": "^2.3.4",
-		"play-dl": "^1.9.5",
-		"puppeteer": "^17.1.3",
+		"puppeteer": "^19.2.0",
 		"puppeteer-extra": "^3.3.4",
 		"puppeteer-extra-plugin-adblocker": "^2.13.5",
 		"puppeteer-extra-plugin-stealth": "^2.11.1",
-		"sequelize": "^6.21.6",
+		"sequelize": "^6.25.3",
 		"slot-machine": "^2.1.0",
-		"urban": "^0.3.4",
-		"youtube-dl-exec": "^2.1.5"
+		"undici": "^5.12.0"
 	},
 	"devDependencies": {
 		"eslint": "^8.23.0",
@@ -51,10 +52,9 @@
 	},
 	"_moduleAliases": {
 		"@root": ".",
-		"@bot": "classes/bot",
+		"@bot": "classes",
 		"@config": "resources/config.js",
 		"@libs": "libs",
-		"@music": "classes/music",
 		"@resources": "resources"
 	}
 }

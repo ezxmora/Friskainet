@@ -1,15 +1,4 @@
 node_modules/
 .env
 package-lock.json
-resources/config.js
-
-# SoundCloud & Spotify data
-.data
-
-# Multimedia
-*.mp3
-*.mp4
-
-resources/pokemon/*
-!resources/pokemon/PokeRandoZX.jar
 resources/rules.json

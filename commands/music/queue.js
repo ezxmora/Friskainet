@@ -7,20 +7,18 @@ module.exports = {
   cooldown: 2,
   run: async (interaction) => {
     await interaction.deferReply();
-    const { voiceConnections, util: { randomColor } } = interaction.client;
-    const connectionExists = voiceConnections.get(interaction.guildId);
+    const { player, util: { randomColor } } = interaction.client;
+    const queue = player.getQueue(interaction.guildId);
 
-    if (connectionExists) {
-      const songs = [...connectionExists.queue];
+    if (queue) {
+      if (queue.songs.length === 0) return interaction.editReply({ content: 'No hay nada en la cola' });
 
-      if (songs.length === 0) return interaction.editReply({ content: 'No hay nada en la cola' });
-
-      const songTitle = connectionExists?.audioPlayer.state.resource?.metadata.title;
-      const queue = await songs.map((song, index) => `${index + 1}. ${song.title}`).join('\n');
+      const playing = queue.songs[0];
+      const queueMap = await queue.songs.map((song, index) => `${index + 1}. ${song.name}`).join('\n');
       const embedObject = {
         title: 'Cola de canciones',
         color: resolveColor(randomColor()),
-        description: `**Está sonando: ** ${songTitle}\n**En la cola:\n**${queue}`,
+        description: `**Está sonando: ** ${playing.name}\n**En la cola:\n**${queueMap}`,
       };
       return interaction.editReply({ embeds: [embedObject] });
     }

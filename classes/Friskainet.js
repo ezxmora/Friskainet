@@ -1,4 +1,8 @@
 const { Client, Collection } = require('discord.js');
+const { DisTube } = require('distube');
+const { SpotifyPlugin } = require('@distube/spotify');
+const { SoundCloudPlugin } = require('@distube/soundcloud');
+const { YtDlpPlugin } = require('@distube/yt-dlp');
 
 const config = require('@config');
 const database = require('@libs/database');
@@ -7,6 +11,7 @@ const util = require('@libs/utils');
 const Loader = require('./Loader');
 const EventLoader = require('./EventLoader');
 const JobLoader = require('./JobLoader');
+const MusicEventLoader = require('./MusicEventLoader');
 
 const Logger = require('./Logger');
 
@@ -21,8 +26,19 @@ module.exports = class Friskainet extends Client {
     this.events = new EventLoader(this);
     this.jobs = new JobLoader(this);
     this.logger = new Logger();
+    this.player = new DisTube(this, {
+      leaveOnFinish: true,
+      nsfw: true,
+      plugins: [
+        new SpotifyPlugin({
+          emitEventsAfterFetching: true,
+        }),
+        new SoundCloudPlugin(),
+        new YtDlpPlugin(),
+      ],
+    });
+    this.mevents = new MusicEventLoader(this, this.player);
     this.util = util;
-    this.voiceConnections = new Map();
   }
 
   async login(token) {
@@ -30,12 +46,14 @@ module.exports = class Friskainet extends Client {
       this.commands.loadFiles(),
       this.events.loadFiles(),
       this.jobs.loadFiles(),
+      this.mevents.loadFiles(),
       super.login(token),
     ]);
 
     this.logger.log(`Se han cargado ${loaders[0].length} comandos`);
     this.logger.log(`Se han cargado ${loaders[1].length} eventos`);
     this.logger.log(`Se han cargado ${loaders[2].length} cron-jobs`);
+    this.logger.log(`Se han cargado ${loaders[3].length} eventos musicales`);
   }
 
   async getAllUsers() {

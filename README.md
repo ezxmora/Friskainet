@@ -19,7 +19,6 @@ It was the first image that I used for my bot and I think that it's a funny one.
 I'm a bit absent minded and I tend to forget or ignore things sometimes ¯\\\_(ツ)\_/¯. Issues and pull requests are open tho :)
 
 ## Features
--   Announcer <sub><sup>(Disabled at the moment)</sup></sub>
 -   Fun
 -   Economy
 -   Gambling
@@ -30,19 +29,15 @@ I'm a bit absent minded and I tend to forget or ignore things sometimes ¯\\\_(�
 -   Message pinner
 -   Music
 -   Voice state logger
--   Pokemon ROM randomizer and tournament creator
 -   Stats
 
 ## Requirements
 -   [NodeJS](https://nodejs.org/) >= 16.6.0
 -   SQL database
--   Java Runtime for [Pokémon randomizer](https://github.com/Ajarmar/universal-pokemon-randomizer-zx)
+-   [ffmpeg](https://ffmpeg.org/)
 
 ## Supported Languages
 - Spanish
-
-## Installation
-Check [SETUP.md](docs/SETUP.md)
 
 ## TODO
 -   More commands

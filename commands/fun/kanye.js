@@ -1,5 +1,5 @@
 const { resolveColor } = require('discord.js');
-const fetch = require('node-fetch');
+const { get } = require('@libs/apis/kanye');
 
 module.exports = {
   name: 'kanye',
@@ -8,19 +8,16 @@ module.exports = {
   cooldown: 5,
   run: async (interaction) => {
     const { util: { randomColor } } = interaction.client;
+    const quote = await get();
 
-    return fetch('https://api.kanye.rest')
-      .then(async (response) => {
-        const jsonResponse = await response.json();
-        interaction.reply({
-          embeds: [{
-            color: resolveColor(randomColor()),
-            title: 'Kanye dijo una vez...',
-            description: `_“${jsonResponse.quote}”_`,
-            timestamp: interaction.createdAt,
-            footer: { text: '🌊' },
-          }],
-        });
-      });
+    interaction.reply({
+      embeds: [{
+        color: resolveColor(randomColor()),
+        title: 'Kanye dijo una vez...',
+        description: `_“${quote}”_`,
+        timestamp: interaction.createdAt,
+        footer: { text: '🌊' },
+      }],
+    });
   },
 };

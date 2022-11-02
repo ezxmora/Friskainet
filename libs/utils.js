@@ -1,6 +1,3 @@
-const { Op } = require('sequelize');
-const { PokemonRom } = require('./database');
-
 module.exports = {
   replaceAll: (string, mapObject) => {
     const re = new RegExp(Object.keys(mapObject).join('|'), 'gi');
@@ -39,20 +36,6 @@ module.exports = {
     * (Math.floor(max) - Math.ceil(min) + 1))
     + Math.ceil(min),
 
-  playingState: Object.freeze({
-    0: 'Jugando',
-    1: 'Completado',
-    2: 'Retirado',
-  }),
-
-  tournamentPhase: Object.freeze({
-    0: 'No comenzado',
-    1: 'Fase de juego',
-    2: 'Fase de competición',
-    3: 'Finalizado',
-  }),
-
-
   isAColor: (color) => /^#[0-9A-F]{6}$/i.test(color),
 
   progressBarGenerator: (percentage, size) => {
@@ -79,15 +62,5 @@ module.exports = {
   isAnURL(inputURL) {
     return inputURL.match(new RegExp(/^((?:https?:\/\/)?(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b[-a-zA-Z0-9@:%_+.~#?&/=]*|)$/gm));
   },
-
-  currentActiveROM: async () => PokemonRom.findOne({
-    where:
-    {
-      tournamentPhase: {
-        [Op.gt]: 0,
-        [Op.lt]: 3,
-      },
-    },
-  }),
 
 };
