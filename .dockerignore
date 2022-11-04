@@ -1,0 +1,7 @@
+node_modules
+.github
+
+resources/rules.json
+.env
+package-lock.json
+

@@ -1,6 +1,5 @@
 process.title = 'Friskainet';
 
-require('dotenv').config();
 require('module-alias/register');
 const { Options, GatewayIntentBits, Partials } = require('discord.js');
 const Friskainet = require('@bot/Friskainet');

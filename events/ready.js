@@ -1,3 +1,5 @@
+const { ActivityType } = require('discord.js');
+
 module.exports = {
   name: 'ready',
   once: true,
@@ -5,8 +7,8 @@ module.exports = {
     const allUsers = await bot.getAllUsers();
     bot.logger.log(`${bot.user.tag} funcionando y sirviendo a ${allUsers.size} usuarios`);
     bot.user.setPresence({
-      activities: [{ name: bot.config.presence.name, type: bot.config.presence.type }],
-      status: bot.config.presence.status,
+      activities: [{ name: `${allUsers.size} usuarios 💤`, type: ActivityType.Watching }],
+      status: 'online',
     });
   },
 };

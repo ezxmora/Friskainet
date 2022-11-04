@@ -1,0 +1,18 @@
+version: "1.0"
+services:
+  app:
+    container_name: "friskainet_app"
+    build: .
+    command: npm run start
+    restart: always
+    volumes:
+      - .env:/Friskainet/.env
+
+  database:
+    container_name: "friskainet_db"
+    image: "postgres"
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: "friskainet"
+

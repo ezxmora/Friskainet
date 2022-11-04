@@ -1,26 +1,12 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const { databaseURL, debug } = require('@config');
+const { databaseURL } = require('@config');
 const Logger = require('@bot/Logger');
 
 const logger = new Logger();
-let sequelize;
 
-if (debug) {
-  sequelize = new Sequelize(databaseURL, {
-    logging: false,
-  });
-}
-else {
-  sequelize = new Sequelize(databaseURL, {
-    logging: false,
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false,
-      },
-    },
-  });
-}
+const sequelize = new Sequelize(databaseURL, {
+  logging: false,
+});
 
 const User = require('./models/User')(sequelize, DataTypes);
 const Rule = require('./models/Rule')(sequelize, DataTypes);
