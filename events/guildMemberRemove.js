@@ -10,7 +10,7 @@ module.exports = {
       channel.send({
         embeds: [{
           color: resolveColor('#FFFF00'),
-          description: `[${member.id}] - **${member.user.tag}** se abandonó al servidor`,
+          description: `[${member.id}] - **${member.user.tag}** ha abandonado el servidor`,
         }],
       });
 
