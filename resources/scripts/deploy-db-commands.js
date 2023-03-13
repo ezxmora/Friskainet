@@ -125,11 +125,6 @@ bot.login(token).then(async () => {
         .addIntegerOption((i) => i.setName('grupos').setDescription('Número de grupos').setRequired(true))
         .addStringOption((s) => s.setName('items').setDescription('Items a barajar separados por comas').setRequired(true)),
       new SlashCommandBuilder()
-        .setName('stalk')
-        .setDescription('Hace una captura de una web')
-        .addStringOption((s) => s.setName('url').setDescription('URL de la página').setRequired(true))
-        .addBooleanOption((b) => b.setName('full').setDescription('¿Quieres que se imprima toda la web?').setRequired(false)),
-      new SlashCommandBuilder()
         .setName('nsfw')
         .setDescription('Envía imágenes nsfw')
         .addSubcommand((sbc) => sbc.setName('ass').setDescription('Envía una foto de un culo'))
