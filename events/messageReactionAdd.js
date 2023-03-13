@@ -62,7 +62,8 @@ module.exports = {
     }
 
     // Regional indicators so people don't do the funny
-    if (reaction.emoji.name.indexOf('regional_indicator') === -1) {
+    const regionalIndicatorRegex = /[\u{1F1E6}-\u{1F1FF}]/gu;
+    if (regionalIndicatorRegex.test(reaction.emoji.name)) {
       await reaction.users.remove(user);
     }
 
