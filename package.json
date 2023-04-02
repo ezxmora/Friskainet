@@ -1,6 +1,6 @@
 {
 	"name": "friskainet",
-	"version": "6.1.0",
+	"version": "7.0.0",
 	"description": "Another Discord bot written in JavaScript using DiscordJS",
 	"main": "app.js",
 	"engines": {
