@@ -6,7 +6,8 @@ services:
     command: "npm run start"
     restart: always
     volumes:
-      - .env:/Friskainet/.env
+      - ./.env:/Friskainet/.env
+      - ./rules.json:/Friskainet/resources/rules.json
     networks:
       friskainet_network:
         ipv4_address: 192.168.66.2
