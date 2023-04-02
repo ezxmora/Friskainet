@@ -1,9 +1,7 @@
 process.title = 'Friskainet - Deploy commands & database script';
 
 require('module-alias/register');
-const { GatewayIntentBits, SlashCommandBuilder } = require('discord.js');
-const { REST } = require('@discordjs/rest');
-const { Routes, PermissionFlagsBits } = require('discord-api-types/v10');
+const { GatewayIntentBits, SlashCommandBuilder, REST, Routes, PermissionFlagsBits } = require('discord.js');
 
 const Friskainet = require('@bot/Friskainet');
 const { token, guildID, applicationID } = require('@config');

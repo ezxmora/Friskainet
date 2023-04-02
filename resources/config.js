@@ -7,7 +7,7 @@ module.exports = {
   token: process.env.FRISKAINET_TOKEN,
   roleAssignerMessageId: process.env.FRISKAINET_ROLE_MESSAGEID,
   channels: {
-    serverInfoId: process.env.FRISKAINET_ROLE_MESSAGEID,
+    serverInfoId: process.env.FRISKAINET_CHANNEL_INFOID,
     volatile: process.env.FRISKAINET_CHANNEL_VOLATILE,
     pinneds: process.env.FRISKAINET_CHANNEL_PINNEDS,
     logs: process.env.FRISKAINET_CHANNEL_LOGS,

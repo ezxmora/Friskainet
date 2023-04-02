@@ -23,7 +23,7 @@ module.exports = {
 
     const now = Date.now();
     const timestamps = cooldowns.get(cmd);
-    const cooldownAmount = (command.coldown || 3) * 1000;
+    const cooldownAmount = (command.cooldown || 3) * 1000;
 
     // Exists the cooldown
     if (timestamps.has(interaction.member.id)) {
