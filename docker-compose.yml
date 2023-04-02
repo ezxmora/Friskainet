@@ -1,18 +1,28 @@
-version: "1.0"
+version: "3.8"
 services:
   app:
     container_name: "friskainet_app"
-    build: .
-    command: npm run start
+    image: "ezxmora/friskainet:latest"
+    command: "npm run start"
     restart: always
     volumes:
       - .env:/Friskainet/.env
-
+    networks:
+      friskainet_network:
+        ipv4_address: 192.168.66.2
   database:
     container_name: "friskainet_db"
-    image: "postgres"
+    image: "postgres:latest"
     restart: always
     environment:
       POSTGRES_PASSWORD: 1234
       POSTGRES_DB: "friskainet"
+    networks:
+      friskainet_network:
+        ipv4_address: 192.168.66.3
+networks:
+  friskainet_network:
+    ipam:
+      config:
+        - subnet: 192.168.66.0/24
 
