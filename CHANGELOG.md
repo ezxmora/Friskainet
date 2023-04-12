@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.0.2](https://github.com/ezxmora/Friskainet/compare/v7.0.1...v7.0.2) (2023-04-02)
+
+
+### Bug Fixes
+
+* docker-compose app volumes fixes ([9d23956](https://github.com/ezxmora/Friskainet/commit/9d23956c631d276bd4188397b066fb19568879f5))
+
 ## [7.0.1](https://github.com/ezxmora/Friskainet/compare/v7.0.0...v7.0.1) (2023-04-02)
 
 
