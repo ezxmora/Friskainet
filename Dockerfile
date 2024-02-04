@@ -1,5 +1,5 @@
-FROM --platform=$BUILDPLATFORM node:21-alpine
-ARG BUILDPLATFORM
+FROM --platform=$BUILDPLATFORM node:lts-alpine
+
 WORKDIR /Friskainet
 
 RUN apk update
