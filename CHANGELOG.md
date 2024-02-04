@@ -1,5 +1,20 @@
 # Changelog
 
+## [8.0.0](https://github.com/ezxmora/Friskainet/compare/v7.0.2...v8.0.0) (2024-02-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* removed @discordjs/opus
+
+### Bug Fixes
+
+* added multiplatform action support ([041e93c](https://github.com/ezxmora/Friskainet/commit/041e93cd2539434a30df729720ab897686d2b261))
+* bumped packages, added multiplatform dockerfile and updated deprecated variables ([bde452a](https://github.com/ezxmora/Friskainet/commit/bde452aa9d3c1fbfc66aa3b1335669c7d2bf84dd))
+* Dockerfile fix ([0394063](https://github.com/ezxmora/Friskainet/commit/039406330bec225df5da85d8d0a24031deffed56))
+* removed @discordjs/opus ([a8c6c01](https://github.com/ezxmora/Friskainet/commit/a8c6c01530f1e0e1bd63ac1caaded3e04e4fea58))
+* switched to arm64v8/node on Dockerfile ([51e74ee](https://github.com/ezxmora/Friskainet/commit/51e74eefeee7602f2080c053941edbea6010fd93))
+
 ## [7.0.2](https://github.com/ezxmora/Friskainet/compare/v7.0.1...v7.0.2) (2023-04-02)
 
 
