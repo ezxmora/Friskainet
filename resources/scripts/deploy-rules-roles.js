@@ -9,7 +9,7 @@ const { intro, rules, outro } = require('../rules.json');
 const bot = new Friskainet({
   intents: [
     GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildBans,
+    GatewayIntentBits.GuildModeration,
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildVoiceStates,

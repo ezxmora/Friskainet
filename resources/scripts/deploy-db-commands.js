@@ -9,7 +9,7 @@ const { token, guildID, applicationID } = require('@config');
 const bot = new Friskainet({
   intents: [
     GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildBans,
+    GatewayIntentBits.GuildModeration,
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildVoiceStates,
